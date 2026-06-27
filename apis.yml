@@ -366,7 +366,7 @@ apis:
 common:
   - type: Website
     url: https://www.asaas.com/
-  - type: SignUp
+  - type: Signup
     url: https://www.asaas.com/cadastro
   - type: Documentation
     url: https://docs.asaas.com/
@@ -396,7 +396,7 @@ common:
     url: https://central.ajuda.asaas.com/hc/pt-br
   - type: Blog
     url: https://blog.asaas.com/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.asaas.com/llms.txt
   - type: Discord
     url: https://discord.gg/asaas

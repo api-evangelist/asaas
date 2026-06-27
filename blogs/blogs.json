@@ -2,10 +2,11 @@
   "repo": "asaas",
   "feeds": [
     {
-      "source": "https://central.ajuda.asaas.com/hc/pt-br",
-      "error": "HTTPError"
+      "source": "https://blog.asaas.com/",
+      "saved": 0,
+      "error": "HTTP 403 Forbidden on scrape"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:25:39Z",
+  "post_count": 10
 }
