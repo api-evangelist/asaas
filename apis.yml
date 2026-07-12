@@ -364,6 +364,8 @@ apis:
       - type: Documentation
         url: https://docs.asaas.com/reference/configurando-o-webhook
 common:
+  - type: DomainSecurity
+    url: security/asaas-domain-security.yml
   - type: Website
     url: https://www.asaas.com/
   - type: Signup
