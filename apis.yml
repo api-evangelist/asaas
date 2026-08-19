@@ -53,7 +53,7 @@ tags:
   - SMB
 url: >-
   https://raw.githubusercontent.com/api-evangelist/asaas/refs/heads/main/apis.yml
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 apis:
   - aid: asaas:customers
     name: Asaas Customers API
