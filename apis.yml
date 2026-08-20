@@ -38,6 +38,22 @@ modified: '2026-05-25'
 tags:
   - Payments
   - Billing
+  - Subscription
+  - Pix
+  - Boleto
+  - Credit Card
+  - Checkout
+  - Split Payments
+  - Webhook
+  - Digital Account
+  - Receivables
+  - Invoicing
+  - Brazil
+  - Fintech
+  - SMB
+tags_raw:
+  - Payments
+  - Billing
   - Subscriptions
   - Pix
   - Boleto
@@ -103,6 +119,10 @@ apis:
     humanURL: https://docs.asaas.com/reference/criar-nova-assinatura
     baseURL: https://api.asaas.com/v3
     tags:
+      - Subscription
+      - Recurring
+      - Billing Cycles
+    tags_raw:
       - Subscriptions
       - Recurring
       - Billing Cycles
@@ -169,6 +189,11 @@ apis:
     humanURL: https://docs.asaas.com/reference/criar-nova-cobranca
     baseURL: https://api.asaas.com/v3
     tags:
+      - Credit Card
+      - Tokenization
+      - 3DS
+      - Pre-Authorization
+    tags_raw:
       - Credit Card
       - Tokenization
       - 3DS
@@ -280,6 +305,11 @@ apis:
     tags:
       - Subaccounts
       - White Label
+      - Backend-as-a-Service
+      - KYC
+    tags_raw:
+      - Subaccounts
+      - White Label
       - BaaS
       - KYC
     properties:
@@ -338,6 +368,10 @@ apis:
     humanURL: https://docs.asaas.com/reference/obter-saldo-atual-da-conta
     baseURL: https://api.asaas.com/v3
     tags:
+      - Balances
+      - Statement
+      - Extrato
+    tags_raw:
       - Balance
       - Statement
       - Extrato
@@ -368,6 +402,10 @@ apis:
     humanURL: https://docs.asaas.com/reference/configurando-o-webhook
     baseURL: customer-configured
     tags:
+      - Webhook
+      - Event
+      - Notification
+    tags_raw:
       - Webhooks
       - Events
       - Notifications
