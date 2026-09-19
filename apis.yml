@@ -52,7 +52,7 @@ tags:
   - Subscription
   - Pix
   - Boleto
-  - Credit Card
+  - Credit Cards
   - Checkout
   - Split Payments
   - Webhook
@@ -116,6 +116,13 @@ apis:
       - Refunds
       - Boleto
       - Pix
+      - Credit Cards
+    tags_raw:
+      - Charges
+      - Billing
+      - Refunds
+      - Boleto
+      - Pix
       - Credit Card
     properties:
       - type: Documentation
@@ -166,6 +173,12 @@ apis:
     baseURL: https://api.asaas.com/v3
     tags:
       - Pix
+      - QR Codes
+      - Instant Payments
+      - Pix Automático
+      - Recurring
+    tags_raw:
+      - Pix
       - QR Code
       - Instant Payments
       - Pix Automático
@@ -200,9 +213,9 @@ apis:
     humanURL: https://docs.asaas.com/reference/criar-nova-cobranca
     baseURL: https://api.asaas.com/v3
     tags:
-      - Credit Card
+      - Credit Cards
       - Tokenization
-      - 3DS
+      - 3D
       - Pre-Authorization
     tags_raw:
       - Credit Card
@@ -365,6 +378,10 @@ apis:
     humanURL: https://docs.asaas.com/reference/listar-chargebacks
     baseURL: https://api.asaas.com/v3
     tags:
+      - Chargebacks
+      - Disputes
+      - Cards
+    tags_raw:
       - Chargebacks
       - Disputes
       - Card
