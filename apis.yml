@@ -64,7 +64,7 @@ tags:
   - Invoicing
   - Brazil
   - Fintech
-  - SMB
+  - Small Business
 tags_raw:
   - Payments
   - Billing
@@ -332,12 +332,12 @@ apis:
     tags:
       - Subaccounts
       - White Label
-      - Backend-as-a-Service
+      - Banking as a Service
       - KYC
     tags_raw:
       - Subaccounts
       - White Label
-      - BaaS
+      - Banking as a Service
       - KYC
     properties:
       - type: Documentation
