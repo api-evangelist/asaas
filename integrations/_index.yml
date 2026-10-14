@@ -27,6 +27,6 @@
     - payments-recurring-consents
     - payments-recurring-consents-automatic
     detected_by: sweep-standard-registers.py
-    detected: '2026-10-12'
+    detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
