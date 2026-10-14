@@ -1,0 +1,1 @@
+{"$schema":"https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json","name":"com.readme/asaas","version":"3","title":"Asaas - Documentação API","description":"MCP server for Asaas - Documentação API. Lets AI agents explore this project's API reference and documentation.","remotes":[{"type":"streamable-http","url":"https://docs.asaas.com/mcp"}]}

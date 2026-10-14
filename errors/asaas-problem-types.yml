@@ -1,0 +1,40 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/asaas-asaas-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: ErrorResponseDTO
+coverage:
+  operations: 213
+  statuses_declared: 4
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 213
+  media_types:
+  - application/json
+  schema: ErrorResponseDTO
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  operations: 213
+  media_types:
+  - application/json
+  schema: ErrorResponseDTO
+- status: 403
+  title: Forbidden
+  description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter
+    um body vazio.
+  operations: 99
+  media_types: []
+  schema: null
+- status: 404
+  title: Not Found
+  description: Not found
+  operations: 122
+  media_types: []
+  schema: null

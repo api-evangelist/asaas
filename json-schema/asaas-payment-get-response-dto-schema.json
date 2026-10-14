@@ -1,0 +1,744 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/asaas/main/json-schema/asaas-payment-get-response-dto-schema.json",
+  "title": "PaymentGetResponseDTO",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentGetResponseDTO",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Tipo do objeto",
+      "deprecated": false
+    },
+    "id": {
+      "type": "string",
+      "description": "Identificador único da cobrança no Asaas",
+      "deprecated": false
+    },
+    "dateCreated": {
+      "type": "string",
+      "description": "Data de criação da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "customer": {
+      "type": "string",
+      "description": "Identificador único do cliente ao qual a cobrança pertence",
+      "deprecated": false
+    },
+    "subscription": {
+      "type": "string",
+      "description": "Identificador único da assinatura (quando cobrança recorrente)",
+      "deprecated": false
+    },
+    "installment": {
+      "type": "string",
+      "description": "Identificador único do parcelamento (quando cobrança parcelada)",
+      "deprecated": false
+    },
+    "checkoutSession": {
+      "type": "string",
+      "description": "Identificador único do checkout",
+      "deprecated": false
+    },
+    "paymentLink": {
+      "type": "string",
+      "description": "Identificador único do link de pagamentos ao qual a cobrança pertence",
+      "deprecated": false
+    },
+    "value": {
+      "type": "number",
+      "description": "Valor da cobrança",
+      "deprecated": false
+    },
+    "netValue": {
+      "type": "number",
+      "description": "Valor líquido da cobrança após desconto da tarifa do Asaas",
+      "deprecated": false
+    },
+    "originalValue": {
+      "type": "number",
+      "description": "Valor original da cobrança (preenchido quando paga com juros e multa)",
+      "deprecated": false
+    },
+    "interestValue": {
+      "type": "number",
+      "description": "Valor calculado de juros e multa que deve ser pago após o vencimento da cobrança",
+      "deprecated": false
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição da cobrança",
+      "deprecated": false
+    },
+    "billingType": {
+      "$ref": "#/$defs/PaymentGetResponseBillingType"
+    },
+    "creditCard": {
+      "$ref": "#/$defs/PaymentSaveWithCreditCardCreditCardDTO"
+    },
+    "canBePaidAfterDueDate": {
+      "type": "boolean",
+      "description": "Informa se a cobrança pode ser paga após o vencimento (Somente para boleto)",
+      "deprecated": false
+    },
+    "pixTransaction": {
+      "type": "string",
+      "description": "Identificador único da transação Pix à qual a cobrança pertence",
+      "deprecated": false
+    },
+    "pixQrCodeId": {
+      "type": "string",
+      "description": "Identificador único do QrCode estático gerado para determinada chave Pix",
+      "deprecated": false
+    },
+    "status": {
+      "$ref": "#/$defs/PaymentGetResponsePaymentStatus"
+    },
+    "dueDate": {
+      "type": "string",
+      "description": "Data de vencimento da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "originalDueDate": {
+      "type": "string",
+      "description": "Vencimento original no ato da criação da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "paymentDate": {
+      "type": "string",
+      "description": "Data de liquidação da cobrança no Asaas",
+      "format": "date",
+      "deprecated": false
+    },
+    "clientPaymentDate": {
+      "type": "string",
+      "description": "Data em que o cliente efetuou o pagamento do boleto",
+      "format": "date",
+      "deprecated": false
+    },
+    "installmentNumber": {
+      "type": "integer",
+      "description": "Número da parcela",
+      "format": "int32",
+      "deprecated": false
+    },
+    "invoiceUrl": {
+      "type": "string",
+      "description": "URL da fatura",
+      "deprecated": false
+    },
+    "invoiceNumber": {
+      "type": "string",
+      "description": "Número da fatura",
+      "deprecated": false
+    },
+    "externalReference": {
+      "type": "string",
+      "description": "Campo livre para busca",
+      "deprecated": false
+    },
+    "deleted": {
+      "type": "boolean",
+      "description": "Determina se a cobrança foi removida",
+      "deprecated": false
+    },
+    "anticipated": {
+      "type": "boolean",
+      "description": "Define se a cobrança foi antecipada ou está em processo de antecipação",
+      "deprecated": false
+    },
+    "anticipable": {
+      "type": "boolean",
+      "description": "Determina se a cobrança é antecipável",
+      "deprecated": false
+    },
+    "creditDate": {
+      "type": "string",
+      "description": "Indica a data que o crédito ficou disponível",
+      "format": "date",
+      "deprecated": false
+    },
+    "estimatedCreditDate": {
+      "type": "string",
+      "description": "Data estimada de quando o crédito ficará disponível",
+      "format": "date",
+      "deprecated": false
+    },
+    "transactionReceiptUrl": {
+      "type": "string",
+      "description": "URL do comprovante de confirmação, recebimento, estorno ou remoção.",
+      "deprecated": false
+    },
+    "nossoNumero": {
+      "type": "string",
+      "description": "Identificação única do boleto",
+      "deprecated": false
+    },
+    "bankSlipUrl": {
+      "type": "string",
+      "description": "URL para download do boleto",
+      "deprecated": false
+    },
+    "discount": {
+      "$ref": "#/$defs/PaymentDiscountDTO"
+    },
+    "fine": {
+      "$ref": "#/$defs/PaymentFineResponseDTO"
+    },
+    "interest": {
+      "$ref": "#/$defs/PaymentInterestResponseDTO"
+    },
+    "split": {
+      "type": "array",
+      "description": "Configurações do split",
+      "deprecated": false,
+      "items": {
+        "$ref": "#/$defs/LeanPaymentSplitGetResponseDTO"
+      }
+    },
+    "postalService": {
+      "type": "boolean",
+      "description": "Define se a cobrança será enviada via Correios",
+      "deprecated": false
+    },
+    "daysAfterDueDateToRegistrationCancellation": {
+      "type": "integer",
+      "description": "Dias após o vencimento para cancelamento do registro (somente para boleto bancário)",
+      "format": "int32",
+      "deprecated": false
+    },
+    "chargeback": {
+      "$ref": "#/$defs/PaymentChargebackResponseDTO"
+    },
+    "escrow": {
+      "$ref": "#/$defs/PaymentEscrowGetResponseDTO"
+    },
+    "refunds": {
+      "type": "array",
+      "description": "Informações de estorno",
+      "deprecated": false,
+      "items": {
+        "$ref": "#/$defs/PaymentRefundGetResponseDTO"
+      }
+    },
+    "threeDSecureChallengeUrl": {
+      "type": "string",
+      "description": "URL para onde o titular do cartão deve ser redirecionado para concluir o desafio de autenticação 3D Secure. Retornado apenas quando o desafio de autenticação é exigido pelo emissor do cartão",
+      "deprecated": false
+    }
+  },
+  "$defs": {
+    "ChargebackCreditCardResponseCreditCardBrand": {
+      "type": "string",
+      "description": "Bandeira do cartão utilizado",
+      "deprecated": false,
+      "enum": [
+        "VISA",
+        "MASTERCARD",
+        "ELO",
+        "DINERS",
+        "DISCOVER",
+        "AMEX",
+        "CABAL",
+        "BANESCARD",
+        "CREDZ",
+        "SOROCRED",
+        "CREDSYSTEM",
+        "JCB",
+        "UNKNOWN"
+      ]
+    },
+    "ChargebackCreditCardResponseDTO": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Últimos 4 dígitos do cartão utilizado",
+          "deprecated": false
+        },
+        "brand": {
+          "$ref": "#/$defs/ChargebackCreditCardResponseCreditCardBrand"
+        }
+      },
+      "description": "Informações do cartão de crédito",
+      "deprecated": false
+    },
+    "LeanPaymentSplitGetResponseDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador único do split pago no Asaas",
+          "deprecated": false
+        },
+        "walletId": {
+          "type": "string",
+          "description": "Identificador da carteira Asaas que será transferido",
+          "deprecated": false
+        },
+        "fixedValue": {
+          "type": "number",
+          "description": "Valor fixo a ser transferido para a conta quando a cobrança for recebida",
+          "deprecated": false
+        },
+        "percentualValue": {
+          "type": "number",
+          "description": "Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida",
+          "deprecated": false
+        },
+        "totalValue": {
+          "type": "number",
+          "description": "Valor total do split que será enviado. Os valores exibidos podem sofrer alteração após a confirmação ou alteração da cobrança.",
+          "deprecated": false
+        },
+        "cancellationReason": {
+          "$ref": "#/$defs/LeanPaymentSplitGetResponsePaymentSplitCancellationReason"
+        },
+        "status": {
+          "$ref": "#/$defs/LeanPaymentSplitGetResponsePaymentSplitStatus"
+        },
+        "externalReference": {
+          "type": "string",
+          "description": "Identificador do split no seu sistema",
+          "deprecated": false
+        },
+        "description": {
+          "type": "string",
+          "description": "Descrição do split",
+          "deprecated": false
+        }
+      },
+      "description": "Configurações do split",
+      "deprecated": false
+    },
+    "LeanPaymentSplitGetResponsePaymentSplitCancellationReason": {
+      "type": "string",
+      "description": "Motivo de cancelamento do split",
+      "deprecated": false,
+      "enum": [
+        "BANK_ACCOUNT_AWAITING_AUTHORIZATION",
+        "BANK_ACCOUNT_PENDING",
+        "BANK_ACCOUNT_REJECTED",
+        "CHECKOUT_VALIDATION_FAILED",
+        "CUSTOMER_DOCUMENTS_PENDING",
+        "CUSTOMER_DOCUMENTS_REJECTED",
+        "EXTERNAL_AUTHORIZATION_REFUSED",
+        "MANUAL_CANCELLATION",
+        "PAYMENT_DELETED",
+        "PAYMENT_OVERDUE",
+        "PAYMENT_RECEIVED_IN_CASH",
+        "PAYMENT_REFUNDED",
+        "VALUE_DIVERGENCE_BLOCK",
+        "WALLET_REMOVED_FROM_OUTSIDE_ARRANGEMENT_ALLOW_LIST",
+        "WALLET_UNABLE_TO_RECEIVE"
+      ]
+    },
+    "LeanPaymentSplitGetResponsePaymentSplitStatus": {
+      "type": "string",
+      "description": "Status do split",
+      "deprecated": false,
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "PROCESSING_REFUND",
+        "AWAITING_CREDIT",
+        "CANCELLED",
+        "DONE",
+        "REFUNDED",
+        "BLOCKED_BY_VALUE_DIVERGENCE"
+      ]
+    },
+    "PaymentChargebackResponseChargebackDisputeStatus": {
+      "type": "string",
+      "description": "Status da disputa do chargeback.",
+      "deprecated": false,
+      "enum": [
+        "REQUESTED",
+        "ACCEPTED",
+        "REJECTED"
+      ]
+    },
+    "PaymentChargebackResponseChargebackReason": {
+      "type": "string",
+      "description": "Razão do chargeback",
+      "deprecated": false,
+      "enum": [
+        "ABSENCE_OF_PRINT",
+        "ABSENT_CARD_FRAUD",
+        "CARD_ACTIVATED_PHONE_TRANSACTION",
+        "CARD_FRAUD",
+        "CARD_RECOVERY_BULLETIN",
+        "COMMERCIAL_DISAGREEMENT",
+        "COPY_NOT_RECEIVED",
+        "CREDIT_OR_DEBIT_PRESENTATION_ERROR",
+        "DIFFERENT_PAY_METHOD",
+        "FRAUD",
+        "INCORRECT_TRANSACTION_VALUE",
+        "INVALID_CURRENCY",
+        "INVALID_DATA",
+        "LATE_PRESENTATION",
+        "LOCAL_REGULATORY_OR_LEGAL_DISPUTE",
+        "MULTIPLE_ROCS",
+        "ORIGINAL_CREDIT_TRANSACTION_NOT_ACCEPTED",
+        "OTHER_ABSENT_CARD_FRAUD",
+        "PROCESS_ERROR",
+        "RECEIVED_COPY_ILLEGIBLE_OR_INCOMPLETE",
+        "RECURRENCE_CANCELED",
+        "REQUIRED_AUTHORIZATION_NOT_GRANTED",
+        "RIGHT_OF_FULL_RECOURSE_FOR_FRAUD",
+        "SALE_CANCELED",
+        "SERVICE_DISAGREEMENT_OR_DEFECTIVE_PRODUCT",
+        "SERVICE_NOT_RECEIVED",
+        "SPLIT_SALE",
+        "TRANSFERS_OF_DIVERSE_RESPONSIBILITIES",
+        "UNQUALIFIED_CAR_RENTAL_DEBIT",
+        "USA_CARDHOLDER_DISPUTE",
+        "VISA_FRAUD_MONITORING_PROGRAM",
+        "WARNING_BULLETIN_FILE"
+      ]
+    },
+    "PaymentChargebackResponseChargebackStatus": {
+      "type": "string",
+      "description": "Status do chargeback",
+      "deprecated": false,
+      "enum": [
+        "REQUESTED",
+        "IN_DISPUTE",
+        "DISPUTE_LOST",
+        "REVERSED",
+        "DONE"
+      ]
+    },
+    "PaymentChargebackResponseDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador único do chargeback.",
+          "deprecated": false
+        },
+        "payment": {
+          "type": "string",
+          "description": "Identificador único da cobrança no Asaas",
+          "deprecated": false
+        },
+        "installment": {
+          "type": "string",
+          "description": "Identificador único do parcelamento no Asaas",
+          "deprecated": false
+        },
+        "customerAccount": {
+          "type": "string",
+          "description": "Identificador único do cliente ao qual o chargeback está vinculado.",
+          "deprecated": false
+        },
+        "status": {
+          "$ref": "#/$defs/PaymentChargebackResponseChargebackStatus"
+        },
+        "reason": {
+          "$ref": "#/$defs/PaymentChargebackResponseChargebackReason"
+        },
+        "disputeStartDate": {
+          "type": "string",
+          "description": "Data de abertura do chargeback.",
+          "format": "date",
+          "deprecated": false
+        },
+        "value": {
+          "type": "number",
+          "description": "Valor do chargeback.",
+          "deprecated": false
+        },
+        "paymentDate": {
+          "type": "string",
+          "description": "Data de liquidação da cobrança no Asaas",
+          "format": "date",
+          "deprecated": false
+        },
+        "creditCard": {
+          "$ref": "#/$defs/ChargebackCreditCardResponseDTO"
+        },
+        "disputeStatus": {
+          "$ref": "#/$defs/PaymentChargebackResponseChargebackDisputeStatus"
+        },
+        "deadlineToSendDisputeDocuments": {
+          "type": "string",
+          "description": "Data limite para envio de documentos de disputa.",
+          "format": "date",
+          "deprecated": false
+        }
+      }
+    },
+    "PaymentDiscountDTO": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor percentual ou fixo de desconto a ser aplicado sobre o valor da cobrança",
+          "deprecated": false
+        },
+        "dueDateLimitDays": {
+          "type": "integer",
+          "description": "Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante",
+          "format": "int32",
+          "deprecated": false
+        },
+        "type": {
+          "$ref": "#/$defs/PaymentDiscountDiscountType"
+        }
+      },
+      "description": "Informações de desconto",
+      "deprecated": false
+    },
+    "PaymentDiscountDiscountType": {
+      "type": "string",
+      "description": "Tipo de desconto",
+      "deprecated": false,
+      "enum": [
+        "FIXED",
+        "PERCENTAGE"
+      ]
+    },
+    "PaymentEscrowGetResponseDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador único da garantia da cobrança na Conta Escrow do Asaas",
+          "deprecated": false
+        },
+        "status": {
+          "$ref": "#/$defs/PaymentEscrowGetResponsePaymentEscrowStatus"
+        },
+        "expirationDate": {
+          "type": "string",
+          "description": "Data de expiração da garantia da cobrança",
+          "format": "date",
+          "deprecated": false
+        },
+        "finishDate": {
+          "type": "string",
+          "description": "Data de encerramento da garantia da cobrança",
+          "format": "date",
+          "deprecated": false
+        },
+        "finishReason": {
+          "$ref": "#/$defs/PaymentEscrowGetResponsePaymentEscrowFinishReason"
+        }
+      },
+      "description": "Informações de garantia da cobrança na Conta Escrow",
+      "deprecated": false
+    },
+    "PaymentEscrowGetResponsePaymentEscrowFinishReason": {
+      "type": "string",
+      "description": "Motivo do encerramento da garantia da cobrança",
+      "deprecated": false,
+      "enum": [
+        "CHARGEBACK",
+        "EXPIRED",
+        "INSUFFICIENT_BALANCE",
+        "PAYMENT_REFUNDED",
+        "REQUESTED_BY_CUSTOMER",
+        "CUSTOMER_CONFIG_DISABLED"
+      ]
+    },
+    "PaymentEscrowGetResponsePaymentEscrowStatus": {
+      "type": "string",
+      "description": "Status da garantia da cobrança",
+      "deprecated": false,
+      "enum": [
+        "ACTIVE",
+        "DONE"
+      ]
+    },
+    "PaymentFineResponseDTO": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor da multa em porcentagem",
+          "deprecated": false
+        }
+      },
+      "description": "Informações de multa para pagamento após o vencimento",
+      "deprecated": false
+    },
+    "PaymentGetResponseBillingType": {
+      "type": "string",
+      "description": "Forma de pagamento",
+      "deprecated": false,
+      "enum": [
+        "UNDEFINED",
+        "BOLETO",
+        "CREDIT_CARD",
+        "DEBIT_CARD",
+        "TRANSFER",
+        "DEPOSIT",
+        "PIX"
+      ]
+    },
+    "PaymentGetResponsePaymentStatus": {
+      "type": "string",
+      "description": "Status da cobrança",
+      "deprecated": false,
+      "enum": [
+        "PENDING",
+        "RECEIVED",
+        "CONFIRMED",
+        "OVERDUE",
+        "REFUNDED",
+        "RECEIVED_IN_CASH",
+        "REFUND_REQUESTED",
+        "REFUND_IN_PROGRESS",
+        "CHARGEBACK_REQUESTED",
+        "CHARGEBACK_DISPUTE",
+        "AWAITING_CHARGEBACK_REVERSAL",
+        "DUNNING_REQUESTED",
+        "DUNNING_RECEIVED",
+        "AWAITING_RISK_ANALYSIS"
+      ]
+    },
+    "PaymentInterestResponseDTO": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor dos juros em porcentagem",
+          "deprecated": false
+        }
+      },
+      "description": "Informações de juros para pagamento após o vencimento",
+      "deprecated": false
+    },
+    "PaymentRefundGetResponseDTO": {
+      "type": "object",
+      "properties": {
+        "dateCreated": {
+          "type": "string",
+          "description": "Data da criação do estorno",
+          "format": "date-time",
+          "deprecated": false
+        },
+        "status": {
+          "$ref": "#/$defs/PaymentRefundGetResponsePaymentRefundStatus"
+        },
+        "value": {
+          "type": "number",
+          "description": "Valor do estorno",
+          "deprecated": false
+        },
+        "endToEndIdentifier": {
+          "type": "string",
+          "description": "(Apenas pix) Identificador da transação Pix no Banco Central",
+          "deprecated": false
+        },
+        "description": {
+          "type": "string",
+          "description": "Descrição do estorno",
+          "deprecated": false
+        },
+        "effectiveDate": {
+          "type": "string",
+          "description": "(Apenas pix) Data de efetivação do estorno",
+          "format": "date-time",
+          "deprecated": false
+        },
+        "transactionReceiptUrl": {
+          "type": "string",
+          "description": "Link do recibo da transação",
+          "deprecated": false
+        },
+        "refundedSplits": {
+          "type": "array",
+          "description": "Lista de splits estornados, se houver",
+          "deprecated": false,
+          "items": {
+            "$ref": "#/$defs/PaymentRefundedSplitResponseDTO"
+          }
+        }
+      },
+      "description": "Informações de estorno",
+      "deprecated": false
+    },
+    "PaymentRefundGetResponsePaymentRefundStatus": {
+      "type": "string",
+      "description": "Status do estorno",
+      "deprecated": false,
+      "enum": [
+        "PENDING",
+        "AWAITING_CRITICAL_ACTION_AUTHORIZATION",
+        "AWAITING_CUSTOMER_EXTERNAL_AUTHORIZATION",
+        "CANCELLED",
+        "DONE"
+      ]
+    },
+    "PaymentRefundedSplitResponseDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador único do split",
+          "deprecated": false
+        },
+        "value": {
+          "type": "number",
+          "description": "Valor estornado",
+          "deprecated": false
+        },
+        "done": {
+          "type": "boolean",
+          "description": "Indica se o split foi estornado",
+          "deprecated": false
+        }
+      },
+      "description": "Lista de splits estornados, se houver",
+      "deprecated": false
+    },
+    "PaymentSaveWithCreditCardCreditCardCreditCardBrand": {
+      "type": "string",
+      "description": "Bandeira do cartão utilizado",
+      "deprecated": false,
+      "enum": [
+        "VISA",
+        "MASTERCARD",
+        "ELO",
+        "DINERS",
+        "DISCOVER",
+        "AMEX",
+        "CABAL",
+        "BANESCARD",
+        "CREDZ",
+        "SOROCRED",
+        "CREDSYSTEM",
+        "JCB",
+        "UNKNOWN"
+      ]
+    },
+    "PaymentSaveWithCreditCardCreditCardDTO": {
+      "type": "object",
+      "properties": {
+        "creditCardNumber": {
+          "type": "string",
+          "description": "Últimos 4 dígitos do cartão utilizado",
+          "deprecated": false
+        },
+        "creditCardBrand": {
+          "$ref": "#/$defs/PaymentSaveWithCreditCardCreditCardCreditCardBrand"
+        },
+        "creditCardToken": {
+          "type": "string",
+          "description": "Token do cartão de crédito caso a tokenização esteja ativa.",
+          "deprecated": false
+        }
+      },
+      "description": "Informações do cartão de crédito",
+      "deprecated": false
+    }
+  }
+}

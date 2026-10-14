@@ -1,0 +1,313 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/asaas/main/json-schema/asaas-payment-lean-save-with-credit-card-response-dto-schema.json",
+  "title": "PaymentLeanSaveWithCreditCardResponseDTO",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentLeanSaveWithCreditCardResponseDTO",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Tipo do objeto",
+      "deprecated": false
+    },
+    "id": {
+      "type": "string",
+      "description": "Identificador único da cobrança no Asaas",
+      "deprecated": false
+    },
+    "dateCreated": {
+      "type": "string",
+      "description": "Data de criação da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Identificador único do cliente ao qual a cobrança pertence",
+      "deprecated": false
+    },
+    "subscriptionId": {
+      "type": "string",
+      "description": "Identificador único da assinatura (quando cobrança recorrente)",
+      "deprecated": false
+    },
+    "installmentId": {
+      "type": "string",
+      "description": "Identificador único do parcelamento (quando cobrança parcelada)",
+      "deprecated": false
+    },
+    "paymentLinkId": {
+      "type": "string",
+      "description": "Identificador único do link de pagamentos ao qual a cobrança pertence",
+      "deprecated": false
+    },
+    "value": {
+      "type": "number",
+      "description": "Valor da cobrança",
+      "deprecated": false
+    },
+    "netValue": {
+      "type": "number",
+      "description": "Valor líquido da cobrança após desconto da tarifa do Asaas",
+      "deprecated": false
+    },
+    "originalValue": {
+      "type": "number",
+      "description": "Valor original da cobrança (preenchido quando paga com juros e multa)",
+      "deprecated": false
+    },
+    "interestValue": {
+      "type": "number",
+      "description": "Valor calculado de juros e multa que deve ser pago após o vencimento da cobrança",
+      "deprecated": false
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição da cobrança",
+      "deprecated": false
+    },
+    "billingType": {
+      "$ref": "#/$defs/PaymentLeanSaveWithCreditCardResponseBillingType"
+    },
+    "canBePaidAfterDueDate": {
+      "type": "boolean",
+      "description": "Informa se a cobrança pode ser paga após o vencimento (Somente para boleto)",
+      "deprecated": false
+    },
+    "confirmedDate": {
+      "type": "string",
+      "description": "Data de confirmação da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "pixTransactionId": {
+      "type": "string",
+      "description": "Identificador único da transação Pix à qual a cobrança pertence",
+      "deprecated": false
+    },
+    "status": {
+      "$ref": "#/$defs/PaymentLeanSaveWithCreditCardResponsePaymentStatus"
+    },
+    "dueDate": {
+      "type": "string",
+      "description": "Data de vencimento da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "originalDueDate": {
+      "type": "string",
+      "description": "Vencimento original no ato da criação da cobrança",
+      "format": "date",
+      "deprecated": false
+    },
+    "paymentDate": {
+      "type": "string",
+      "description": "Data de liquidação da cobrança no Asaas",
+      "format": "date",
+      "deprecated": false
+    },
+    "customerPaymentDate": {
+      "type": "string",
+      "description": "Data em que o cliente efetuou o pagamento do boleto",
+      "format": "date",
+      "deprecated": false
+    },
+    "installmentNumber": {
+      "type": "integer",
+      "description": "Número da parcela",
+      "format": "int32",
+      "deprecated": false
+    },
+    "externalReference": {
+      "type": "string",
+      "description": "Campo livre para busca",
+      "deprecated": false
+    },
+    "deleted": {
+      "type": "boolean",
+      "description": "Determina se a cobrança foi removida",
+      "deprecated": false
+    },
+    "anticipated": {
+      "type": "boolean",
+      "description": "Define se a cobrança foi antecipada ou está em processo de antecipação",
+      "deprecated": false
+    },
+    "anticipable": {
+      "type": "boolean",
+      "description": "Determina se a cobrança é antecipável",
+      "deprecated": false
+    },
+    "creditDate": {
+      "type": "string",
+      "description": "Data de crédito da cobrança",
+      "deprecated": false
+    },
+    "transactionReceiptUrl": {
+      "type": "string",
+      "description": "URL do comprovante de confirmação, recebimento, estorno ou remoção.",
+      "deprecated": false
+    },
+    "duplicatedPaymentId": {
+      "type": "string",
+      "description": "Identificador de cobrança duplicada (caso verdadeiro)",
+      "deprecated": false
+    },
+    "discount": {
+      "$ref": "#/$defs/PaymentDiscountDTO"
+    },
+    "fine": {
+      "$ref": "#/$defs/PaymentFineResponseDTO"
+    },
+    "interest": {
+      "$ref": "#/$defs/PaymentInterestResponseDTO"
+    },
+    "postalService": {
+      "type": "boolean",
+      "description": "Define se a cobrança será enviada via Correios",
+      "deprecated": false
+    },
+    "threeDSecureChallengeUrl": {
+      "type": "string",
+      "description": "URL para onde o titular do cartão deve ser redirecionado para concluir o desafio de autenticação 3D Secure. Retornado apenas quando o desafio de autenticação é exigido pelo emissor do cartão",
+      "deprecated": false
+    },
+    "creditCard": {
+      "$ref": "#/$defs/PaymentSaveWithCreditCardCreditCardDTO"
+    }
+  },
+  "$defs": {
+    "PaymentDiscountDTO": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor percentual ou fixo de desconto a ser aplicado sobre o valor da cobrança",
+          "deprecated": false
+        },
+        "dueDateLimitDays": {
+          "type": "integer",
+          "description": "Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante",
+          "format": "int32",
+          "deprecated": false
+        },
+        "type": {
+          "$ref": "#/$defs/PaymentDiscountDiscountType"
+        }
+      },
+      "description": "Informações de desconto",
+      "deprecated": false
+    },
+    "PaymentDiscountDiscountType": {
+      "type": "string",
+      "description": "Tipo de desconto",
+      "deprecated": false,
+      "enum": [
+        "FIXED",
+        "PERCENTAGE"
+      ]
+    },
+    "PaymentFineResponseDTO": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor da multa em porcentagem",
+          "deprecated": false
+        }
+      },
+      "description": "Informações de multa para pagamento após o vencimento",
+      "deprecated": false
+    },
+    "PaymentInterestResponseDTO": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Valor dos juros em porcentagem",
+          "deprecated": false
+        }
+      },
+      "description": "Informações de juros para pagamento após o vencimento",
+      "deprecated": false
+    },
+    "PaymentLeanSaveWithCreditCardResponseBillingType": {
+      "type": "string",
+      "description": "Forma de pagamento",
+      "deprecated": false,
+      "enum": [
+        "UNDEFINED",
+        "BOLETO",
+        "CREDIT_CARD",
+        "DEBIT_CARD",
+        "TRANSFER",
+        "DEPOSIT",
+        "PIX"
+      ]
+    },
+    "PaymentLeanSaveWithCreditCardResponsePaymentStatus": {
+      "type": "string",
+      "description": "Status da cobrança",
+      "deprecated": false,
+      "enum": [
+        "PENDING",
+        "RECEIVED",
+        "CONFIRMED",
+        "OVERDUE",
+        "REFUNDED",
+        "RECEIVED_IN_CASH",
+        "REFUND_REQUESTED",
+        "REFUND_IN_PROGRESS",
+        "CHARGEBACK_REQUESTED",
+        "CHARGEBACK_DISPUTE",
+        "AWAITING_CHARGEBACK_REVERSAL",
+        "DUNNING_REQUESTED",
+        "DUNNING_RECEIVED",
+        "AWAITING_RISK_ANALYSIS"
+      ]
+    },
+    "PaymentSaveWithCreditCardCreditCardCreditCardBrand": {
+      "type": "string",
+      "description": "Bandeira do cartão utilizado",
+      "deprecated": false,
+      "enum": [
+        "VISA",
+        "MASTERCARD",
+        "ELO",
+        "DINERS",
+        "DISCOVER",
+        "AMEX",
+        "CABAL",
+        "BANESCARD",
+        "CREDZ",
+        "SOROCRED",
+        "CREDSYSTEM",
+        "JCB",
+        "UNKNOWN"
+      ]
+    },
+    "PaymentSaveWithCreditCardCreditCardDTO": {
+      "type": "object",
+      "properties": {
+        "creditCardNumber": {
+          "type": "string",
+          "description": "Últimos 4 dígitos do cartão utilizado",
+          "deprecated": false
+        },
+        "creditCardBrand": {
+          "$ref": "#/$defs/PaymentSaveWithCreditCardCreditCardCreditCardBrand"
+        },
+        "creditCardToken": {
+          "type": "string",
+          "description": "Token do cartão de crédito caso a tokenização esteja ativa.",
+          "deprecated": false
+        }
+      },
+      "description": "Informações do cartão de crédito",
+      "deprecated": false
+    }
+  }
+}

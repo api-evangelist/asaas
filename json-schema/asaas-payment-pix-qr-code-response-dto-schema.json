@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/asaas/main/json-schema/asaas-payment-pix-qr-code-response-dto-schema.json",
+  "title": "PaymentPixQrCodeResponseDTO",
+  "description": "Dados do pagamento relacionados a Pix",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentPixQrCodeResponseDTO",
+  "type": "object",
+  "properties": {
+    "encodedImage": {
+      "type": "string",
+      "description": "Imagem do QrCode em base64",
+      "deprecated": false
+    },
+    "payload": {
+      "type": "string",
+      "description": "Copia e Cola do QrCode",
+      "deprecated": false
+    },
+    "expirationDate": {
+      "type": "string",
+      "description": "Data de expiração do QrCode",
+      "format": "date-time",
+      "deprecated": false
+    },
+    "description": {
+      "type": "string",
+      "description": "Descrição do QrCode",
+      "deprecated": false
+    }
+  },
+  "deprecated": false
+}

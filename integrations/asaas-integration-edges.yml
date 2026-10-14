@@ -1,3 +1,18 @@
+generated: '2026-10-14'
+method: searched
+source:
+- https://zapier.com/apps/asaas/integrations
+- https://n8n.io/integrations/asaas/
+- https://composio.dev/toolkits/asaas
+- https://monid.ai/tools/asaas
+checked:
+- https://composio.dev/toolkits/asaas
+- https://data.directory.openbankingbrasil.org.br/participants
+- https://monid.ai/tools/asaas
+- https://n8n.io/integrations/asaas/
+- https://zapier.com/apps/asaas/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: Open Finance Brasil
   partner: null
@@ -23,7 +38,4 @@ edges:
     - payments-recurring-consents-automatic
     detected_by: sweep-standard-registers.py
     detected: '2026-10-12'
-generated: '2026-10-12'
-method: searched
-checked:
-- https://data.directory.openbankingbrasil.org.br/participants
+templates: []

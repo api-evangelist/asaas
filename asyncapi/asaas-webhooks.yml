@@ -1,0 +1,261 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-webhooks.py
+source:
+- openapi/asaas-asaas-openapi.yml
+description: 'Event surface derived from the provider''s own OpenAPI: enum WebhookConfigGetResponseWebhookEvent, enum WebhookConfigUpdateRequestWebhookEvent,
+  enum NotificationGetResponseNotificationEvent. No AsyncAPI document is published by the provider; this catalog lists the events the contract
+  names.'
+management_operations:
+- recuperar-notificacoes-de-um-cliente
+- atualizar-notificacoes-existentes-em-lote
+- atualizar-notificacao-existente
+- criar-nova-assinatura
+- listar-assinaturas
+- criar-assinatura-com-cartao-de-credito
+- recuperar-uma-unica-assinatura
+- atualizar-assinatura-existente
+- remover-assinatura
+- criar-configuracao-para-emissao-de-notas-fiscais
+- recuperar-configuracao-para-emissao-de-notas-fiscais
+- remover-configuracao-para-emissao-de-notas-fiscais
+- atualizar-configuracao-para-emissao-de-notas-fiscais
+- listar-notas-fiscais-das-cobrancas-de-uma-assinatura
+- gerar-carne-de-assinatura
+- listar-cobrancas-de-uma-assinatura
+- atualizar-cartao-de-credito-assinatura
+- criar-novo-webhook
+- listar-webhooks
+- recuperar-um-unico-webhook
+- atualizar-webhook-existente
+- remover-webhook
+- remover-penalizacao-webhook
+events:
+- event: PAYMENT_AUTHORIZED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_AWAITING_RISK_ANALYSIS
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_APPROVED_BY_RISK_ANALYSIS
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_REPROVED_BY_RISK_ANALYSIS
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_UPDATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_CONFIRMED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_RECEIVED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_ANTICIPATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_OVERDUE
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_DELETED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_RESTORED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_REFUNDED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_REFUND_IN_PROGRESS
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_REFUND_DENIED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_RECEIVED_IN_CASH_UNDONE
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_CHARGEBACK_REQUESTED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_CHARGEBACK_DISPUTE
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_AWAITING_CHARGEBACK_REVERSAL
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_DUNNING_RECEIVED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_DUNNING_REQUESTED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_BANK_SLIP_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_BANK_SLIP_VIEWED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_CHECKOUT_VIEWED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_CREDIT_CARD_CAPTURE_REFUSED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_PARTIALLY_REFUNDED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_SPLIT_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_SPLIT_DIVERGENCE_BLOCK
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_SPLIT_DIVERGENCE_BLOCK_FINISHED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_SPLIT_DONE
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_UPDATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_SYNCHRONIZED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_AUTHORIZED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_PROCESSING_CANCELLATION
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_CANCELED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_CANCELLATION_DENIED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INVOICE_ERROR
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_IN_BANK_PROCESSING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_BLOCKED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_DONE
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_FAILED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: TRANSFER_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_BANK_PROCESSING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_PAID
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_FAILED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BILL_REFUNDED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_SCHEDULED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_CREDITED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_DEBITED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_DENIED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: RECEIVABLE_ANTICIPATION_OVERDUE
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: MOBILE_PHONE_RECHARGE_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: MOBILE_PHONE_RECHARGE_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: MOBILE_PHONE_RECHARGE_CONFIRMED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: MOBILE_PHONE_RECHARGE_REFUNDED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_BANK_ACCOUNT_INFO_APPROVED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_BANK_ACCOUNT_INFO_AWAITING_APPROVAL
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_BANK_ACCOUNT_INFO_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_BANK_ACCOUNT_INFO_REJECTED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_COMMERCIAL_INFO_APPROVED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_COMMERCIAL_INFO_AWAITING_APPROVAL
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_COMMERCIAL_INFO_EXPIRED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_COMMERCIAL_INFO_EXPIRING_SOON
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_COMMERCIAL_INFO_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_COMMERCIAL_INFO_REJECTED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_DOCUMENT_APPROVED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_DOCUMENT_AWAITING_APPROVAL
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_DOCUMENT_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_DOCUMENT_REJECTED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_GENERAL_APPROVAL_APPROVED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_GENERAL_APPROVAL_AWAITING_APPROVAL
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_GENERAL_APPROVAL_PENDING
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCOUNT_STATUS_GENERAL_APPROVAL_REJECTED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_UPDATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_INACTIVATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_DELETED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_SPLIT_DISABLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_SPLIT_DIVERGENCE_BLOCK
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: SUBSCRIPTION_SPLIT_DIVERGENCE_BLOCK_FINISHED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: CHECKOUT_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: CHECKOUT_CANCELED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: CHECKOUT_EXPIRED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: CHECKOUT_PAID
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BALANCE_VALUE_BLOCKED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: BALANCE_VALUE_UNBLOCKED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INTERNAL_TRANSFER_CREDIT
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: INTERNAL_TRANSFER_DEBIT
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCESS_TOKEN_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCESS_TOKEN_DELETED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCESS_TOKEN_DISABLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCESS_TOKEN_ENABLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCESS_TOKEN_EXPIRED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: ACCESS_TOKEN_EXPIRING_SOON
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_AUTHORIZATION_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_AUTHORIZATION_ACTIVATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_AUTHORIZATION_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_AUTHORIZATION_EXPIRED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_AUTHORIZATION_REFUSED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_PAYMENT_INSTRUCTION_CREATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_PAYMENT_INSTRUCTION_SCHEDULED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_PAYMENT_INSTRUCTION_REFUSED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_PAYMENT_INSTRUCTION_CANCELLED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PIX_AUTOMATIC_RECURRING_ELIGIBILITY_UPDATED
+  declared_in: components/schemas/WebhookConfigGetResponseWebhookEvent
+- event: PAYMENT_DUEDATE_WARNING
+  declared_in: components/schemas/NotificationGetResponseNotificationEvent
+- event: SEND_LINHA_DIGITAVEL
+  declared_in: components/schemas/NotificationGetResponseNotificationEvent

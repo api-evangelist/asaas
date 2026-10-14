@@ -1,0 +1,419 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/asaas-asaas-openapi.yml
+vocabulary:
+  name: Asaas Domain Vocabulary
+  description: 'Terms declared by Asaas''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: ErrorResponseDTO
+    definition: 'Object declared by the contract with fields: errors.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/ErrorResponseDTO
+  - term: ErrorResponseItemDTO
+    definition: Lista de objetos
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/ErrorResponseItemDTO
+  - term: CustomerGetResponseDTO
+    definition: 'Object declared by the contract with fields: object, id, dateCreated, name, email, phone, mobilePhone, address, addressNumber,
+      complement, province, city. (12 more)'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CustomerGetResponseDTO
+  - term: CustomerGetResponsePersonType
+    definition: Tipo de pessoa
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CustomerGetResponsePersonType
+  - term: CustomerSaveRequestDTO
+    definition: 'Object declared by the contract with fields: name, cpfCnpj, email, phone, mobilePhone, address, addressNumber, complement, province,
+      postalCode, externalReference, notificationDisabled. (8 more)'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CustomerSaveRequestDTO
+  - term: CustomerListResponseDTO
+    definition: 'Object declared by the contract with fields: object, hasMore, totalCount, limit, offset, data.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CustomerListResponseDTO
+  - term: CustomerUpdateRequestDTO
+    definition: 'Object declared by the contract with fields: name, cpfCnpj, email, phone, mobilePhone, address, addressNumber, complement, province,
+      postalCode, externalReference, notificationDisabled. (8 more)'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CustomerUpdateRequestDTO
+  - term: CustomerDeleteResponseDTO
+    definition: 'Object declared by the contract with fields: deleted, id.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CustomerDeleteResponseDTO
+  - term: NotificationGetResponseDTO
+    definition: Lista de informações das notificações
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/NotificationGetResponseDTO
+  - term: NotificationGetResponseNotificationEvent
+    definition: Tipo de evento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/NotificationGetResponseNotificationEvent
+  - term: NotificationListResponseDTO
+    definition: 'Object declared by the contract with fields: object, hasMore, totalCount, limit, offset, data.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/NotificationListResponseDTO
+  - term: PaymentChargebackResponseDTO
+    definition: 'Object declared by the contract with fields: id, payment, installment, customerAccount, status, reason, disputeStartDate, value,
+      paymentDate, creditCard, disputeStatus, deadlineToSendDisputeDocuments.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentChargebackResponseDTO
+  - term: PaymentChargebackResponseChargebackStatus
+    definition: Status do chargeback
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentChargebackResponseChargebackStatus
+  - term: PaymentChargebackResponseChargebackReason
+    definition: Razão do chargeback
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentChargebackResponseChargebackReason
+  - term: ChargebackCreditCardResponseDTO
+    definition: Informações do cartão de crédito
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/ChargebackCreditCardResponseDTO
+  - term: ChargebackCreditCardResponseCreditCardBrand
+    definition: Bandeira do cartão utilizado
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/ChargebackCreditCardResponseCreditCardBrand
+  - term: PaymentChargebackResponseChargebackDisputeStatus
+    definition: Status da disputa do chargeback.
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentChargebackResponseChargebackDisputeStatus
+  - term: PaymentSaveWithCreditCardCreditCardDTO
+    definition: Informações do cartão de crédito
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSaveWithCreditCardCreditCardDTO
+  - term: PaymentSaveWithCreditCardCreditCardCreditCardBrand
+    definition: Bandeira do cartão utilizado
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSaveWithCreditCardCreditCardCreditCardBrand
+  - term: PaymentRefundedSplitResponseDTO
+    definition: Lista de splits estornados, se houver
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentRefundedSplitResponseDTO
+  - term: PaymentDiscountDTO
+    definition: Informações de desconto
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentDiscountDTO
+  - term: PaymentDiscountDiscountType
+    definition: Tipo de desconto
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentDiscountDiscountType
+  - term: PaymentInterestRequestDTO
+    definition: Informações de juros para pagamento após o vencimento
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentInterestRequestDTO
+  - term: PaymentFineRequestDTO
+    definition: Informações de multa para pagamento após o vencimento
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentFineRequestDTO
+  - term: PaymentFineRequestFineType
+    definition: Tipo de multa
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentFineRequestFineType
+  - term: PaymentCallbackRequestDTO
+    definition: Informações de redirecionamento automático após pagamento do link de pagamento
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentCallbackRequestDTO
+  - term: PaymentGetResponseDTO
+    definition: 'Object declared by the contract with fields: object, id, dateCreated, customer, subscription, installment, checkoutSession, paymentLink,
+      value, netValue, originalValue, interestValue. (33 more)'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentGetResponseDTO
+  - term: PaymentGetResponseBillingType
+    definition: Forma de pagamento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentGetResponseBillingType
+  - term: PaymentGetResponsePaymentStatus
+    definition: Status da cobrança
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentGetResponsePaymentStatus
+  - term: PaymentFineResponseDTO
+    definition: Informações de multa para pagamento após o vencimento
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentFineResponseDTO
+  - term: PaymentInterestResponseDTO
+    definition: Informações de juros para pagamento após o vencimento
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentInterestResponseDTO
+  - term: LeanPaymentSplitGetResponseDTO
+    definition: Configurações do split
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/LeanPaymentSplitGetResponseDTO
+  - term: LeanPaymentSplitGetResponsePaymentSplitCancellationReason
+    definition: Motivo de cancelamento do split
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/LeanPaymentSplitGetResponsePaymentSplitCancellationReason
+  - term: LeanPaymentSplitGetResponsePaymentSplitStatus
+    definition: Status do split
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/LeanPaymentSplitGetResponsePaymentSplitStatus
+  - term: PaymentEscrowGetResponseDTO
+    definition: Informações de garantia da cobrança na Conta Escrow
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentEscrowGetResponseDTO
+  - term: PaymentEscrowGetResponsePaymentEscrowStatus
+    definition: Status da garantia da cobrança
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentEscrowGetResponsePaymentEscrowStatus
+  - term: PaymentEscrowGetResponsePaymentEscrowFinishReason
+    definition: Motivo do encerramento da garantia da cobrança
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentEscrowGetResponsePaymentEscrowFinishReason
+  - term: PaymentRefundGetResponseDTO
+    definition: Informações de estorno
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentRefundGetResponseDTO
+  - term: PaymentRefundGetResponsePaymentRefundStatus
+    definition: Status do estorno
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentRefundGetResponsePaymentRefundStatus
+  - term: PaymentSaveRequestDTO
+    definition: 'Object declared by the contract with fields: customer, billingType, value, dueDate, description, daysAfterDueDateToRegistrationCancellation,
+      externalReference, installmentCount, totalValue, installmentValue, discount, interest. (5 more)'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSaveRequestDTO
+  - term: PaymentSaveRequestBillingType
+    definition: Forma de pagamento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSaveRequestBillingType
+  - term: PaymentSplitRequestDTO
+    definition: Configurações do split
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSplitRequestDTO
+  - term: PaymentListResponseDTO
+    definition: 'Object declared by the contract with fields: object, hasMore, totalCount, limit, offset, data.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentListResponseDTO
+  - term: PaymentListRequestBillingType
+    definition: Filtrar por forma de pagamento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentListRequestBillingType
+  - term: PaymentListRequestPaymentStatus
+    definition: Filtrar por status
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentListRequestPaymentStatus
+  - term: PaymentListRequestInvoiceStatus
+    definition: Filtro para retornar cobranças que possuem ou não nota fiscal
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentListRequestInvoiceStatus
+  - term: CreditCardRequestDTO
+    definition: Informações do cartão de crédito
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CreditCardRequestDTO
+  - term: CreditCardHolderInfoRequestDTO
+    definition: Informações do titular do cartão de crédito
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CreditCardHolderInfoRequestDTO
+  - term: CreditCardThreeDSecureRequestDTO
+    definition: Dados para habilitar a autenticação 3D Secure na cobrança. Quando informado, o titular do cartão poderá ser direcionado para autenticação
+      junto ao emissor do cartão antes da confirmação do pagamento.
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CreditCardThreeDSecureRequestDTO
+  - term: CreditCardDeviceInfoRequestDTO
+    definition: Informações do dispositivo do titular do cartão, utilizadas na autenticação 3D Secure para análise de risco pelo emissor do cartão
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CreditCardDeviceInfoRequestDTO
+  - term: PaymentSaveWithCreditCardRequestDTO
+    definition: 'Object declared by the contract with fields: customer, billingType, value, dueDate, description, daysAfterDueDateToRegistrationCancellation,
+      externalReference, installmentCount, totalValue, installmentValue, discount, interest. (12 more)'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSaveWithCreditCardRequestDTO
+  - term: PaymentSaveWithCreditCardRequestBillingType
+    definition: Forma de pagamento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSaveWithCreditCardRequestBillingType
+  - term: PaymentPayWithCreditCardRequestDTO
+    definition: 'Object declared by the contract with fields: creditCard, creditCardHolderInfo, creditCardToken, threeDSecure, deviceInfo.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentPayWithCreditCardRequestDTO
+  - term: PaymentPayWithCardRequestDTO
+    definition: 'Object declared by the contract with fields: cardType, card, cardToken.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentPayWithCardRequestDTO
+  - term: PaymentPayWithCardRequestCardTransactionType
+    definition: Tipo do cartão utilizado
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentPayWithCardRequestCardTransactionType
+  - term: PaymentCardRequestDTO
+    definition: Informações do cartão. Obrigatório caso o cardToken não seja informado
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentCardRequestDTO
+  - term: PaymentCardHolderRequestDTO
+    definition: Informações do titular do cartão. Obrigatório quando os dados do cartão (card) forem informados
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentCardHolderRequestDTO
+  - term: CreditCardTokenizeResponseDTO
+    definition: 'Object declared by the contract with fields: creditCardNumber, creditCardBrand, creditCardToken.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CreditCardTokenizeResponseDTO
+  - term: CreditCardTokenizeResponseCreditCardBrand
+    definition: Bandeira do cartão utilizado
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/CreditCardTokenizeResponseCreditCardBrand
+  - term: PaymentBillingInfoResponseDTO
+    definition: 'Object declared by the contract with fields: pix, creditCard, bankSlip.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentBillingInfoResponseDTO
+  - term: PaymentPixQrCodeResponseDTO
+    definition: Dados do pagamento relacionados a Pix
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentPixQrCodeResponseDTO
+  - term: BankSlipBillingInfoResponseDTO
+    definition: Dados do pagamento relacionados a boleto
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/BankSlipBillingInfoResponseDTO
+  - term: PaymentViewingInfoResponseDTO
+    definition: 'Object declared by the contract with fields: invoiceViewedDate, boletoViewedDate.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentViewingInfoResponseDTO
+  - term: PaymentUpdateRequestDTO
+    definition: 'Object declared by the contract with fields: billingType, value, dueDate, description, daysAfterDueDateToRegistrationCancellation,
+      externalReference, discount, interest, fine, postalService, split, callback.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentUpdateRequestDTO
+  - term: PaymentUpdateRequestBillingType
+    definition: Forma de pagamento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentUpdateRequestBillingType
+  - term: PaymentDeleteResponseDTO
+    definition: 'Object declared by the contract with fields: deleted, id.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentDeleteResponseDTO
+  - term: PaymentStatusResponseDTO
+    definition: 'Object declared by the contract with fields: status.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentStatusResponseDTO
+  - term: PaymentStatusResponsePaymentStatus
+    definition: Status da cobrança
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentStatusResponsePaymentStatus
+  - term: PaymentIdentificationFieldResponseDTO
+    definition: 'Object declared by the contract with fields: identificationField, nossoNumero, barCode.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentIdentificationFieldResponseDTO
+  - term: PaymentReceiveInCashRequestDTO
+    definition: 'Object declared by the contract with fields: paymentDate, value, notifyCustomer.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentReceiveInCashRequestDTO
+  - term: PaymentSimulateRequestDTO
+    definition: 'Object declared by the contract with fields: value, installmentCount, billingTypes.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulateRequestDTO
+  - term: PaymentSimulateRequestBillingType
+    definition: Forma de pagamento
+    tags:
+    - Enumeration
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulateRequestBillingType
+  - term: PaymentSimulateResponseDTO
+    definition: 'Object declared by the contract with fields: value, creditCard, bankSlip, pix.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulateResponseDTO
+  - term: PaymentSimulateCreditCardResponseDTO
+    definition: Taxas de cartão
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulateCreditCardResponseDTO
+  - term: PaymentSimulateInstallmentResponseDTO
+    definition: Informações de parcelamento
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulateInstallmentResponseDTO
+  - term: PaymentSimulateBankSlipResponseDTO
+    definition: Taxas de boleto
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulateBankSlipResponseDTO
+  - term: PaymentSimulatePixResponseDTO
+    definition: Taxas de PIX
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentSimulatePixResponseDTO
+  - term: PaymentLimitsResponseDTO
+    definition: 'Object declared by the contract with fields: creation.'
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentLimitsResponseDTO
+  - term: PaymentLimitsResponseCreationDTO
+    definition: Limites de criação
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentLimitsResponseCreationDTO
+  - term: PaymentLimitsResponseCreationDailyDTO
+    definition: Limites diários
+    tags:
+    - Object
+    source: openapi/asaas-asaas-openapi.yml#/components/schemas/PaymentLimitsResponseCreationDailyDTO

@@ -1,0 +1,872 @@
+{
+  "@context": {
+    "@vocab": "https://asaas.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "asaas": "https://asaas.com/schema#",
+    "ErrorResponseDTO": "asaas:ErrorResponseDTO",
+    "errors": {
+      "@id": "asaas:errors",
+      "@container": "@list"
+    },
+    "ErrorResponseItemDTO": "asaas:ErrorResponseItemDTO",
+    "code": {
+      "@id": "asaas:code",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "asaas:description",
+      "@type": "xsd:string"
+    },
+    "CustomerGetResponseDTO": "asaas:CustomerGetResponseDTO",
+    "object": {
+      "@id": "asaas:object",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "asaas:id",
+      "@type": "xsd:string"
+    },
+    "dateCreated": {
+      "@id": "asaas:dateCreated",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "asaas:name",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "asaas:email",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "asaas:phone",
+      "@type": "xsd:string"
+    },
+    "mobilePhone": {
+      "@id": "asaas:mobilePhone",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "asaas:address",
+      "@type": "xsd:string"
+    },
+    "addressNumber": {
+      "@id": "asaas:addressNumber",
+      "@type": "xsd:string"
+    },
+    "complement": {
+      "@id": "asaas:complement",
+      "@type": "xsd:string"
+    },
+    "province": {
+      "@id": "asaas:province",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "asaas:city",
+      "@type": "xsd:integer"
+    },
+    "cityName": {
+      "@id": "asaas:cityName",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "asaas:state",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "asaas:country",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "asaas:postalCode",
+      "@type": "xsd:string"
+    },
+    "cpfCnpj": {
+      "@id": "asaas:cpfCnpj",
+      "@type": "xsd:string"
+    },
+    "personType": {
+      "@id": "asaas:personType",
+      "@type": "@id"
+    },
+    "deleted": {
+      "@id": "asaas:deleted",
+      "@type": "xsd:boolean"
+    },
+    "additionalEmails": {
+      "@id": "asaas:additionalEmails",
+      "@type": "xsd:string"
+    },
+    "externalReference": {
+      "@id": "asaas:externalReference",
+      "@type": "xsd:string"
+    },
+    "notificationDisabled": {
+      "@id": "asaas:notificationDisabled",
+      "@type": "xsd:boolean"
+    },
+    "observations": {
+      "@id": "asaas:observations",
+      "@type": "xsd:string"
+    },
+    "foreignCustomer": {
+      "@id": "asaas:foreignCustomer",
+      "@type": "xsd:boolean"
+    },
+    "CustomerGetResponsePersonType": "asaas:CustomerGetResponsePersonType",
+    "CustomerSaveRequestDTO": "asaas:CustomerSaveRequestDTO",
+    "municipalInscription": {
+      "@id": "asaas:municipalInscription",
+      "@type": "xsd:string"
+    },
+    "stateInscription": {
+      "@id": "asaas:stateInscription",
+      "@type": "xsd:string"
+    },
+    "groupName": {
+      "@id": "asaas:groupName",
+      "@type": "xsd:string"
+    },
+    "groupNames": {
+      "@id": "asaas:groupNames",
+      "@container": "@list"
+    },
+    "company": {
+      "@id": "asaas:company",
+      "@type": "xsd:string"
+    },
+    "CustomerListResponseDTO": "asaas:CustomerListResponseDTO",
+    "hasMore": {
+      "@id": "asaas:hasMore",
+      "@type": "xsd:boolean"
+    },
+    "totalCount": {
+      "@id": "asaas:totalCount",
+      "@type": "xsd:integer"
+    },
+    "limit": {
+      "@id": "asaas:limit",
+      "@type": "xsd:integer"
+    },
+    "offset": {
+      "@id": "asaas:offset",
+      "@type": "xsd:integer"
+    },
+    "data": {
+      "@id": "asaas:data",
+      "@container": "@list"
+    },
+    "CustomerUpdateRequestDTO": "asaas:CustomerUpdateRequestDTO",
+    "CustomerDeleteResponseDTO": "asaas:CustomerDeleteResponseDTO",
+    "NotificationGetResponseDTO": "asaas:NotificationGetResponseDTO",
+    "customer": {
+      "@id": "asaas:customer",
+      "@type": "xsd:string"
+    },
+    "enabled": {
+      "@id": "asaas:enabled",
+      "@type": "xsd:boolean"
+    },
+    "emailEnabledForProvider": {
+      "@id": "asaas:emailEnabledForProvider",
+      "@type": "xsd:boolean"
+    },
+    "smsEnabledForProvider": {
+      "@id": "asaas:smsEnabledForProvider",
+      "@type": "xsd:boolean"
+    },
+    "emailEnabledForCustomer": {
+      "@id": "asaas:emailEnabledForCustomer",
+      "@type": "xsd:boolean"
+    },
+    "smsEnabledForCustomer": {
+      "@id": "asaas:smsEnabledForCustomer",
+      "@type": "xsd:boolean"
+    },
+    "phoneCallEnabledForCustomer": {
+      "@id": "asaas:phoneCallEnabledForCustomer",
+      "@type": "xsd:boolean"
+    },
+    "whatsappEnabledForCustomer": {
+      "@id": "asaas:whatsappEnabledForCustomer",
+      "@type": "xsd:boolean"
+    },
+    "event": {
+      "@id": "asaas:event",
+      "@type": "@id"
+    },
+    "scheduleOffset": {
+      "@id": "asaas:scheduleOffset",
+      "@type": "xsd:integer"
+    },
+    "NotificationGetResponseNotificationEvent": "asaas:NotificationGetResponseNotificationEvent",
+    "NotificationListResponseDTO": "asaas:NotificationListResponseDTO",
+    "PaymentChargebackResponseDTO": "asaas:PaymentChargebackResponseDTO",
+    "payment": {
+      "@id": "asaas:payment",
+      "@type": "xsd:string"
+    },
+    "installment": {
+      "@id": "asaas:installment",
+      "@type": "xsd:string"
+    },
+    "customerAccount": {
+      "@id": "asaas:customerAccount",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "asaas:status",
+      "@type": "@id"
+    },
+    "reason": {
+      "@id": "asaas:reason",
+      "@type": "@id"
+    },
+    "disputeStartDate": {
+      "@id": "asaas:disputeStartDate",
+      "@type": "xsd:date"
+    },
+    "value": {
+      "@id": "asaas:value",
+      "@type": "xsd:decimal"
+    },
+    "paymentDate": {
+      "@id": "asaas:paymentDate",
+      "@type": "xsd:date"
+    },
+    "creditCard": {
+      "@id": "asaas:creditCard",
+      "@type": "@id"
+    },
+    "disputeStatus": {
+      "@id": "asaas:disputeStatus",
+      "@type": "@id"
+    },
+    "deadlineToSendDisputeDocuments": {
+      "@id": "asaas:deadlineToSendDisputeDocuments",
+      "@type": "xsd:date"
+    },
+    "PaymentChargebackResponseChargebackStatus": "asaas:PaymentChargebackResponseChargebackStatus",
+    "PaymentChargebackResponseChargebackReason": "asaas:PaymentChargebackResponseChargebackReason",
+    "ChargebackCreditCardResponseDTO": "asaas:ChargebackCreditCardResponseDTO",
+    "number": {
+      "@id": "asaas:number",
+      "@type": "xsd:string"
+    },
+    "brand": {
+      "@id": "asaas:brand",
+      "@type": "@id"
+    },
+    "ChargebackCreditCardResponseCreditCardBrand": "asaas:ChargebackCreditCardResponseCreditCardBrand",
+    "PaymentChargebackResponseChargebackDisputeStatus": "asaas:PaymentChargebackResponseChargebackDisputeStatus",
+    "PaymentSaveWithCreditCardCreditCardDTO": "asaas:PaymentSaveWithCreditCardCreditCardDTO",
+    "creditCardNumber": {
+      "@id": "asaas:creditCardNumber",
+      "@type": "xsd:string"
+    },
+    "creditCardBrand": {
+      "@id": "asaas:creditCardBrand",
+      "@type": "@id"
+    },
+    "creditCardToken": {
+      "@id": "asaas:creditCardToken",
+      "@type": "xsd:string"
+    },
+    "PaymentSaveWithCreditCardCreditCardCreditCardBrand": "asaas:PaymentSaveWithCreditCardCreditCardCreditCardBrand",
+    "PaymentRefundedSplitResponseDTO": "asaas:PaymentRefundedSplitResponseDTO",
+    "done": {
+      "@id": "asaas:done",
+      "@type": "xsd:boolean"
+    },
+    "PaymentDiscountDTO": "asaas:PaymentDiscountDTO",
+    "dueDateLimitDays": {
+      "@id": "asaas:dueDateLimitDays",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "asaas:type",
+      "@type": "@id"
+    },
+    "PaymentDiscountDiscountType": "asaas:PaymentDiscountDiscountType",
+    "PaymentInterestRequestDTO": "asaas:PaymentInterestRequestDTO",
+    "PaymentFineRequestDTO": "asaas:PaymentFineRequestDTO",
+    "PaymentFineRequestFineType": "asaas:PaymentFineRequestFineType",
+    "PaymentCallbackRequestDTO": "asaas:PaymentCallbackRequestDTO",
+    "successUrl": {
+      "@id": "asaas:successUrl",
+      "@type": "xsd:string"
+    },
+    "autoRedirect": {
+      "@id": "asaas:autoRedirect",
+      "@type": "xsd:boolean"
+    },
+    "PaymentGetResponseDTO": "asaas:PaymentGetResponseDTO",
+    "subscription": {
+      "@id": "asaas:subscription",
+      "@type": "xsd:string"
+    },
+    "checkoutSession": {
+      "@id": "asaas:checkoutSession",
+      "@type": "xsd:string"
+    },
+    "paymentLink": {
+      "@id": "asaas:paymentLink",
+      "@type": "xsd:string"
+    },
+    "netValue": {
+      "@id": "asaas:netValue",
+      "@type": "xsd:decimal"
+    },
+    "originalValue": {
+      "@id": "asaas:originalValue",
+      "@type": "xsd:decimal"
+    },
+    "interestValue": {
+      "@id": "asaas:interestValue",
+      "@type": "xsd:decimal"
+    },
+    "billingType": {
+      "@id": "asaas:billingType",
+      "@type": "@id"
+    },
+    "canBePaidAfterDueDate": {
+      "@id": "asaas:canBePaidAfterDueDate",
+      "@type": "xsd:boolean"
+    },
+    "pixTransaction": {
+      "@id": "asaas:pixTransaction",
+      "@type": "xsd:string"
+    },
+    "pixQrCodeId": {
+      "@id": "asaas:pixQrCodeId",
+      "@type": "xsd:string"
+    },
+    "dueDate": {
+      "@id": "asaas:dueDate",
+      "@type": "xsd:date"
+    },
+    "originalDueDate": {
+      "@id": "asaas:originalDueDate",
+      "@type": "xsd:date"
+    },
+    "clientPaymentDate": {
+      "@id": "asaas:clientPaymentDate",
+      "@type": "xsd:date"
+    },
+    "installmentNumber": {
+      "@id": "asaas:installmentNumber",
+      "@type": "xsd:integer"
+    },
+    "invoiceUrl": {
+      "@id": "asaas:invoiceUrl",
+      "@type": "xsd:string"
+    },
+    "invoiceNumber": {
+      "@id": "asaas:invoiceNumber",
+      "@type": "xsd:string"
+    },
+    "anticipated": {
+      "@id": "asaas:anticipated",
+      "@type": "xsd:boolean"
+    },
+    "anticipable": {
+      "@id": "asaas:anticipable",
+      "@type": "xsd:boolean"
+    },
+    "creditDate": {
+      "@id": "asaas:creditDate",
+      "@type": "xsd:date"
+    },
+    "estimatedCreditDate": {
+      "@id": "asaas:estimatedCreditDate",
+      "@type": "xsd:date"
+    },
+    "transactionReceiptUrl": {
+      "@id": "asaas:transactionReceiptUrl",
+      "@type": "xsd:string"
+    },
+    "nossoNumero": {
+      "@id": "asaas:nossoNumero",
+      "@type": "xsd:string"
+    },
+    "bankSlipUrl": {
+      "@id": "asaas:bankSlipUrl",
+      "@type": "xsd:string"
+    },
+    "discount": {
+      "@id": "asaas:discount",
+      "@type": "@id"
+    },
+    "fine": {
+      "@id": "asaas:fine",
+      "@type": "@id"
+    },
+    "interest": {
+      "@id": "asaas:interest",
+      "@type": "@id"
+    },
+    "split": {
+      "@id": "asaas:split",
+      "@container": "@list"
+    },
+    "postalService": {
+      "@id": "asaas:postalService",
+      "@type": "xsd:boolean"
+    },
+    "daysAfterDueDateToRegistrationCancellation": {
+      "@id": "asaas:daysAfterDueDateToRegistrationCancellation",
+      "@type": "xsd:integer"
+    },
+    "chargeback": {
+      "@id": "asaas:chargeback",
+      "@type": "@id"
+    },
+    "escrow": {
+      "@id": "asaas:escrow",
+      "@type": "@id"
+    },
+    "refunds": {
+      "@id": "asaas:refunds",
+      "@container": "@list"
+    },
+    "threeDSecureChallengeUrl": {
+      "@id": "asaas:threeDSecureChallengeUrl",
+      "@type": "xsd:string"
+    },
+    "PaymentGetResponseBillingType": "asaas:PaymentGetResponseBillingType",
+    "PaymentGetResponsePaymentStatus": "asaas:PaymentGetResponsePaymentStatus",
+    "PaymentFineResponseDTO": "asaas:PaymentFineResponseDTO",
+    "PaymentInterestResponseDTO": "asaas:PaymentInterestResponseDTO",
+    "LeanPaymentSplitGetResponseDTO": "asaas:LeanPaymentSplitGetResponseDTO",
+    "walletId": {
+      "@id": "asaas:walletId",
+      "@type": "xsd:string"
+    },
+    "fixedValue": {
+      "@id": "asaas:fixedValue",
+      "@type": "xsd:decimal"
+    },
+    "percentualValue": {
+      "@id": "asaas:percentualValue",
+      "@type": "xsd:decimal"
+    },
+    "totalValue": {
+      "@id": "asaas:totalValue",
+      "@type": "xsd:decimal"
+    },
+    "cancellationReason": {
+      "@id": "asaas:cancellationReason",
+      "@type": "@id"
+    },
+    "LeanPaymentSplitGetResponsePaymentSplitCancellationReason": "asaas:LeanPaymentSplitGetResponsePaymentSplitCancellationReason",
+    "LeanPaymentSplitGetResponsePaymentSplitStatus": "asaas:LeanPaymentSplitGetResponsePaymentSplitStatus",
+    "PaymentEscrowGetResponseDTO": "asaas:PaymentEscrowGetResponseDTO",
+    "expirationDate": {
+      "@id": "asaas:expirationDate",
+      "@type": "xsd:date"
+    },
+    "finishDate": {
+      "@id": "asaas:finishDate",
+      "@type": "xsd:date"
+    },
+    "finishReason": {
+      "@id": "asaas:finishReason",
+      "@type": "@id"
+    },
+    "PaymentEscrowGetResponsePaymentEscrowStatus": "asaas:PaymentEscrowGetResponsePaymentEscrowStatus",
+    "PaymentEscrowGetResponsePaymentEscrowFinishReason": "asaas:PaymentEscrowGetResponsePaymentEscrowFinishReason",
+    "PaymentRefundGetResponseDTO": "asaas:PaymentRefundGetResponseDTO",
+    "endToEndIdentifier": {
+      "@id": "asaas:endToEndIdentifier",
+      "@type": "xsd:string"
+    },
+    "effectiveDate": {
+      "@id": "asaas:effectiveDate",
+      "@type": "xsd:dateTime"
+    },
+    "refundedSplits": {
+      "@id": "asaas:refundedSplits",
+      "@container": "@list"
+    },
+    "PaymentRefundGetResponsePaymentRefundStatus": "asaas:PaymentRefundGetResponsePaymentRefundStatus",
+    "PaymentSaveRequestDTO": "asaas:PaymentSaveRequestDTO",
+    "installmentCount": {
+      "@id": "asaas:installmentCount",
+      "@type": "xsd:integer"
+    },
+    "installmentValue": {
+      "@id": "asaas:installmentValue",
+      "@type": "xsd:decimal"
+    },
+    "callback": {
+      "@id": "asaas:callback",
+      "@type": "@id"
+    },
+    "pixAutomaticAuthorizationId": {
+      "@id": "asaas:pixAutomaticAuthorizationId",
+      "@type": "xsd:string"
+    },
+    "PaymentSaveRequestBillingType": "asaas:PaymentSaveRequestBillingType",
+    "PaymentSplitRequestDTO": "asaas:PaymentSplitRequestDTO",
+    "totalFixedValue": {
+      "@id": "asaas:totalFixedValue",
+      "@type": "xsd:decimal"
+    },
+    "PaymentListResponseDTO": "asaas:PaymentListResponseDTO",
+    "PaymentListRequestBillingType": "asaas:PaymentListRequestBillingType",
+    "PaymentListRequestPaymentStatus": "asaas:PaymentListRequestPaymentStatus",
+    "PaymentListRequestInvoiceStatus": "asaas:PaymentListRequestInvoiceStatus",
+    "CreditCardRequestDTO": "asaas:CreditCardRequestDTO",
+    "holderName": {
+      "@id": "asaas:holderName",
+      "@type": "xsd:string"
+    },
+    "expiryMonth": {
+      "@id": "asaas:expiryMonth",
+      "@type": "xsd:string"
+    },
+    "expiryYear": {
+      "@id": "asaas:expiryYear",
+      "@type": "xsd:string"
+    },
+    "ccv": {
+      "@id": "asaas:ccv",
+      "@type": "xsd:string"
+    },
+    "CreditCardHolderInfoRequestDTO": "asaas:CreditCardHolderInfoRequestDTO",
+    "addressComplement": {
+      "@id": "asaas:addressComplement",
+      "@type": "xsd:string"
+    },
+    "CreditCardThreeDSecureRequestDTO": "asaas:CreditCardThreeDSecureRequestDTO",
+    "callbackUrl": {
+      "@id": "asaas:callbackUrl",
+      "@type": "xsd:string"
+    },
+    "CreditCardDeviceInfoRequestDTO": "asaas:CreditCardDeviceInfoRequestDTO",
+    "colorDepth": {
+      "@id": "asaas:colorDepth",
+      "@type": "xsd:integer"
+    },
+    "screenHeight": {
+      "@id": "asaas:screenHeight",
+      "@type": "xsd:integer"
+    },
+    "screenWidth": {
+      "@id": "asaas:screenWidth",
+      "@type": "xsd:integer"
+    },
+    "timeZoneOffset": {
+      "@id": "asaas:timeZoneOffset",
+      "@type": "xsd:integer"
+    },
+    "language": {
+      "@id": "asaas:language",
+      "@type": "xsd:string"
+    },
+    "userAgent": {
+      "@id": "asaas:userAgent",
+      "@type": "xsd:string"
+    },
+    "remoteIp": {
+      "@id": "asaas:remoteIp",
+      "@type": "xsd:string"
+    },
+    "PaymentSaveWithCreditCardRequestDTO": "asaas:PaymentSaveWithCreditCardRequestDTO",
+    "creditCardHolderInfo": {
+      "@id": "asaas:creditCardHolderInfo",
+      "@type": "@id"
+    },
+    "authorizeOnly": {
+      "@id": "asaas:authorizeOnly",
+      "@type": "xsd:boolean"
+    },
+    "threeDSecure": {
+      "@id": "asaas:threeDSecure",
+      "@type": "@id"
+    },
+    "deviceInfo": {
+      "@id": "asaas:deviceInfo",
+      "@type": "@id"
+    },
+    "PaymentSaveWithCreditCardRequestBillingType": "asaas:PaymentSaveWithCreditCardRequestBillingType",
+    "PaymentPayWithCreditCardRequestDTO": "asaas:PaymentPayWithCreditCardRequestDTO",
+    "PaymentPayWithCardRequestDTO": "asaas:PaymentPayWithCardRequestDTO",
+    "cardType": {
+      "@id": "asaas:cardType",
+      "@type": "@id"
+    },
+    "card": {
+      "@id": "asaas:card",
+      "@type": "@id"
+    },
+    "cardToken": {
+      "@id": "asaas:cardToken",
+      "@type": "xsd:string"
+    },
+    "PaymentPayWithCardRequestCardTransactionType": "asaas:PaymentPayWithCardRequestCardTransactionType",
+    "PaymentCardRequestDTO": "asaas:PaymentCardRequestDTO",
+    "holder": {
+      "@id": "asaas:holder",
+      "@type": "@id"
+    },
+    "PaymentCardHolderRequestDTO": "asaas:PaymentCardHolderRequestDTO",
+    "uf": {
+      "@id": "asaas:uf",
+      "@type": "xsd:string"
+    },
+    "CreditCardTokenizeResponseDTO": "asaas:CreditCardTokenizeResponseDTO",
+    "CreditCardTokenizeResponseCreditCardBrand": "asaas:CreditCardTokenizeResponseCreditCardBrand",
+    "PaymentBillingInfoResponseDTO": "asaas:PaymentBillingInfoResponseDTO",
+    "pix": {
+      "@id": "asaas:pix",
+      "@type": "@id"
+    },
+    "bankSlip": {
+      "@id": "asaas:bankSlip",
+      "@type": "@id"
+    },
+    "PaymentPixQrCodeResponseDTO": "asaas:PaymentPixQrCodeResponseDTO",
+    "encodedImage": {
+      "@id": "asaas:encodedImage",
+      "@type": "xsd:string"
+    },
+    "payload": {
+      "@id": "asaas:payload",
+      "@type": "xsd:string"
+    },
+    "BankSlipBillingInfoResponseDTO": "asaas:BankSlipBillingInfoResponseDTO",
+    "identificationField": {
+      "@id": "asaas:identificationField",
+      "@type": "xsd:string"
+    },
+    "barCode": {
+      "@id": "asaas:barCode",
+      "@type": "xsd:string"
+    },
+    "PaymentViewingInfoResponseDTO": "asaas:PaymentViewingInfoResponseDTO",
+    "invoiceViewedDate": {
+      "@id": "asaas:invoiceViewedDate",
+      "@type": "xsd:dateTime"
+    },
+    "boletoViewedDate": {
+      "@id": "asaas:boletoViewedDate",
+      "@type": "xsd:dateTime"
+    },
+    "PaymentUpdateRequestDTO": "asaas:PaymentUpdateRequestDTO",
+    "PaymentUpdateRequestBillingType": "asaas:PaymentUpdateRequestBillingType",
+    "PaymentDeleteResponseDTO": "asaas:PaymentDeleteResponseDTO",
+    "PaymentStatusResponseDTO": "asaas:PaymentStatusResponseDTO",
+    "PaymentStatusResponsePaymentStatus": "asaas:PaymentStatusResponsePaymentStatus",
+    "PaymentIdentificationFieldResponseDTO": "asaas:PaymentIdentificationFieldResponseDTO",
+    "PaymentReceiveInCashRequestDTO": "asaas:PaymentReceiveInCashRequestDTO",
+    "notifyCustomer": {
+      "@id": "asaas:notifyCustomer",
+      "@type": "xsd:boolean"
+    },
+    "PaymentSimulateRequestDTO": "asaas:PaymentSimulateRequestDTO",
+    "billingTypes": {
+      "@id": "asaas:billingTypes",
+      "@container": "@list"
+    },
+    "PaymentSimulateRequestBillingType": "asaas:PaymentSimulateRequestBillingType",
+    "PaymentSimulateResponseDTO": "asaas:PaymentSimulateResponseDTO",
+    "PaymentSimulateCreditCardResponseDTO": "asaas:PaymentSimulateCreditCardResponseDTO",
+    "feePercentage": {
+      "@id": "asaas:feePercentage",
+      "@type": "xsd:decimal"
+    },
+    "operationFee": {
+      "@id": "asaas:operationFee",
+      "@type": "xsd:decimal"
+    },
+    "PaymentSimulateInstallmentResponseDTO": "asaas:PaymentSimulateInstallmentResponseDTO",
+    "paymentNetValue": {
+      "@id": "asaas:paymentNetValue",
+      "@type": "xsd:decimal"
+    },
+    "paymentValue": {
+      "@id": "asaas:paymentValue",
+      "@type": "xsd:decimal"
+    },
+    "PaymentSimulateBankSlipResponseDTO": "asaas:PaymentSimulateBankSlipResponseDTO",
+    "feeValue": {
+      "@id": "asaas:feeValue",
+      "@type": "xsd:decimal"
+    },
+    "PaymentSimulatePixResponseDTO": "asaas:PaymentSimulatePixResponseDTO",
+    "PaymentLimitsResponseDTO": "asaas:PaymentLimitsResponseDTO",
+    "creation": {
+      "@id": "asaas:creation",
+      "@type": "@id"
+    },
+    "PaymentLimitsResponseCreationDTO": "asaas:PaymentLimitsResponseCreationDTO",
+    "daily": {
+      "@id": "asaas:daily",
+      "@type": "@id"
+    },
+    "PaymentLimitsResponseCreationDailyDTO": "asaas:PaymentLimitsResponseCreationDailyDTO",
+    "used": {
+      "@id": "asaas:used",
+      "@type": "xsd:integer"
+    },
+    "wasReached": {
+      "@id": "asaas:wasReached",
+      "@type": "xsd:boolean"
+    },
+    "PaymentLeanGetResponseDTO": "asaas:PaymentLeanGetResponseDTO",
+    "customerId": {
+      "@id": "asaas:customerId",
+      "@type": "xsd:string"
+    },
+    "subscriptionId": {
+      "@id": "asaas:subscriptionId",
+      "@type": "xsd:string"
+    },
+    "installmentId": {
+      "@id": "asaas:installmentId",
+      "@type": "xsd:string"
+    },
+    "paymentLinkId": {
+      "@id": "asaas:paymentLinkId",
+      "@type": "xsd:string"
+    },
+    "confirmedDate": {
+      "@id": "asaas:confirmedDate",
+      "@type": "xsd:date"
+    },
+    "pixTransactionId": {
+      "@id": "asaas:pixTransactionId",
+      "@type": "xsd:string"
+    },
+    "customerPaymentDate": {
+      "@id": "asaas:customerPaymentDate",
+      "@type": "xsd:date"
+    },
+    "duplicatedPaymentId": {
+      "@id": "asaas:duplicatedPaymentId",
+      "@type": "xsd:string"
+    },
+    "PaymentLeanGetResponseBillingType": "asaas:PaymentLeanGetResponseBillingType",
+    "PaymentLeanGetResponsePaymentStatus": "asaas:PaymentLeanGetResponsePaymentStatus",
+    "PaymentLeanListResponseDTO": "asaas:PaymentLeanListResponseDTO",
+    "PaymentLeanSaveWithCreditCardResponseDTO": "asaas:PaymentLeanSaveWithCreditCardResponseDTO",
+    "PaymentLeanSaveWithCreditCardResponseBillingType": "asaas:PaymentLeanSaveWithCreditCardResponseBillingType",
+    "PaymentLeanSaveWithCreditCardResponsePaymentStatus": "asaas:PaymentLeanSaveWithCreditCardResponsePaymentStatus",
+    "PaymentDocumentSaveRequestDTO": "asaas:PaymentDocumentSaveRequestDTO",
+    "availableAfterPayment": {
+      "@id": "asaas:availableAfterPayment",
+      "@type": "xsd:boolean"
+    },
+    "file": {
+      "@id": "asaas:file",
+      "@type": "@id"
+    },
+    "PaymentDocumentSaveRequestPaymentDocumentType": "asaas:PaymentDocumentSaveRequestPaymentDocumentType",
+    "PaymentDocumentGetResponseDTO": "asaas:PaymentDocumentGetResponseDTO",
+    "PaymentDocumentGetResponsePaymentDocumentType": "asaas:PaymentDocumentGetResponsePaymentDocumentType",
+    "PaymentDocumentFileResponseDTO": "asaas:PaymentDocumentFileResponseDTO",
+    "publicId": {
+      "@id": "asaas:publicId",
+      "@type": "xsd:string"
+    },
+    "originalName": {
+      "@id": "asaas:originalName",
+      "@type": "xsd:string"
+    },
+    "size": {
+      "@id": "asaas:size",
+      "@type": "xsd:integer"
+    },
+    "extension": {
+      "@id": "asaas:extension",
+      "@type": "xsd:string"
+    },
+    "previewUrl": {
+      "@id": "asaas:previewUrl",
+      "@type": "xsd:string"
+    },
+    "downloadUrl": {
+      "@id": "asaas:downloadUrl",
+      "@type": "xsd:string"
+    },
+    "PaymentDocumentListResponseDTO": "asaas:PaymentDocumentListResponseDTO",
+    "PaymentDocumentUpdateRequestDTO": "asaas:PaymentDocumentUpdateRequestDTO",
+    "PaymentDocumentUpdateRequestPaymentDocumentType": "asaas:PaymentDocumentUpdateRequestPaymentDocumentType",
+    "PaymentDocumentDeleteResponseDTO": "asaas:PaymentDocumentDeleteResponseDTO",
+    "InstallmentGetResponseDTO": "asaas:InstallmentGetResponseDTO",
+    "expirationDay": {
+      "@id": "asaas:expirationDay",
+      "@type": "xsd:integer"
+    },
+    "InstallmentGetResponseBillingType": "asaas:InstallmentGetResponseBillingType",
+    "InstallmentRefundResponseDTO": "asaas:InstallmentRefundResponseDTO",
+    "paymentId": {
+      "@id": "asaas:paymentId",
+      "@type": "xsd:string"
+    },
+    "InstallmentRefundResponsePaymentRefundStatus": "asaas:InstallmentRefundResponsePaymentRefundStatus",
+    "InstallmentSaveRequestDTO": "asaas:InstallmentSaveRequestDTO",
+    "paymentExternalReference": {
+      "@id": "asaas:paymentExternalReference",
+      "@type": "xsd:string"
+    },
+    "splits": {
+      "@id": "asaas:splits",
+      "@container": "@list"
+    },
+    "InstallmentSaveRequestBillingType": "asaas:InstallmentSaveRequestBillingType",
+    "InstallmentSplitRequestDTO": "asaas:InstallmentSplitRequestDTO",
+    "InstallmentListResponseDTO": "asaas:InstallmentListResponseDTO",
+    "InstallmentDeleteResponseDTO": "asaas:InstallmentDeleteResponseDTO",
+    "InstallmentUpdateSplitRequestDTO": "asaas:InstallmentUpdateSplitRequestDTO",
+    "InstallmentUpdateSplitResponseDTO": "asaas:InstallmentUpdateSplitResponseDTO",
+    "InstallmentSplitGetResponseDTO": "asaas:InstallmentSplitGetResponseDTO",
+    "InstallmentSplitGetResponsePaymentSplitCancellationReason": "asaas:InstallmentSplitGetResponsePaymentSplitCancellationReason",
+    "InstallmentSplitGetResponsePaymentSplitStatus": "asaas:InstallmentSplitGetResponsePaymentSplitStatus",
+    "InstallmentDeletePaymentsResponseDTO": "asaas:InstallmentDeletePaymentsResponseDTO",
+    "deletedPayments": {
+      "@id": "asaas:deletedPayments",
+      "@container": "@list"
+    },
+    "InstallmentPaymentDeletedDTO": "asaas:InstallmentPaymentDeletedDTO",
+    "SubscriptionGetResponseDTO": "asaas:SubscriptionGetResponseDTO",
+    "cycle": {
+      "@id": "asaas:cycle",
+      "@type": "@id"
+    },
+    "nextDueDate": {
+      "@id": "asaas:nextDueDate",
+      "@type": "xsd:date"
+    },
+    "endDate": {
+      "@id": "asaas:endDate",
+      "@type": "xsd:date"
+    },
+    "maxPayments": {
+      "@id": "asaas:maxPayments",
+      "@type": "xsd:integer"
+    },
+    "SubscriptionGetResponseBillingType": "asaas:SubscriptionGetResponseBillingType",
+    "SubscriptionGetResponseCycle": "asaas:SubscriptionGetResponseCycle",
+    "SubscriptionGetResponseSubscriptionStatus": "asaas:SubscriptionGetResponseSubscriptionStatus",
+    "SubscriptionSplitResponseDTO": "asaas:SubscriptionSplitResponseDTO",
+    "disabledReason": {
+      "@id": "asaas:disabledReason",
+      "@type": "@id"
+    },
+    "SubscriptionSplitResponseSubscriptionSplitStatus": "asaas:SubscriptionSplitResponseSubscriptionSplitStatus",
+    "SubscriptionSplitResponseSubscriptionSplitDisabledReason": "asaas:SubscriptionSplitResponseSubscriptionSplitDisabledReason",
+    "SubscriptionSaveRequestDTO": "asaas:SubscriptionSaveRequestDTO"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Asaas API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Asaas's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/asaas-asaas-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/asaas-asaas-openapi.yml"
+  ]
+}
