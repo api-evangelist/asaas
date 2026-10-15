@@ -12,6 +12,7 @@ checked:
 - https://n8n.io/integrations/asaas/
 - https://www.bcb.gov.br/estabilidadefinanceira/participantespix
 - https://zapier.com/apps/asaas/integrations
+- wordpress/integrations/wordpress-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -114,4 +115,21 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-latam-open-finance.py
   first_seen: '2026-10-15'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/woo-asaas/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Asaas Gateway for WooCommerce
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
 templates: []
