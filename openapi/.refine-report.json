@@ -1,0 +1,56 @@
+{
+  "provider": "asaas",
+  "sources": [
+    "asaas-asaas-openapi.yml"
+  ],
+  "outputs": [
+    "asaas-antecipa-es-api-openapi.yml",
+    "asaas-anticipation-api-openapi.yml",
+    "asaas-assinaturas-api-openapi.yml",
+    "asaas-a-es-em-sandbox-api-openapi.yml",
+    "asaas-cart-o-de-cr-dito-api-openapi.yml",
+    "asaas-chargeback-api-openapi.yml",
+    "asaas-checkout-api-openapi.yml",
+    "asaas-clientes-api-openapi.yml",
+    "asaas-cobran-as-api-openapi.yml",
+    "asaas-cobran-as-com-dados-resumidos-api-openapi.yml",
+    "asaas-configura-es-de-webhooks-api-openapi.yml",
+    "asaas-consulta-serasa-api-openapi.yml",
+    "asaas-conta-escrow-api-openapi.yml",
+    "asaas-documentos-de-cobran-as-api-openapi.yml",
+    "asaas-envio-de-documentos-white-label-api-openapi.yml",
+    "asaas-estornos-api-openapi.yml",
+    "asaas-extrato-api-openapi.yml",
+    "asaas-informa-es-e-personaliza-o-da-conta-api-openapi.yml",
+    "asaas-informa-es-financeiras-api-openapi.yml",
+    "asaas-informa-es-fiscais-api-openapi.yml",
+    "asaas-installment-api-openapi.yml",
+    "asaas-link-de-pagamentos-api-openapi.yml",
+    "asaas-negativa-es-api-openapi.yml",
+    "asaas-notas-fiscais-api-openapi.yml",
+    "asaas-notifica-es-api-openapi.yml",
+    "asaas-pagamento-de-contas-api-openapi.yml",
+    "asaas-parcelamentos-api-openapi.yml",
+    "asaas-pix-api-openapi.yml",
+    "asaas-pix-autom-tico-api-openapi.yml",
+    "asaas-pix-recorrente-api-openapi.yml",
+    "asaas-recargas-de-celular-api-openapi.yml",
+    "asaas-registro-de-receb-veis-api-openapi.yml",
+    "asaas-splits-api-openapi.yml",
+    "asaas-subcontas-asaas-api-openapi.yml",
+    "asaas-transa-es-pix-api-openapi.yml",
+    "asaas-transfer-api-openapi.yml",
+    "asaas-transfer-ncias-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/asaas-asaas-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "asaas-asaas-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+37 apis, 57 total)"
+  ],
+  "skipped": []
+}

@@ -1,0 +1,1620 @@
+openapi: 3.2.0
+info:
+  title: Asaas Parcelamentos API
+  description: API pública de integração com a plataforma Asaas.
+  version: 3.0.0
+servers:
+- url: https://api-sandbox.asaas.com
+  description: Sandbox
+security:
+- Authorization: []
+tags:
+- name: Parcelamentos
+paths:
+  /v3/installments:
+    post:
+      tags:
+      - Parcelamentos
+      summary: Criar parcelamento
+      description: ''
+      operationId: criar-parcelamento
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstallmentSaveRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_object
+                  description: Informe o número de parcelas.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+      deprecated: false
+    get:
+      tags:
+      - Parcelamentos
+      summary: Listar parcelamentos
+      description: ''
+      operationId: listar-parcelamentos
+      parameters:
+      - name: offset
+        in: query
+        description: Elemento inicial da lista
+        schema:
+          type: integer
+          example: 0
+      - name: limit
+        in: query
+        description: 'Número de elementos da lista (max: 100)'
+        schema:
+          maximum: 100
+          type: integer
+          example: 10
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentListResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+      deprecated: false
+  /v3/installments/{id}:
+    get:
+      tags:
+      - Parcelamentos
+      summary: Recuperar um único parcelamento
+      description: ''
+      operationId: recuperar-um-unico-parcelamento
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único do parcelamento no Asaas
+        required: true
+        schema:
+          type: string
+          example: 2765d086-c7c5-5cca-898a-4262d212587c
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+    delete:
+      tags:
+      - Parcelamentos
+      summary: Remover parcelamento
+      description: ''
+      operationId: remover-parcelamento
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único do parcelamento a ser removido.
+        required: true
+        schema:
+          type: string
+          example: 5a2c890b-dd63-4b5a-9169-96c8d7828f4c
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentDeleteResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/installments/{id}/paymentBook:
+    get:
+      tags:
+      - Parcelamentos
+      summary: Gerar carnê de parcelamento
+      description: ''
+      operationId: gerar-carne-de-parcelamento
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único do parcelamento no Asaas
+        required: true
+        schema:
+          type: string
+          example: 2765d086-c7c5-5cca-898a-4262d212587c
+      - name: sort
+        in: query
+        description: Filtrar pelo nome da coluna
+        schema:
+          type: string
+          example: null
+      - name: order
+        in: query
+        description: Ordenação da coluna
+        schema:
+          type: string
+          example: asc
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+                example: Binário do carnê do parcelamento
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/installments/{id}/payments:
+    delete:
+      tags:
+      - Parcelamentos
+      summary: Cancelar cobranças de um parcelamento (pendentes e vencidas)
+      description: ''
+      operationId: cancelar-cobrancas-de-um-parcelamento
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único do parcelamento que terá cobranças removidas.
+        required: true
+        schema:
+          type: string
+          example: 5a2c890b-dd63-4b5a-9169-96c8d7828f4c
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentDeletePaymentsResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/installments/{id}/refund:
+    post:
+      tags:
+      - Parcelamentos
+      summary: Estornar parcelamento
+      description: 'É possível estornar um parcelamento via cartão de crédito recebido ou confirmado.
+
+
+        Como já ocorre no processo de estorno de uma cobrança avulsa por cartão de crédito, o saldo correspondente do parcelamento é debitado de sua conta no Asaas e a cobrança é cancelada no cartão do seu cliente. O cancelamento pode levar até 10 dias úteis para aparecer na fatura de seu cliente.'
+      operationId: estornar-parcelamento
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único do parcelamento a ser estornado.
+        required: true
+        schema:
+          type: string
+          example: 2765d086-c7c5-5cca-898a-4262d212587c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstallmentRefundRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/installments/{id}/splits:
+    put:
+      tags:
+      - Parcelamentos
+      summary: Atualizar splits do parcelamento
+      description: ''
+      operationId: atualizar-splits-do-parcelamento
+      parameters:
+      - name: id
+        in: path
+        description: ID do parcelamento
+        required: true
+        schema:
+          type: string
+          example: 2765d086-c7c5-5cca-898a-4262d212587c
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstallmentUpdateSplitRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallmentUpdateSplitResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+components:
+  schemas:
+    PaymentChargebackResponseChargebackReason:
+      type: string
+      description: Razão do chargeback
+      example: COMMERCIAL_DISAGREEMENT
+      deprecated: false
+      enum:
+      - ABSENCE_OF_PRINT
+      - ABSENT_CARD_FRAUD
+      - CARD_ACTIVATED_PHONE_TRANSACTION
+      - CARD_FRAUD
+      - CARD_RECOVERY_BULLETIN
+      - COMMERCIAL_DISAGREEMENT
+      - COPY_NOT_RECEIVED
+      - CREDIT_OR_DEBIT_PRESENTATION_ERROR
+      - DIFFERENT_PAY_METHOD
+      - FRAUD
+      - INCORRECT_TRANSACTION_VALUE
+      - INVALID_CURRENCY
+      - INVALID_DATA
+      - LATE_PRESENTATION
+      - LOCAL_REGULATORY_OR_LEGAL_DISPUTE
+      - MULTIPLE_ROCS
+      - ORIGINAL_CREDIT_TRANSACTION_NOT_ACCEPTED
+      - OTHER_ABSENT_CARD_FRAUD
+      - PROCESS_ERROR
+      - RECEIVED_COPY_ILLEGIBLE_OR_INCOMPLETE
+      - RECURRENCE_CANCELED
+      - REQUIRED_AUTHORIZATION_NOT_GRANTED
+      - RIGHT_OF_FULL_RECOURSE_FOR_FRAUD
+      - SALE_CANCELED
+      - SERVICE_DISAGREEMENT_OR_DEFECTIVE_PRODUCT
+      - SERVICE_NOT_RECEIVED
+      - SPLIT_SALE
+      - TRANSFERS_OF_DIVERSE_RESPONSIBILITIES
+      - UNQUALIFIED_CAR_RENTAL_DEBIT
+      - USA_CARDHOLDER_DISPUTE
+      - VISA_FRAUD_MONITORING_PROGRAM
+      - WARNING_BULLETIN_FILE
+    InstallmentSplitGetResponsePaymentSplitStatus:
+      type: string
+      description: Status do split
+      example: PENDING
+      deprecated: false
+      enum:
+      - PENDING
+      - PROCESSING
+      - PROCESSING_REFUND
+      - AWAITING_CREDIT
+      - CANCELLED
+      - DONE
+      - REFUNDED
+      - BLOCKED_BY_VALUE_DIVERGENCE
+    PaymentDiscountDiscountType:
+      type: string
+      description: Tipo de desconto
+      example: PERCENTAGE
+      deprecated: false
+      enum:
+      - FIXED
+      - PERCENTAGE
+    PaymentDiscountDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Valor percentual ou fixo de desconto a ser aplicado sobre o valor da cobrança
+          example: 10
+          deprecated: false
+        dueDateLimitDays:
+          type: integer
+          description: 'Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante'
+          format: int32
+          example: 0
+          deprecated: false
+        type:
+          $ref: '#/components/schemas/PaymentDiscountDiscountType'
+      description: Informações de desconto
+      deprecated: false
+    PaymentChargebackResponseChargebackDisputeStatus:
+      type: string
+      description: Status da disputa do chargeback.
+      example: ACCEPTED
+      deprecated: false
+      enum:
+      - REQUESTED
+      - ACCEPTED
+      - REJECTED
+    InstallmentUpdateSplitRequestDTO:
+      type: object
+      properties:
+        splits:
+          type: array
+          description: Dados de split para atualizar
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InstallmentSplitRequestDTO'
+    InstallmentSplitGetResponsePaymentSplitCancellationReason:
+      type: string
+      description: Motivo de cancelamento do split
+      example: BANK_ACCOUNT_AWAITING_AUTHORIZATION
+      deprecated: false
+      enum:
+      - BANK_ACCOUNT_AWAITING_AUTHORIZATION
+      - BANK_ACCOUNT_PENDING
+      - BANK_ACCOUNT_REJECTED
+      - CHECKOUT_VALIDATION_FAILED
+      - CUSTOMER_DOCUMENTS_PENDING
+      - CUSTOMER_DOCUMENTS_REJECTED
+      - EXTERNAL_AUTHORIZATION_REFUSED
+      - MANUAL_CANCELLATION
+      - PAYMENT_DELETED
+      - PAYMENT_OVERDUE
+      - PAYMENT_RECEIVED_IN_CASH
+      - PAYMENT_REFUNDED
+      - VALUE_DIVERGENCE_BLOCK
+      - WALLET_REMOVED_FROM_OUTSIDE_ARRANGEMENT_ALLOW_LIST
+      - WALLET_UNABLE_TO_RECEIVE
+    ErrorResponseItemDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código do erro
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do erro
+          deprecated: false
+          example: null
+      description: Lista de objetos
+      deprecated: false
+    ChargebackCreditCardResponseDTO:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Últimos 4 dígitos do cartão utilizado
+          example: '8829'
+          deprecated: false
+        brand:
+          $ref: '#/components/schemas/ChargebackCreditCardResponseCreditCardBrand'
+      description: Informações do cartão de crédito
+      deprecated: false
+    InstallmentSaveRequestDTO:
+      required:
+      - installmentCount
+      - customer
+      - value
+      - billingType
+      - dueDate
+      type: object
+      properties:
+        installmentCount:
+          type: integer
+          description: Número de parcelas
+          format: int32
+          example: 3
+          deprecated: false
+        customer:
+          type: string
+          description: Identificador único do cliente no Asaas
+          example: cus_G7Dvo4iphUNk
+          deprecated: false
+        value:
+          type: number
+          description: Valor de cada parcela
+          example: 100
+          deprecated: false
+        totalValue:
+          type: number
+          description: Valor total do parcelamento
+          example: 150
+          deprecated: false
+        billingType:
+          $ref: '#/components/schemas/InstallmentSaveRequestBillingType'
+        dueDate:
+          type: string
+          description: Data de vencimento da primeira parcela
+          format: date
+          example: '2025-07-08'
+          deprecated: false
+        description:
+          type: string
+          description: Descrição do parcelamento (máx. 500 caracteres)
+          example: Parcelamento 08652
+          deprecated: false
+        postalService:
+          type: boolean
+          description: Define se a cobrança será enviada via Correios
+          example: false
+          deprecated: false
+        daysAfterDueDateToRegistrationCancellation:
+          type: integer
+          description: Dias após o vencimento para cancelamento do registro (somente para boleto bancário)
+          format: int32
+          example: 1
+          deprecated: false
+        paymentExternalReference:
+          type: string
+          description: Campo livre para busca
+          example: 056984
+          deprecated: false
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestRequestDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineRequestDTO'
+        splits:
+          type: array
+          description: Configurações do split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InstallmentSplitRequestDTO'
+    PaymentFineRequestDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Percentual de multa sobre o valor da cobrança para pagamento após o vencimento
+          deprecated: false
+          example: null
+        type:
+          $ref: '#/components/schemas/PaymentFineRequestFineType'
+      description: Informações de multa para pagamento após o vencimento
+      deprecated: false
+    InstallmentRefundRequestDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Valor total a ser estornado
+          example: 5
+          deprecated: false
+    InstallmentGetResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo do objeto
+          example: installment
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único do parcelamento no Asaas
+          example: 2765d086-c7c5-5cca-898a-4262d212587c
+          deprecated: false
+        value:
+          type: number
+          description: Valor do parcelamento
+          example: 360
+          deprecated: false
+        netValue:
+          type: number
+          description: Valor líquido do parcelamento
+          example: 312.12
+          deprecated: false
+        paymentValue:
+          type: number
+          description: Valor de cada parcela
+          example: 30
+          deprecated: false
+        installmentCount:
+          type: integer
+          description: Número de parcelas
+          format: int32
+          example: 12
+          deprecated: false
+        billingType:
+          $ref: '#/components/schemas/InstallmentGetResponseBillingType'
+        paymentDate:
+          type: string
+          description: Data de liquidação da cobrança no Asaas
+          format: date
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do parcelamento
+          example: Pedido 056984
+          deprecated: false
+        expirationDay:
+          type: integer
+          description: Data de vencimento de cada parcela
+          format: int32
+          example: 31
+          deprecated: false
+        dateCreated:
+          type: string
+          description: Data de criação do parcelamento
+          format: date
+          example: '2021-01-19'
+          deprecated: false
+        customer:
+          type: string
+          description: Identificador único do cliente ao qual o parcelamento pertence
+          example: cus_000000001645
+          deprecated: false
+        paymentLink:
+          type: string
+          description: Identificador único do link de pagamentos ao qual o parcelamento pertence
+          example: '997152082166122'
+          deprecated: false
+        checkoutSession:
+          type: string
+          description: Identificador único do checkout
+          example: 5a3e564f-81cd-4f4e-9c8e-af43f9ac4287
+          deprecated: false
+        transactionReceiptUrl:
+          type: string
+          description: URL do comprovante de confirmação, recebimento, estorno ou remoção.
+          deprecated: false
+          example: null
+        chargeback:
+          $ref: '#/components/schemas/PaymentChargebackResponseDTO'
+        creditCard:
+          $ref: '#/components/schemas/PaymentSaveWithCreditCardCreditCardDTO'
+        deleted:
+          type: boolean
+          description: Indica se o parcelamento foi removido
+          example: false
+          deprecated: false
+        refunds:
+          type: array
+          description: Informações de estorno
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InstallmentRefundResponseDTO'
+        threeDSecureChallengeUrl:
+          type: string
+          description: URL para onde o titular do cartão deve ser redirecionado para concluir o desafio de autenticação 3D Secure. Retornado apenas quando o desafio de autenticação é exigido pelo emissor do cartão
+          deprecated: false
+          example: null
+    PaymentFineRequestFineType:
+      type: string
+      description: Tipo de multa
+      example: FIXED
+      deprecated: false
+      enum:
+      - FIXED
+      - PERCENTAGE
+    PaymentRefundedSplitResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do split
+          example: cff860dd-148e-48ca-ac8e-849684175158
+          deprecated: false
+        value:
+          type: number
+          description: Valor estornado
+          example: 10
+          deprecated: false
+        done:
+          type: boolean
+          description: Indica se o split foi estornado
+          example: true
+          deprecated: false
+      description: Lista de splits estornados, se houver
+      deprecated: false
+    InstallmentRefundResponseDTO:
+      type: object
+      properties:
+        dateCreated:
+          type: string
+          description: Data da criação do estorno
+          format: date-time
+          example: '2024-10-18 10:19:06'
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/InstallmentRefundResponsePaymentRefundStatus'
+        value:
+          type: number
+          description: Valor do estorno
+          example: 40
+          deprecated: false
+        endToEndIdentifier:
+          type: string
+          description: (Apenas pix) Identificador da transação Pix no Banco Central
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do estorno
+          deprecated: false
+          example: null
+        effectiveDate:
+          type: string
+          description: (Apenas pix) Data de efetivação do estorno
+          format: date-time
+          example: '2024-10-19 10:19:06'
+          deprecated: false
+        transactionReceiptUrl:
+          type: string
+          description: Link do recibo da transação
+          deprecated: false
+          example: null
+        refundedSplits:
+          type: array
+          description: Lista de splits estornados, se houver
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/PaymentRefundedSplitResponseDTO'
+        paymentId:
+          type: string
+          description: Identificador único da cobrança no Asaas
+          example: pay_080225913252
+          deprecated: false
+      description: Informações de estorno
+      deprecated: false
+    InstallmentGetResponseBillingType:
+      type: string
+      description: Forma de pagamento
+      example: CREDIT_CARD
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - DEBIT_CARD
+      - TRANSFER
+      - DEPOSIT
+      - PIX
+    PaymentSaveWithCreditCardCreditCardDTO:
+      type: object
+      properties:
+        creditCardNumber:
+          type: string
+          description: Últimos 4 dígitos do cartão utilizado
+          example: '8829'
+          deprecated: false
+        creditCardBrand:
+          $ref: '#/components/schemas/PaymentSaveWithCreditCardCreditCardCreditCardBrand'
+        creditCardToken:
+          type: string
+          description: Token do cartão de crédito caso a tokenização esteja ativa.
+          deprecated: false
+          example: null
+      description: Informações do cartão de crédito
+      deprecated: false
+    InstallmentListResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo de objeto
+          example: list
+          deprecated: false
+        hasMore:
+          type: boolean
+          description: Indica se há mais uma página a ser buscada
+          example: false
+          deprecated: false
+        totalCount:
+          type: integer
+          description: Quantidade total de itens para os filtros informados
+          format: int32
+          example: 2
+          deprecated: false
+        limit:
+          type: integer
+          description: Quantidade de objetos por página
+          format: int32
+          example: 10
+          deprecated: false
+        offset:
+          type: integer
+          description: Posição do objeto a partir do qual a página deve ser carregada
+          format: int32
+          example: 0
+          deprecated: false
+        data:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InstallmentGetResponseDTO'
+    InstallmentSplitRequestDTO:
+      required:
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          description: Identificador da carteira Asaas que será transferido
+          deprecated: false
+          example: null
+        fixedValue:
+          type: number
+          description: Valor fixo a ser transferido para a conta quando a cobrança for recebida
+          deprecated: false
+          example: null
+        percentualValue:
+          type: number
+          description: Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida
+          deprecated: false
+          example: null
+        totalFixedValue:
+          type: number
+          description: (Somente parcelamentos). Valor que será feito split referente ao valor total que será parcelado.
+          deprecated: false
+          example: null
+        externalReference:
+          type: string
+          description: Identificador do split no seu sistema
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do split
+          deprecated: false
+          example: null
+        installmentNumber:
+          type: integer
+          description: Número da parcela em que o split será vinculado. Não pode ser informado junto com o campo 'totalFixedValue'
+          format: int32
+          deprecated: false
+          example: null
+      description: Configurações do split
+      deprecated: false
+    InstallmentRefundResponsePaymentRefundStatus:
+      type: string
+      description: Status do estorno
+      example: DONE
+      deprecated: false
+      enum:
+      - PENDING
+      - AWAITING_CRITICAL_ACTION_AUTHORIZATION
+      - AWAITING_CUSTOMER_EXTERNAL_AUTHORIZATION
+      - CANCELLED
+      - DONE
+    PaymentChargebackResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do chargeback.
+          example: 8e784c3e-afe8-4844-bb93-6b445763
+          deprecated: false
+        payment:
+          type: string
+          description: Identificador único da cobrança no Asaas
+          example: pay_pBtDdshgBD2Rt
+          deprecated: false
+        installment:
+          type: string
+          description: Identificador único do parcelamento no Asaas
+          example: b8dd74c-d078-40a0-9ae1-61a66c61a204
+          deprecated: false
+        customerAccount:
+          type: string
+          description: Identificador único do cliente ao qual o chargeback está vinculado.
+          example: cus_000000004085
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/PaymentChargebackResponseChargebackStatus'
+        reason:
+          $ref: '#/components/schemas/PaymentChargebackResponseChargebackReason'
+        disputeStartDate:
+          type: string
+          description: Data de abertura do chargeback.
+          format: date
+          example: '2024-11-10'
+          deprecated: false
+        value:
+          type: number
+          description: Valor do chargeback.
+          example: 2323.45
+          deprecated: false
+        paymentDate:
+          type: string
+          description: Data de liquidação da cobrança no Asaas
+          format: date
+          example: '2024-03-10'
+          deprecated: false
+        creditCard:
+          $ref: '#/components/schemas/ChargebackCreditCardResponseDTO'
+        disputeStatus:
+          $ref: '#/components/schemas/PaymentChargebackResponseChargebackDisputeStatus'
+        deadlineToSendDisputeDocuments:
+          type: string
+          description: Data limite para envio de documentos de disputa.
+          format: date
+          example: '2024-12-10'
+          deprecated: false
+    InstallmentDeleteResponseDTO:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          description: Indica se o parcelamento está removido
+          example: true
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único do parcelamento no Asaas
+          example: a2c890b-dd63-4b5a-9169-96c8d7828f4c
+          deprecated: false
+    InstallmentPaymentDeletedDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único da cobrança no Asaas
+          example: pay_080225913252
+          deprecated: false
+        installmentNumber:
+          type: string
+          description: Número da parcela
+          example: 1
+          deprecated: false
+        deleted:
+          type: boolean
+          description: Determina se a cobrança foi removida
+          example: true
+          deprecated: false
+      description: Lista das cobranças que foram removidas
+      deprecated: false
+    InstallmentSplitGetResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do split pago no Asaas
+          example: fd41396a-7453-47d0-9411-c8543522591d
+          deprecated: false
+        walletId:
+          type: string
+          description: Identificador da carteira Asaas que será transferido
+          example: 7bafd95a-e783-4a62-9be1-23999af742c6
+          deprecated: false
+        fixedValue:
+          type: number
+          description: Valor fixo a ser transferido para a conta quando a cobrança for recebida
+          example: 20.32
+          deprecated: false
+        percentualValue:
+          type: number
+          description: Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida
+          deprecated: false
+          example: null
+        totalValue:
+          type: number
+          description: Valor total do split que será enviado. Os valores exibidos podem sofrer alteração após a confirmação ou alteração da cobrança.
+          example: 20.32
+          deprecated: false
+        cancellationReason:
+          $ref: '#/components/schemas/InstallmentSplitGetResponsePaymentSplitCancellationReason'
+        status:
+          $ref: '#/components/schemas/InstallmentSplitGetResponsePaymentSplitStatus'
+        externalReference:
+          type: string
+          description: Identificador do split no seu sistema
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do split
+          deprecated: false
+          example: null
+        installmentNumber:
+          type: integer
+          description: Parcela à qual o split está vinculado
+          format: int32
+          deprecated: false
+          example: null
+      description: Array de splits
+      deprecated: false
+    ChargebackCreditCardResponseCreditCardBrand:
+      type: string
+      description: Bandeira do cartão utilizado
+      example: VISA
+      deprecated: false
+      enum:
+      - VISA
+      - MASTERCARD
+      - ELO
+      - DINERS
+      - DISCOVER
+      - AMEX
+      - CABAL
+      - BANESCARD
+      - CREDZ
+      - SOROCRED
+      - CREDSYSTEM
+      - JCB
+      - UNKNOWN
+    InstallmentUpdateSplitResponseDTO:
+      type: object
+      properties:
+        splits:
+          type: array
+          description: Array de splits
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InstallmentSplitGetResponseDTO'
+    PaymentInterestRequestDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Percentual de juros *ao mês* sobre o valor da cobrança para pagamento após o vencimento
+          deprecated: false
+          example: null
+      description: Informações de juros para pagamento após o vencimento
+      deprecated: false
+    InstallmentDeletePaymentsResponseDTO:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          description: Indica se o parcelamento está removido
+          example: true
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único do parcelamento no Asaas
+          example: a2c890b-dd63-4b5a-9169-96c8d7828f4c
+          deprecated: false
+        deletedPayments:
+          type: array
+          description: Lista das cobranças que foram removidas
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InstallmentPaymentDeletedDTO'
+    PaymentChargebackResponseChargebackStatus:
+      type: string
+      description: Status do chargeback
+      example: DONE
+      deprecated: false
+      enum:
+      - REQUESTED
+      - IN_DISPUTE
+      - DISPUTE_LOST
+      - REVERSED
+      - DONE
+    InstallmentSaveRequestBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - PIX
+    PaymentSaveWithCreditCardCreditCardCreditCardBrand:
+      type: string
+      description: Bandeira do cartão utilizado
+      example: VISA
+      deprecated: false
+      enum:
+      - VISA
+      - MASTERCARD
+      - ELO
+      - DINERS
+      - DISCOVER
+      - AMEX
+      - CABAL
+      - BANESCARD
+      - CREDZ
+      - SOROCRED
+      - CREDSYSTEM
+      - JCB
+      - UNKNOWN
+    ErrorResponseDTO:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/ErrorResponseItemDTO'
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      name: access_token
+      in: header
+x-provenance:
+  method: searched
+  source: https://docs.asaas.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.asaas.com/reference/add-an-image-to-a-payments-link.md
+  - https://docs.asaas.com/reference/adicionar-uma-imagem-a-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/agendar-nota-fiscal.md
+  - https://docs.asaas.com/reference/approve-account.md
+  - https://docs.asaas.com/reference/aprovar-conta.md
+  - https://docs.asaas.com/reference/atualizar-assinatura-existente.md
+  - https://docs.asaas.com/reference/atualizar-cartao-de-credito-assinatura.md
+  - https://docs.asaas.com/reference/atualizar-chave-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/atualizar-cliente-existente.md
+  - https://docs.asaas.com/reference/atualizar-cobranca-existente-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/atualizar-cobranca-existente.md
+  - https://docs.asaas.com/reference/atualizar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/atualizar-dados-comerciais.md
+  - https://docs.asaas.com/reference/atualizar-definicoes-de-um-documento-da-cobranca.md
+  - https://docs.asaas.com/reference/atualizar-documento-enviado.md
+  - https://docs.asaas.com/reference/atualizar-nota-fiscal.md
+  - https://docs.asaas.com/reference/atualizar-notificacao-existente.md
+  - https://docs.asaas.com/reference/atualizar-notificacoes-existentes-em-lote.md
+  - https://docs.asaas.com/reference/atualizar-splits-do-parcelamento.md
+  - https://docs.asaas.com/reference/atualizar-status-da-antecipacao-automatica.md
+  - https://docs.asaas.com/reference/atualizar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/atualizar-webhook-existente.md
+  - https://docs.asaas.com/reference/available-token-bucket-check.md
+  - https://docs.asaas.com/reference/billing-statistics.md
+  - https://docs.asaas.com/reference/buscar-qual-provedor-o-numero-pertence-e-os-valores-disponiveis-para-recarga.md
+  - https://docs.asaas.com/reference/cancel-a-cellphone-recharge.md
+  - https://docs.asaas.com/reference/cancel-a-checkout.md
+  - https://docs.asaas.com/reference/cancel-a-recurrence-item.md
+  - https://docs.asaas.com/reference/cancel-a-recurrence.md
+  - https://docs.asaas.com/reference/cancel-a-scheduled-transaction.md
+  - https://docs.asaas.com/reference/cancel-a-transfer.md
+  - https://docs.asaas.com/reference/cancel-an-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/cancel-an-invoice.md
+  - https://docs.asaas.com/reference/cancel-anticipation.md
+  - https://docs.asaas.com/reference/cancel-bill-payment.md
+  - https://docs.asaas.com/reference/cancel-charges-of-an-installment.md
+  - https://docs.asaas.com/reference/cancel-payment-dunning.md
+  - https://docs.asaas.com/reference/cancelar-antecipacao.md
+  - https://docs.asaas.com/reference/cancelar-cobrancas-de-um-parcelamento.md
+  - https://docs.asaas.com/reference/cancelar-item-de-uma-recorrencia.md
+  - https://docs.asaas.com/reference/cancelar-negativacao.md
+  - https://docs.asaas.com/reference/cancelar-pagamento-de-contas.md
+  - https://docs.asaas.com/reference/cancelar-um-checkout.md
+  - https://docs.asaas.com/reference/cancelar-uma-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/cancelar-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/cancelar-uma-recarga-de-celular.md
+  - https://docs.asaas.com/reference/cancelar-uma-recorrencia.md
+  - https://docs.asaas.com/reference/cancelar-uma-transacao-agendada.md
+  - https://docs.asaas.com/reference/capturar-cobranca-com-pre-autorizacao-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/capturar-cobranca-com-pre-autorizacao.md
+  - https://docs.asaas.com/reference/capture-payment-with-pre-authorization-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/capture-payment-with-pre-authorization.md
+  - https://docs.asaas.com/reference/check-account-registration-status.md
+  - https://docs.asaas.com/reference/check-pending-documents.md
+  - https://docs.asaas.com/reference/check-pix-key.md
+  - https://docs.asaas.com/reference/close-non-baas-subaccount.md
+  - https://docs.asaas.com/reference/configurar-portal-emissor-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/configure-invoice-issuing-portal.md
+  - https://docs.asaas.com/reference/confirm-cash-receipt-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/confirm-cash-receipt.md
+  - https://docs.asaas.com/reference/confirm-payment.md
+  - https://docs.asaas.com/reference/confirmar-pagamento.md
+  - https://docs.asaas.com/reference/confirmar-recebimento-em-dinheiro-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/confirmar-recebimento-em-dinheiro.md
+  - https://docs.asaas.com/reference/consulta-de-fichas-disponiveis-no-balde.md
+  - https://docs.asaas.com/reference/consultar-chave-pix.md
+  - https://docs.asaas.com/reference/consultar-situacao-cadastral-da-conta.md
+  - https://docs.asaas.com/reference/create-a-bill-payment.md
+  - https://docs.asaas.com/reference/create-a-chargeback-dispute.md
+  - https://docs.asaas.com/reference/create-a-key.md
+  - https://docs.asaas.com/reference/create-a-payment-dunning.md
+  - https://docs.asaas.com/reference/create-a-payments-link.md
+  - https://docs.asaas.com/reference/create-an-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/create-and-update-tax-information.md
+  - https://docs.asaas.com/reference/create-api-key-for-subaccount.md
+  - https://docs.asaas.com/reference/create-automatic-pix-payment-instruction-retry.md
+  - https://docs.asaas.com/reference/create-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/create-default-escrow-account-configuration-to-all-subaccounts.md
+  - https://docs.asaas.com/reference/create-installment-with-credit-card.md
+  - https://docs.asaas.com/reference/create-installment.md
+  - https://docs.asaas.com/reference/create-new-checkout.md
+  - https://docs.asaas.com/reference/create-new-customer.md
+  - https://docs.asaas.com/reference/create-new-payment-with-credit-card-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/create-new-payment-with-credit-card.md
+  - https://docs.asaas.com/reference/create-new-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/create-new-payment.md
+  - https://docs.asaas.com/reference/create-new-subscription.md
+  - https://docs.asaas.com/reference/create-new-webhook.md
+  - https://docs.asaas.com/reference/create-static-qrcode.md
+  - https://docs.asaas.com/reference/create-subaccount.md
+  - https://docs.asaas.com/reference/create-subscription-with-credit-card.md
+  - https://docs.asaas.com/reference/credit-card-tokenization.md
+  - https://docs.asaas.com/reference/criar-assinatura-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/criar-chave-de-api-para-uma-subconta.md
+  - https://docs.asaas.com/reference/criar-cobranca-com-cartao-de-credito-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/criar-cobranca-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/criar-configuracao-padrao-da-conta-escrow-para-todas-as-subcontas.md
+  - https://docs.asaas.com/reference/criar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/criar-disputa-de-chargeback.md
+  - https://docs.asaas.com/reference/criar-e-atualizar-informacoes-fiscais.md
+  - https://docs.asaas.com/reference/criar-nova-assinatura.md
+  - https://docs.asaas.com/reference/criar-nova-cobranca-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/criar-nova-cobranca.md
+  - https://docs.asaas.com/reference/criar-novo-checkout.md
+  - https://docs.asaas.com/reference/criar-novo-cliente.md
+  - https://docs.asaas.com/reference/criar-novo-webhook.md
+  - https://docs.asaas.com/reference/criar-parcelamento.md
+  - https://docs.asaas.com/reference/criar-qrcode-estatico.md
+  - https://docs.asaas.com/reference/criar-retentativa-de-instrucao-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/criar-subconta.md
+  - https://docs.asaas.com/reference/criar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/criar-um-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/criar-uma-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/criar-uma-chave.md
+  - https://docs.asaas.com/reference/criar-uma-negativacao.md
+  - https://docs.asaas.com/reference/decode-a-qrcode-for-payment.md
+  - https://docs.asaas.com/reference/decodificar-um-qrcode-para-pagamento.md
+  - https://docs.asaas.com/reference/definir-imagem-principal-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/deletar-qrcode-estatico.md
+  - https://docs.asaas.com/reference/delete-api-key-for-a-subaccount.md
+  - https://docs.asaas.com/reference/delete-baas-subaccount.md
+  - https://docs.asaas.com/reference/delete-document-from-a-payment.md
+  - https://docs.asaas.com/reference/delete-payment-with-summary-data.md
+  - https://docs.asaas.com/reference/delete-payment.md
+  - https://docs.asaas.com/reference/delete-static-qrcode.md
+  - https://docs.asaas.com/reference/desfazer-confirmacao-de-recebimento-em-dinheiro-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/desfazer-confirmacao-de-recebimento-em-dinheiro.md
+  - https://docs.asaas.com/reference/emitir-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/encerrar-garantia-da-cobranca-na-conta-escrow.md
+  - https://docs.asaas.com/reference/encerrar-subconta-nao-baas.md
+  - https://docs.asaas.com/reference/enviar-documentos.md
+  - https://docs.asaas.com/reference/estatisticas-de-cobrancas.md
+  - https://docs.asaas.com/reference/estornar-boleto.md
+  - https://docs.asaas.com/reference/estornar-cobranca-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/estornar-cobranca.md
+  - https://docs.asaas.com/reference/estornar-parcelamento.md
+  - https://docs.asaas.com/reference/event-history-lists.md
+  - https://docs.asaas.com/reference/excluir-chave-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/excluir-cobranca-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/excluir-cobranca.md
+  - https://docs.asaas.com/reference/excluir-documento-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/excluir-subconta-baas.md
+  - https://docs.asaas.com/reference/fazer-upload-de-documentos-da-cobranca.md
+  - https://docs.asaas.com/reference/finish-payment-escrow-in-the-escrow-account.md
+  - https://docs.asaas.com/reference/forcar-vencimento.md
+  - https://docs.asaas.com/reference/force-expire.md
+  - https://docs.asaas.com/reference/generate-installment-booklet.md
+  - https://docs.asaas.com/reference/generate-subscription-booklet.md
+  - https://docs.asaas.com/reference/gerar-carne-de-assinatura.md
+  - https://docs.asaas.com/reference/gerar-carne-de-parcelamento.md
+  - https://docs.asaas.com/reference/get-digitable-bill-line.md
+  - https://docs.asaas.com/reference/get-qr-code-for-pix-payments.md
+  - https://docs.asaas.com/reference/informacoes-sobre-visualizacao-da-cobranca.md
+  - https://docs.asaas.com/reference/issue-an-invoice.md
+  - https://docs.asaas.com/reference/list-anticipations.md
+  - https://docs.asaas.com/reference/list-api-keys-for-subaccount.md
+  - https://docs.asaas.com/reference/list-automatic-pix-authorizations.md
+  - https://docs.asaas.com/reference/list-automatic-pix-payment-instructions.md
+  - https://docs.asaas.com/reference/list-bill-payments.md
+  - https://docs.asaas.com/reference/list-chargebacks.md
+  - https://docs.asaas.com/reference/list-credit-bureau-reports.md
+  - https://docs.asaas.com/reference/list-customers.md
+  - https://docs.asaas.com/reference/list-documents-of-a-payment.md
+  - https://docs.asaas.com/reference/list-federal-service-codes.md
+  - https://docs.asaas.com/reference/list-images-from-a-payments-link.md
+  - https://docs.asaas.com/reference/list-installments.md
+  - https://docs.asaas.com/reference/list-invoices-for-subscription-charges.md
+  - https://docs.asaas.com/reference/list-invoices.md
+  - https://docs.asaas.com/reference/list-keys.md
+  - https://docs.asaas.com/reference/list-mobile-recharges.md
+  - https://docs.asaas.com/reference/list-municipal-configurations.md
+  - https://docs.asaas.com/reference/list-municipal-services.md
+  - https://docs.asaas.com/reference/list-nbs-codes.md
+  - https://docs.asaas.com/reference/list-operation-indicator-codes.md
+  - https://docs.asaas.com/reference/list-paid-splits-1.md
+  - https://docs.asaas.com/reference/list-payment-dunnings.md
+  - https://docs.asaas.com/reference/list-payments-available-for-payment-dunning.md
+  - https://docs.asaas.com/reference/list-payments-links.md
+  - https://docs.asaas.com/reference/list-payments-of-a-installment.md
+  - https://docs.asaas.com/reference/list-payments-of-a-subscription.md
+  - https://docs.asaas.com/reference/list-payments-received.md
+  - https://docs.asaas.com/reference/list-payments-with-summary-data.md
+  - https://docs.asaas.com/reference/list-payments.md
+  - https://docs.asaas.com/reference/list-received-splits-1.md
+  - https://docs.asaas.com/reference/list-recurrence-items.md
+  - https://docs.asaas.com/reference/list-recurrences.md
+  - https://docs.asaas.com/reference/list-subaccounts.md
+  - https://docs.asaas.com/reference/list-subscriptions.md
+  - https://docs.asaas.com/reference/list-tax-classification-codes.md
+  - https://docs.asaas.com/reference/list-tax-situation-codes.md
+  - https://docs.asaas.com/reference/list-transactions.md
+  - https://docs.asaas.com/reference/list-transfers.md
+  - https://docs.asaas.com/reference/list-webhooks.md
+  - https://docs.asaas.com/reference/listar-antecipacoes.md
+  - https://docs.asaas.com/reference/listar-assinaturas.md
+  - https://docs.asaas.com/reference/listar-autorizacoes-pix-automatico.md
+  - https://docs.asaas.com/reference/listar-chargebacks.md
+  - https://docs.asaas.com/reference/listar-chaves-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/listar-chaves.md
+  - https://docs.asaas.com/reference/listar-clientes.md
+  - https://docs.asaas.com/reference/listar-cobrancas-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/listar-cobrancas-de-uma-assinatura.md
+  - https://docs.asaas.com/reference/listar-cobrancas-disponiveis-para-negativacao.md
+  - https://docs.asaas.com/reference/listar-cobrancas.md
+  - https://docs.asaas.com/reference/listar-codigos-de-classificacoes-tributarias.md
+  - https://docs.asaas.com/reference/listar-codigos-de-operadores-de-indicacoes.md
+  - https://docs.asaas.com/reference/listar-codigos-de-situacoes-tributarias.md
+  - https://docs.asaas.com/reference/listar-codigos-nbs.md
+  - https://docs.asaas.com/reference/listar-codigos-servicos-federais.md
+  - https://docs.asaas.com/reference/listar-configuracoes-municipais.md
+  - https://docs.asaas.com/reference/listar-consultas-1.md
+  - https://docs.asaas.com/reference/listar-documentos-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/listar-estornos-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/listar-historico-de-eventos.md
+  - https://docs.asaas.com/reference/listar-imagens-de-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/listar-instrucoes-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/listar-itens-de-uma-recorrencia.md
+  - https://docs.asaas.com/reference/listar-links-de-pagamentos.md
+  - https://docs.asaas.com/reference/listar-negativacoes.md
+  - https://docs.asaas.com/reference/listar-notas-fiscais-das-cobrancas-de-uma-assinatura.md
+  - https://docs.asaas.com/reference/listar-notas-fiscais.md
+  - https://docs.asaas.com/reference/listar-pagamento-de-contas.md
+  - https://docs.asaas.com/reference/listar-pagamentos-recebidos.md
+  - https://docs.asaas.com/reference/listar-parcelamentos.md
+  - https://docs.asaas.com/reference/listar-recargas-de-celular.md
+  - https://docs.asaas.com/reference/listar-recorrencias.md
+  - https://docs.asaas.com/reference/listar-servicos-municipais.md
+  - https://docs.asaas.com/reference/listar-splits-pagos.md
+  - https://docs.asaas.com/reference/listar-splits-recebidos.md
+  - https://docs.asaas.com/reference/listar-subcontas.md
+  - https://docs.asaas.com/reference/listar-transacoes.md
+  - https://docs.asaas.com/reference/listar-transferencias.md
+  - https://docs.asaas.com/reference/listar-webhooks.md
+  - https://docs.asaas.com/reference/make-consultation.md
+  - https://docs.asaas.com/reference/obter-linha-digitavel-do-boleto.md
+  - https://docs.asaas.com/reference/obter-qr-code-para-pagamentos-via-pix.md
+  - https://docs.asaas.com/reference/pagar-um-qrcode.md
+  - https://docs.asaas.com/reference/pagar-uma-cobranca-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/pagar-uma-cobranca-com-cartao.md
+  - https://docs.asaas.com/reference/pay-a-charge-with-card.md
+  - https://docs.asaas.com/reference/pay-a-charge-with-credit-card.md
+  - https://docs.asaas.com/reference/pay-a-qrcode.md
+  - https://docs.asaas.com/reference/payment-viewing-information.md
+  - https://docs.asaas.com/reference/realizar-consulta.md
+  - https://docs.asaas.com/reference/recover-a-single-cellphone-recharge.md
+  - https://docs.asaas.com/reference/recover-a-single-payment-dunning.md
+  - https://docs.asaas.com/reference/recovering-payment-limits.md
+  - https://docs.asaas.com/reference/recuperando-limites-de-cobrancas-1.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-da-conta-escrow-para-a-subconta.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-de-pre-autorizacao.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-padrao-da-conta-escrow.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/recuperar-configuracoes-de-personalizacao.md
+  - https://docs.asaas.com/reference/recuperar-dados-comerciais.md
+  - https://docs.asaas.com/reference/recuperar-efeito-de-contrato-bloqueando-antecipacao-da-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-extrato.md
+  - https://docs.asaas.com/reference/recuperar-garantia-da-cobranca-na-conta-escrow.md
+  - https://docs.asaas.com/reference/recuperar-informacoes-de-pagamento-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-informacoes-fiscais.md
+  - https://docs.asaas.com/reference/recuperar-limites-de-antecipacoes.md
+  - https://docs.asaas.com/reference/recuperar-notificacoes-de-um-cliente.md
+  - https://docs.asaas.com/reference/recuperar-numero-de-conta-no-asaas.md
+  - https://docs.asaas.com/reference/recuperar-saldo-da-conta.md
+  - https://docs.asaas.com/reference/recuperar-status-da-antecipacao-automatica.md
+  - https://docs.asaas.com/reference/recuperar-status-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-taxas-da-conta.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-chargeback.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-cliente.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-documento-da-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-parcelamento.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-split-pago.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-split-recebido.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-webhook.md
+  - https://docs.asaas.com/reference/recuperar-uma-consulta-1.md
+  - https://docs.asaas.com/reference/recuperar-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-antecipacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-assinatura.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-chave.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-cobranca-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-imagem-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-instrucao-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-negativacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-recarga-de-celular.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-recorrencia.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-subconta.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-transacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-transferencia.md
+  - https://docs.asaas.com/reference/recuperar-valores-de-split.md
+  - https://docs.asaas.com/reference/recuperar-walletid.md
+  - https://docs.asaas.com/reference/reenviar-documentos.md
+  - https://docs.asaas.com/reference/reenviar-link-de-ativacao-para-subconta-nao-baas.md
+  - https://docs.asaas.com/reference/refund-bank-slip.md
+  - https://docs.asaas.com/reference/refund-installment.md
+  - https://docs.asaas.com/reference/refund-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/refund-payment.md
+  - https://docs.asaas.com/reference/remove-a-payments-link.md
+  - https://docs.asaas.com/reference/remove-an-image-from-payments-link.md
+  - https://docs.asaas.com/reference/remove-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/remove-customer.md
+  - https://docs.asaas.com/reference/remove-installment.md
+  - https://docs.asaas.com/reference/remove-key-1.md
+  - https://docs.asaas.com/reference/remove-sent-document.md
+  - https://docs.asaas.com/reference/remove-subscription.md
+  - https://docs.asaas.com/reference/remove-webhook-backoff.md
+  - https://docs.asaas.com/reference/remove-webhook.md
+  - https://docs.asaas.com/reference/remover-assinatura.md
+  - https://docs.asaas.com/reference/remover-chave.md
+  - https://docs.asaas.com/reference/remover-cliente.md
+  - https://docs.asaas.com/reference/remover-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/remover-documento-enviado.md
+  - https://docs.asaas.com/reference/remover-parcelamento-1.md
+  - https://docs.asaas.com/reference/remover-penalizacao-webhook.md
+  - https://docs.asaas.com/reference/remover-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/remover-uma-imagem-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/remover-webhook.md
+  - https://docs.asaas.com/reference/request-anticipation.md
+  - https://docs.asaas.com/reference/request-recharge.md
+  - https://docs.asaas.com/reference/resend-activation-link-for-non-baas-subaccount.md
+  - https://docs.asaas.com/reference/resend-documents.md
+  - https://docs.asaas.com/reference/restaurar-cliente-removido.md
+  - https://docs.asaas.com/reference/restaurar-cobranca-removida-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/restaurar-cobranca-removida.md
+  - https://docs.asaas.com/reference/restaurar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/restore-a-payments-link.md
+  - https://docs.asaas.com/reference/restore-removed-customer.md
+  - https://docs.asaas.com/reference/restore-removed-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/restore-removed-payment.md
+  - https://docs.asaas.com/reference/reterive-escrow-account-configuration-for-subaccount.md
+  - https://docs.asaas.com/reference/retrieve-a-credit-bureau-report.md
+  - https://docs.asaas.com/reference/retrieve-a-single-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-a-single-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/retrieve-a-single-automatic-pix-payment-instruction.md
+  - https://docs.asaas.com/reference/retrieve-a-single-bill-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-chargeback.md
+  - https://docs.asaas.com/reference/retrieve-a-single-customer.md
+  - https://docs.asaas.com/reference/retrieve-a-single-document-of-a-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-installment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-invoice.md
+  - https://docs.asaas.com/reference/retrieve-a-single-key.md
+  - https://docs.asaas.com/reference/retrieve-a-single-paid-split.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payment-with-summary-data.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payments-link-image.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payments-link.md
+  - https://docs.asaas.com/reference/retrieve-a-single-received-split.md
+  - https://docs.asaas.com/reference/retrieve-a-single-recurrence.md
+  - https://docs.asaas.com/reference/retrieve-a-single-subaccount.md
+  - https://docs.asaas.com/reference/retrieve-a-single-subscription.md
+  - https://docs.asaas.com/reference/retrieve-a-single-transaction.md
+  - https://docs.asaas.com/reference/retrieve-a-single-transfer.md
+  - https://docs.asaas.com/reference/retrieve-a-single-webhook.md
+  - https://docs.asaas.com/reference/retrieve-account-balance.md
+  - https://docs.asaas.com/reference/retrieve-account-fees.md
+  - https://docs.asaas.com/reference/retrieve-anticipation-limits.md
+  - https://docs.asaas.com/reference/retrieve-asaas-account-number.md
+  - https://docs.asaas.com/reference/retrieve-business-data.md
+  - https://docs.asaas.com/reference/retrieve-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/retrieve-contract-effect-blocking-payment-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-default-escrow-account-configuration.md
+  - https://docs.asaas.com/reference/retrieve-extract.md
+  - https://docs.asaas.com/reference/retrieve-notifications-from-a-customer.md
+  - https://docs.asaas.com/reference/retrieve-payment-billing-information.md
+  - https://docs.asaas.com/reference/retrieve-payment-escrow-in-the-escrow-account.md
+  - https://docs.asaas.com/reference/retrieve-personalization-settings.md
+  - https://docs.asaas.com/reference/retrieve-pre-authorization-configuration.md
+  - https://docs.asaas.com/reference/retrieve-refunds-of-a-single-payment.md
+  - https://docs.asaas.com/reference/retrieve-split-values.md
+  - https://docs.asaas.com/reference/retrieve-status-of-a-payment.md
+  - https://docs.asaas.com/reference/retrieve-status-of-automatic-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-tax-information.md
+  - https://docs.asaas.com/reference/retrieve-walletid.md
+  - https://docs.asaas.com/reference/sales-simulator.md
+  - https://docs.asaas.com/reference/salvar-ou-atualizar-configuracao-da-conta-escrow-para-a-subconta.md
+  - https://docs.asaas.com/reference/salvar-ou-atualizar-configuracao-de-pre-autorizacao.md
+  - https://docs.asaas.com/reference/salvar-personalizacao-da-fatura.md
+  - https://docs.asaas.com/reference/save-or-update-escrow-account-configuration-for-subaccount.md
+  - https://docs.asaas.com/reference/save-or-update-pre-authorization-configuration.md
+  - https://docs.asaas.com/reference/save-payment-checkout-personalization.md
+  - https://docs.asaas.com/reference/schedule-invoice.md
+  - https://docs.asaas.com/reference/search-for-cell-phone-provider.md
+  - https://docs.asaas.com/reference/send-documents.md
+  - https://docs.asaas.com/reference/set-payments-link-main-image.md
+  - https://docs.asaas.com/reference/simulador-de-vendas.md
+  - https://docs.asaas.com/reference/simular-um-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/simular-uma-negativacao.md
+  - https://docs.asaas.com/reference/simulate-a-bill-payment.md
+  - https://docs.asaas.com/reference/simulate-a-payment-dunning.md
+  - https://docs.asaas.com/reference/simulate-anticipation.md
+  - https://docs.asaas.com/reference/solicitar-antecipacao.md
+  - https://docs.asaas.com/reference/solicitar-recarga.md
+  - https://docs.asaas.com/reference/tokenizacao-de-cartao-de-credito.md
+  - https://docs.asaas.com/reference/transfer-to-another-institution-account-or-pix-key.md
+  - https://docs.asaas.com/reference/transfer-to-asaas-account-1.md
+  - https://docs.asaas.com/reference/transferir-para-conta-asaas.md
+  - https://docs.asaas.com/reference/transferir-para-conta-de-outra-instituicao-ou-chave-pix.md
+  - https://docs.asaas.com/reference/undo-cash-receipt-confirmation-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/undo-cash-receipt-confirmation.md
+  - https://docs.asaas.com/reference/update-a-payments-link.md
+  - https://docs.asaas.com/reference/update-api-key-for-a-subaccount.md
+  - https://docs.asaas.com/reference/update-business-data.md
+  - https://docs.asaas.com/reference/update-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/update-existing-customer.md
+  - https://docs.asaas.com/reference/update-existing-notification.md
+  - https://docs.asaas.com/reference/update-existing-notifications-in-batch.md
+  - https://docs.asaas.com/reference/update-existing-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/update-existing-payment.md
+  - https://docs.asaas.com/reference/update-existing-subscription.md
+  - https://docs.asaas.com/reference/update-existing-webhook.md
+  - https://docs.asaas.com/reference/update-installment-splits.md
+  - https://docs.asaas.com/reference/update-invoice.md
+  - https://docs.asaas.com/reference/update-sent-document.md
+  - https://docs.asaas.com/reference/update-settings-of-a-document-of-a-payment.md
+  - https://docs.asaas.com/reference/update-status-of-automatic-anticipation.md
+  - https://docs.asaas.com/reference/update-subscription-credit-card.md
+  - https://docs.asaas.com/reference/upload-payment-documents.md
+  - https://docs.asaas.com/reference/verificar-documentos-pendentes.md
+  - https://docs.asaas.com/reference/view-document-sent.md
+  - https://docs.asaas.com/reference/visualizar-documento-enviado.md
+  merge:
+    pages: 422
+    deduped: 1780
+    conflicts_kept_first: 2048

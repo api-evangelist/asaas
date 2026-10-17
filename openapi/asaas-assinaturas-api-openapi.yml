@@ -1,0 +1,3632 @@
+openapi: 3.2.0
+info:
+  title: Asaas Assinaturas API
+  description: API pública de integração com a plataforma Asaas.
+  version: 3.0.0
+servers:
+- url: https://api-sandbox.asaas.com
+  description: Sandbox
+security:
+- Authorization: []
+tags:
+- name: Assinaturas
+paths:
+  /v3/subscriptions:
+    post:
+      tags:
+      - Assinaturas
+      summary: Criar nova assinatura
+      description: ''
+      operationId: criar-nova-assinatura
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionSaveRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+      deprecated: false
+    get:
+      tags:
+      - Assinaturas
+      summary: Listar assinaturas
+      description: ''
+      operationId: listar-assinaturas
+      parameters:
+      - name: offset
+        in: query
+        description: Elemento inicial da lista
+        schema:
+          type: integer
+          example: 0
+      - name: limit
+        in: query
+        description: 'Número de elementos da lista (max: 100)'
+        schema:
+          maximum: 100
+          type: integer
+          example: 10
+      - name: customer
+        in: query
+        description: Filtrar pelo Identificador único do cliente
+        schema:
+          type: string
+          example: null
+      - name: customerGroupName
+        in: query
+        description: Filtrar pelo nome do grupo de cliente
+        schema:
+          type: string
+          example: null
+      - name: billingType
+        in: query
+        description: Filtrar por forma de pagamento
+        schema:
+          $ref: '#/components/schemas/SubscriptionListRequestBillingType'
+      - name: status
+        in: query
+        description: Filtrar pelo status
+        schema:
+          $ref: '#/components/schemas/SubscriptionListRequestSubscriptionStatus'
+      - name: deletedOnly
+        in: query
+        description: Envie true para retornar somente as assinaturas removidas
+        schema:
+          type: string
+          example: null
+      - name: includeDeleted
+        in: query
+        description: Envie true para recuperar também as assinaturas removidas
+        schema:
+          type: string
+          example: null
+      - name: externalReference
+        in: query
+        description: Filtrar pelo Identificador do seu sistema
+        schema:
+          type: string
+          example: null
+      - name: order
+        in: query
+        description: Ordem crescente ou decrescente
+        schema:
+          type: string
+          example: null
+      - name: sort
+        in: query
+        description: Por qual campo será ordenado
+        schema:
+          type: string
+          example: null
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionListResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+      deprecated: false
+  /v3/subscriptions/:
+    post:
+      tags:
+      - Assinaturas
+      summary: Criar assinatura com cartão de crédito
+      description: ''
+      operationId: criar-assinatura-com-cartao-de-credito
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionSaveWithCreditCardRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionSaveWithCreditCardResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+      deprecated: false
+  /v3/subscriptions/{id}:
+    get:
+      tags:
+      - Assinaturas
+      summary: Recuperar uma única assinatura
+      description: ''
+      operationId: recuperar-uma-unica-assinatura
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+    put:
+      tags:
+      - Assinaturas
+      summary: Atualizar assinatura existente
+      description: ''
+      operationId: atualizar-assinatura-existente
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionUpdateRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+    delete:
+      tags:
+      - Assinaturas
+      summary: Remover assinatura
+      description: ''
+      operationId: remover-assinatura
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDeleteResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/subscriptions/{id}/invoiceSettings:
+    post:
+      tags:
+      - Assinaturas
+      summary: Criar configuração para emissão de Notas Fiscais
+      description: ''
+      operationId: criar-configuracao-para-emissao-de-notas-fiscais
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionConfigureInvoiceRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInvoiceConfigGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+    get:
+      tags:
+      - Assinaturas
+      summary: Recuperar configuração para emissão de notas fiscais
+      description: ''
+      operationId: recuperar-configuracao-para-emissao-de-notas-fiscais
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInvoiceConfigGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+    delete:
+      tags:
+      - Assinaturas
+      summary: Remover configuração para emissão de Notas Fiscais
+      description: ''
+      operationId: remover-configuracao-para-emissao-de-notas-fiscais
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDeleteInvoiceConfigResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+    put:
+      tags:
+      - Assinaturas
+      summary: Atualizar configuração para emissão de Notas Fiscais
+      description: ''
+      operationId: atualizar-configuracao-para-emissao-de-notas-fiscais
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionInvoiceConfigUpdateRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionInvoiceConfigGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/subscriptions/{id}/invoices:
+    get:
+      tags:
+      - Assinaturas
+      summary: Listar notas fiscais das cobranças de uma assinatura
+      description: ''
+      operationId: listar-notas-fiscais-das-cobrancas-de-uma-assinatura
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: inv_000000000232
+      - name: offset
+        in: query
+        description: Elemento inicial da lista
+        schema:
+          type: integer
+          example: 0
+      - name: limit
+        in: query
+        description: 'Número de elementos da lista (max: 100)'
+        schema:
+          maximum: 100
+          type: integer
+          example: 10
+      - name: effectiveDate[ge]
+        in: query
+        description: Filtrar a partir de uma data de emissão
+        schema:
+          type: string
+          example: '2024-08-20'
+      - name: effectiveDate[le]
+        in: query
+        description: Filtrar até uma data de emissão
+        schema:
+          type: string
+          example: '2024-08-20'
+      - name: externalReference
+        in: query
+        description: Identificador da nota fiscal no seu sistema
+        schema:
+          type: string
+          example: null
+      - name: status
+        in: query
+        description: Filtrar por status da nota fiscal
+        schema:
+          $ref: '#/components/schemas/SubscriptionGetInvoicesRequestInvoiceStatus'
+      - name: customer
+        in: query
+        description: Filtrar pelo identificador único do cliente
+        schema:
+          type: string
+          example: cus_000000002750
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceListResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/subscriptions/{id}/paymentBook:
+    get:
+      tags:
+      - Assinaturas
+      summary: Gerar carnê de assinatura
+      description: ''
+      operationId: gerar-carne-de-assinatura
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      - name: month
+        in: query
+        description: Mês final para geração do carnê
+        schema:
+          type: integer
+          example: null
+      - name: year
+        in: query
+        description: Ano final para geração do carnê
+        schema:
+          type: integer
+          example: null
+      - name: sort
+        in: query
+        description: Filtrar pelo nome da coluna
+        schema:
+          type: string
+          example: null
+      - name: order
+        in: query
+        description: Ordenação da coluna
+        schema:
+          type: string
+          example: asc
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+                example: Binário do carnê da assinatura
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/subscriptions/{id}/payments:
+    get:
+      tags:
+      - Assinaturas
+      summary: Listar cobranças de uma assinatura
+      description: ''
+      operationId: listar-cobrancas-de-uma-assinatura
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      - name: status
+        in: query
+        description: Filtrar por status das cobranças
+        schema:
+          $ref: '#/components/schemas/SubscriptionListPaymentsRequestPaymentStatus'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentListResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '403':
+          description: Forbidden. Ocorre quando o body da requisição está preenchido, chamadas de método GET precisam ter um body vazio.
+        '404':
+          description: Not found
+      deprecated: false
+  /v3/subscriptions/{id}/updateCreditCard:
+    post:
+      tags:
+      - Assinaturas
+      summary: Atualiza o cartão de crédito sem efetuar cobrança
+      description: Este endpoint atualiza o cartão de crédito da assinatura sem realizar a cobrança imediata. Além disso, todas as cobranças pendentes vinculadas a assinatura também são atualizadas.
+      operationId: atualizar-cartao-de-credito-assinatura
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único da assinatura no Asaas
+        required: true
+        schema:
+          type: string
+          example: sub_VXJBYgP2u0eO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionUpdateCreditCardRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionGetResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+components:
+  schemas:
+    PaymentChargebackResponseChargebackReason:
+      type: string
+      description: Razão do chargeback
+      example: COMMERCIAL_DISAGREEMENT
+      deprecated: false
+      enum:
+      - ABSENCE_OF_PRINT
+      - ABSENT_CARD_FRAUD
+      - CARD_ACTIVATED_PHONE_TRANSACTION
+      - CARD_FRAUD
+      - CARD_RECOVERY_BULLETIN
+      - COMMERCIAL_DISAGREEMENT
+      - COPY_NOT_RECEIVED
+      - CREDIT_OR_DEBIT_PRESENTATION_ERROR
+      - DIFFERENT_PAY_METHOD
+      - FRAUD
+      - INCORRECT_TRANSACTION_VALUE
+      - INVALID_CURRENCY
+      - INVALID_DATA
+      - LATE_PRESENTATION
+      - LOCAL_REGULATORY_OR_LEGAL_DISPUTE
+      - MULTIPLE_ROCS
+      - ORIGINAL_CREDIT_TRANSACTION_NOT_ACCEPTED
+      - OTHER_ABSENT_CARD_FRAUD
+      - PROCESS_ERROR
+      - RECEIVED_COPY_ILLEGIBLE_OR_INCOMPLETE
+      - RECURRENCE_CANCELED
+      - REQUIRED_AUTHORIZATION_NOT_GRANTED
+      - RIGHT_OF_FULL_RECOURSE_FOR_FRAUD
+      - SALE_CANCELED
+      - SERVICE_DISAGREEMENT_OR_DEFECTIVE_PRODUCT
+      - SERVICE_NOT_RECEIVED
+      - SPLIT_SALE
+      - TRANSFERS_OF_DIVERSE_RESPONSIBILITIES
+      - UNQUALIFIED_CAR_RENTAL_DEBIT
+      - USA_CARDHOLDER_DISPUTE
+      - VISA_FRAUD_MONITORING_PROGRAM
+      - WARNING_BULLETIN_FILE
+    SubscriptionUpdateRequestSubscriptionStatus:
+      type: string
+      description: Status da assinatura
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - INACTIVE
+    SubscriptionGetInvoicesRequestInvoiceStatus:
+      type: string
+      description: Filtrar por status da nota fiscal
+      example: SCHEDULED
+      deprecated: false
+      enum:
+      - SCHEDULED
+      - WAITING_OVERDUE_PAYMENT
+      - PENDING
+      - SYNCHRONIZED
+      - AUTHORIZED
+      - PROCESSING_CANCELLATION
+      - CANCELLED
+      - CANCELLATION_DENIED
+      - ERROR
+      - NONE
+      - CANCELED
+    SubscriptionSaveRequestCycle:
+      type: string
+      description: Periodicidade da cobrança
+      example: MONTHLY
+      deprecated: false
+      enum:
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - BIMONTHLY
+      - QUARTERLY
+      - SEMIANNUALLY
+      - YEARLY
+    SubscriptionListPaymentsRequestPaymentStatus:
+      type: string
+      description: Filtrar por status das cobranças
+      example: PENDING
+      deprecated: false
+      enum:
+      - PENDING
+      - RECEIVED
+      - CONFIRMED
+      - OVERDUE
+      - REFUNDED
+      - RECEIVED_IN_CASH
+      - REFUND_REQUESTED
+      - REFUND_IN_PROGRESS
+      - CHARGEBACK_REQUESTED
+      - CHARGEBACK_DISPUTE
+      - AWAITING_CHARGEBACK_REVERSAL
+      - DUNNING_REQUESTED
+      - DUNNING_RECEIVED
+      - AWAITING_RISK_ANALYSIS
+    PaymentDiscountDiscountType:
+      type: string
+      description: Tipo de desconto
+      example: PERCENTAGE
+      deprecated: false
+      enum:
+      - FIXED
+      - PERCENTAGE
+    PaymentInterestResponseDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Valor dos juros em porcentagem
+          example: 2
+          deprecated: false
+      description: Informações de juros para pagamento após o vencimento
+      deprecated: false
+    CreditCardRequestDTO:
+      required:
+      - holderName
+      - number
+      - expiryMonth
+      - expiryYear
+      - ccv
+      type: object
+      properties:
+        holderName:
+          type: string
+          description: Nome impresso no cartão
+          example: John Doe
+          deprecated: false
+        number:
+          type: string
+          description: Número do cartão
+          example: '1234567890123456'
+          deprecated: false
+        expiryMonth:
+          type: string
+          description: Mês de expiração com 2 dígitos
+          example: '10'
+          deprecated: false
+        expiryYear:
+          type: string
+          description: Ano de expiração com 4 dígitos
+          example: '2026'
+          deprecated: false
+        ccv:
+          type: string
+          description: Código de segurança
+          example: '123'
+          deprecated: false
+      description: Informações do cartão de crédito
+      deprecated: false
+    PaymentDiscountDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Valor percentual ou fixo de desconto a ser aplicado sobre o valor da cobrança
+          example: 10
+          deprecated: false
+        dueDateLimitDays:
+          type: integer
+          description: 'Dias antes do vencimento para aplicar desconto. Ex: 0 = até o vencimento, 1 = até um dia antes, 2 = até dois dias antes, e assim por diante'
+          format: int32
+          example: 0
+          deprecated: false
+        type:
+          $ref: '#/components/schemas/PaymentDiscountDiscountType'
+      description: Informações de desconto
+      deprecated: false
+    SubscriptionSaveWithCreditCardResponseBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - DEBIT_CARD
+      - TRANSFER
+      - DEPOSIT
+      - PIX
+    PaymentGetResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo do objeto
+          example: payment
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único da cobrança no Asaas
+          example: pay_080225913252
+          deprecated: false
+        dateCreated:
+          type: string
+          description: Data de criação da cobrança
+          format: date
+          example: '2017-03-10'
+          deprecated: false
+        customer:
+          type: string
+          description: Identificador único do cliente ao qual a cobrança pertence
+          example: cus_G7Dvo4iphUNk
+          deprecated: false
+        subscription:
+          type: string
+          description: Identificador único da assinatura (quando cobrança recorrente)
+          deprecated: false
+          example: null
+        installment:
+          type: string
+          description: Identificador único do parcelamento (quando cobrança parcelada)
+          deprecated: false
+          example: null
+        checkoutSession:
+          type: string
+          description: Identificador único do checkout
+          example: 356eb0c4-9eb7-4b7f-b2be-d9479af1d29f
+          deprecated: false
+        paymentLink:
+          type: string
+          description: Identificador único do link de pagamentos ao qual a cobrança pertence
+          deprecated: false
+          example: null
+        value:
+          type: number
+          description: Valor da cobrança
+          example: 129.9
+          deprecated: false
+        netValue:
+          type: number
+          description: Valor líquido da cobrança após desconto da tarifa do Asaas
+          example: 124.9
+          deprecated: false
+        originalValue:
+          type: number
+          description: Valor original da cobrança (preenchido quando paga com juros e multa)
+          deprecated: false
+          example: null
+        interestValue:
+          type: number
+          description: Valor calculado de juros e multa que deve ser pago após o vencimento da cobrança
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição da cobrança
+          example: Pedido 056984
+          deprecated: false
+        billingType:
+          $ref: '#/components/schemas/PaymentGetResponseBillingType'
+        creditCard:
+          $ref: '#/components/schemas/PaymentSaveWithCreditCardCreditCardDTO'
+        canBePaidAfterDueDate:
+          type: boolean
+          description: Informa se a cobrança pode ser paga após o vencimento (Somente para boleto)
+          example: true
+          deprecated: false
+        pixTransaction:
+          type: string
+          description: Identificador único da transação Pix à qual a cobrança pertence
+          deprecated: false
+          example: null
+        pixQrCodeId:
+          type: string
+          description: Identificador único do QrCode estático gerado para determinada chave Pix
+          deprecated: false
+          example: null
+        status:
+          $ref: '#/components/schemas/PaymentGetResponsePaymentStatus'
+        dueDate:
+          type: string
+          description: Data de vencimento da cobrança
+          format: date
+          example: '2017-06-10'
+          deprecated: false
+        originalDueDate:
+          type: string
+          description: Vencimento original no ato da criação da cobrança
+          format: date
+          example: '2017-06-10'
+          deprecated: false
+        paymentDate:
+          type: string
+          description: Data de liquidação da cobrança no Asaas
+          format: date
+          deprecated: false
+          example: null
+        clientPaymentDate:
+          type: string
+          description: Data em que o cliente efetuou o pagamento do boleto
+          format: date
+          deprecated: false
+          example: null
+        installmentNumber:
+          type: integer
+          description: Número da parcela
+          format: int32
+          deprecated: false
+          example: null
+        invoiceUrl:
+          type: string
+          description: URL da fatura
+          example: https://www.asaas.com/i/080225913252
+          deprecated: false
+        invoiceNumber:
+          type: string
+          description: Número da fatura
+          example: '00005101'
+          deprecated: false
+        externalReference:
+          type: string
+          description: Campo livre para busca
+          example: 056984
+          deprecated: false
+        deleted:
+          type: boolean
+          description: Determina se a cobrança foi removida
+          example: false
+          deprecated: false
+        anticipated:
+          type: boolean
+          description: Define se a cobrança foi antecipada ou está em processo de antecipação
+          example: false
+          deprecated: false
+        anticipable:
+          type: boolean
+          description: Determina se a cobrança é antecipável
+          example: false
+          deprecated: false
+        creditDate:
+          type: string
+          description: Indica a data que o crédito ficou disponível
+          format: date
+          example: '2017-06-10'
+          deprecated: false
+        estimatedCreditDate:
+          type: string
+          description: Data estimada de quando o crédito ficará disponível
+          format: date
+          example: '2017-06-10'
+          deprecated: false
+        transactionReceiptUrl:
+          type: string
+          description: URL do comprovante de confirmação, recebimento, estorno ou remoção.
+          deprecated: false
+          example: null
+        nossoNumero:
+          type: string
+          description: Identificação única do boleto
+          example: '6453'
+          deprecated: false
+        bankSlipUrl:
+          type: string
+          description: URL para download do boleto
+          example: https://www.asaas.com/b/pdf/080225913252
+          deprecated: false
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineResponseDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestResponseDTO'
+        split:
+          type: array
+          description: Configurações do split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/LeanPaymentSplitGetResponseDTO'
+        postalService:
+          type: boolean
+          description: Define se a cobrança será enviada via Correios
+          example: false
+          deprecated: false
+        daysAfterDueDateToRegistrationCancellation:
+          type: integer
+          description: Dias após o vencimento para cancelamento do registro (somente para boleto bancário)
+          format: int32
+          deprecated: false
+          example: null
+        chargeback:
+          $ref: '#/components/schemas/PaymentChargebackResponseDTO'
+        escrow:
+          $ref: '#/components/schemas/PaymentEscrowGetResponseDTO'
+        refunds:
+          type: array
+          description: Informações de estorno
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/PaymentRefundGetResponseDTO'
+        threeDSecureChallengeUrl:
+          type: string
+          description: URL para onde o titular do cartão deve ser redirecionado para concluir o desafio de autenticação 3D Secure. Retornado apenas quando o desafio de autenticação é exigido pelo emissor do cartão
+          deprecated: false
+          example: null
+    LeanPaymentSplitGetResponsePaymentSplitCancellationReason:
+      type: string
+      description: Motivo de cancelamento do split
+      example: BANK_ACCOUNT_AWAITING_AUTHORIZATION
+      deprecated: false
+      enum:
+      - BANK_ACCOUNT_AWAITING_AUTHORIZATION
+      - BANK_ACCOUNT_PENDING
+      - BANK_ACCOUNT_REJECTED
+      - CHECKOUT_VALIDATION_FAILED
+      - CUSTOMER_DOCUMENTS_PENDING
+      - CUSTOMER_DOCUMENTS_REJECTED
+      - EXTERNAL_AUTHORIZATION_REFUSED
+      - MANUAL_CANCELLATION
+      - PAYMENT_DELETED
+      - PAYMENT_OVERDUE
+      - PAYMENT_RECEIVED_IN_CASH
+      - PAYMENT_REFUNDED
+      - VALUE_DIVERGENCE_BLOCK
+      - WALLET_REMOVED_FROM_OUTSIDE_ARRANGEMENT_ALLOW_LIST
+      - WALLET_UNABLE_TO_RECEIVE
+    PaymentChargebackResponseChargebackDisputeStatus:
+      type: string
+      description: Status da disputa do chargeback.
+      example: ACCEPTED
+      deprecated: false
+      enum:
+      - REQUESTED
+      - ACCEPTED
+      - REJECTED
+    SubscriptionSaveRequestDTO:
+      required:
+      - customer
+      - billingType
+      - value
+      - nextDueDate
+      - cycle
+      type: object
+      properties:
+        customer:
+          type: string
+          description: Identificador único do cliente no Asaas
+          example: cus_0T1mdomVMi39
+          deprecated: false
+        billingType:
+          $ref: '#/components/schemas/SubscriptionSaveRequestBillingType'
+        value:
+          type: number
+          description: Valor da assinatura
+          example: 19.9
+          deprecated: false
+        nextDueDate:
+          type: string
+          description: Vencimento da primeira cobrança
+          format: date
+          example: '2017-05-15'
+          deprecated: false
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestRequestDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineRequestDTO'
+        cycle:
+          $ref: '#/components/schemas/SubscriptionSaveRequestCycle'
+        description:
+          type: string
+          description: Descrição da assinatura (máx. 500 caracteres)
+          example: Assinatura Plano Pró
+          deprecated: false
+        endDate:
+          type: string
+          description: Data limite para vencimento das cobranças
+          format: date
+          deprecated: false
+          example: null
+        maxPayments:
+          type: integer
+          description: Número máximo de cobranças a serem geradas para esta assinatura
+          format: int32
+          deprecated: false
+          example: null
+        externalReference:
+          type: string
+          description: Identificador da assinatura no seu sistema
+          deprecated: false
+          example: null
+        split:
+          type: array
+          description: Informações de split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/SubscriptionSplitRequestDTO'
+        callback:
+          $ref: '#/components/schemas/PaymentCallbackRequestDTO'
+    SubscriptionUpdateRequestBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - PIX
+    SubscriptionSaveWithCreditCardRequestDTO:
+      required:
+      - customer
+      - billingType
+      - value
+      - nextDueDate
+      - cycle
+      - creditCard
+      - creditCardHolderInfo
+      - remoteIp
+      type: object
+      properties:
+        customer:
+          type: string
+          description: Identificador único do cliente no Asaas
+          example: cus_0T1mdomVMi39
+          deprecated: false
+        billingType:
+          $ref: '#/components/schemas/SubscriptionSaveWithCreditCardRequestBillingType'
+        value:
+          type: number
+          description: Valor da assinatura
+          example: 19.9
+          deprecated: false
+        nextDueDate:
+          type: string
+          description: Vencimento da primeira cobrança
+          format: date
+          example: '2017-05-15'
+          deprecated: false
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestRequestDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineRequestDTO'
+        cycle:
+          $ref: '#/components/schemas/SubscriptionSaveWithCreditCardRequestCycle'
+        description:
+          type: string
+          description: Descrição da assinatura (máx. 500 caracteres)
+          example: Assinatura Plano Pró
+          deprecated: false
+        endDate:
+          type: string
+          description: Data limite para vencimento das cobranças
+          format: date
+          deprecated: false
+          example: null
+        maxPayments:
+          type: integer
+          description: Número máximo de cobranças a serem geradas para esta assinatura
+          format: int32
+          deprecated: false
+          example: null
+        externalReference:
+          type: string
+          description: Identificador da assinatura no seu sistema
+          deprecated: false
+          example: null
+        split:
+          type: array
+          description: Informações de split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/SubscriptionSplitRequestDTO'
+        callback:
+          $ref: '#/components/schemas/PaymentCallbackRequestDTO'
+        creditCard:
+          $ref: '#/components/schemas/CreditCardRequestDTO'
+        creditCardHolderInfo:
+          $ref: '#/components/schemas/CreditCardHolderInfoRequestDTO'
+        creditCardToken:
+          type: string
+          description: Token do cartão de crédito para uso da funcionalidade de tokenização de cartão de crédito. Caso informado, os campos acima não são obrigatórios.
+          example: a75a1d98-c52d-4a6b-a413-71e00b193c99
+          deprecated: false
+        remoteIp:
+          type: string
+          description: IP de onde o cliente está fazendo a compra. Não deve ser informado o IP do seu servidor.
+          deprecated: false
+          example: null
+    ErrorResponseItemDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código do erro
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do erro
+          deprecated: false
+          example: null
+      description: Lista de objetos
+      deprecated: false
+    SubscriptionInvoiceTaxesRequestDTO:
+      required:
+      - retainIss
+      - iss
+      - pis
+      - cofins
+      - csll
+      - inss
+      - ir
+      type: object
+      properties:
+        nbsCode:
+          type: string
+          description: Código NBS (Nomenclatura Brasileira de Serviços)
+          example: '01.01'
+          deprecated: false
+        taxSituationCode:
+          type: string
+          description: Código de situação tributária
+          example: '011'
+          deprecated: false
+        taxClassificationCode:
+          type: string
+          description: Código de classificação tributária
+          example: '011001'
+          deprecated: false
+        operationIndicatorCode:
+          type: string
+          description: Código do indicador de operação
+          example: '020101'
+          deprecated: false
+        retainIss:
+          type: boolean
+          description: Tomador da nota fiscal deve reter ISS ou não
+          example: true
+          deprecated: false
+        iss:
+          type: number
+          description: Alíquota ISS
+          example: 2
+          deprecated: false
+        pisCofinsRetentionType:
+          type: string
+          description: Tipo de retenção de PIS/COFINS. Não envie este campo na requisição; ele é calculado automaticamente pelo Asaas com base nas alíquotas de PIS, COFINS e CSLL. Utilize o valor retornado na resposta para fins de conciliação
+          example: NOT_WITHHELD
+          deprecated: true
+        pisCofinsTaxStatus:
+          type: string
+          description: Situação tributária do PIS/COFINS
+          example: STANDARD_TAXABLE_OPERATION
+          deprecated: false
+        operationPis:
+          type: number
+          description: Alíquota de PIS de operação (apuração própria do contribuinte)
+          example: 0.65
+          deprecated: false
+        operationCofins:
+          type: number
+          description: Alíquota de COFINS de operação (apuração própria do contribuinte)
+          example: 3
+          deprecated: false
+        pis:
+          type: number
+          description: Alíquota PIS
+          example: 0.65
+          deprecated: false
+        cofins:
+          type: number
+          description: Alíquota COFINS
+          example: 3
+          deprecated: false
+        csll:
+          type: number
+          description: Alíquota CSLL
+          example: 9
+          deprecated: false
+        inss:
+          type: number
+          description: Alíquota INSS
+          example: 11
+          deprecated: false
+        ir:
+          type: number
+          description: Alíquota IR
+          example: 1.5
+          deprecated: false
+        realEstateInfo:
+          $ref: '#/components/schemas/InvoiceRealEstateInfoRequestDTO'
+        operationTypeCode:
+          type: integer
+          description: Código do tipo de operação da reforma tributária. Obrigatório para notas de serviços de locação, cessão ou usufruto de bens imóveis
+          format: int32
+          example: '2'
+          deprecated: false
+      description: Impostos da nota fiscal
+      deprecated: false
+    LeanPaymentSplitGetResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do split pago no Asaas
+          example: fd41396a-7453-47d0-9411-c8543522591d
+          deprecated: false
+        walletId:
+          type: string
+          description: Identificador da carteira Asaas que será transferido
+          example: 7bafd95a-e783-4a62-9be1-23999af742c6
+          deprecated: false
+        fixedValue:
+          type: number
+          description: Valor fixo a ser transferido para a conta quando a cobrança for recebida
+          example: 20.32
+          deprecated: false
+        percentualValue:
+          type: number
+          description: Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida
+          deprecated: false
+          example: null
+        totalValue:
+          type: number
+          description: Valor total do split que será enviado. Os valores exibidos podem sofrer alteração após a confirmação ou alteração da cobrança.
+          example: 20.32
+          deprecated: false
+        cancellationReason:
+          $ref: '#/components/schemas/LeanPaymentSplitGetResponsePaymentSplitCancellationReason'
+        status:
+          $ref: '#/components/schemas/LeanPaymentSplitGetResponsePaymentSplitStatus'
+        externalReference:
+          type: string
+          description: Identificador do split no seu sistema
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do split
+          deprecated: false
+          example: null
+      description: Configurações do split
+      deprecated: false
+    SubscriptionGetResponseBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - DEBIT_CARD
+      - TRANSFER
+      - DEPOSIT
+      - PIX
+    ChargebackCreditCardResponseDTO:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Últimos 4 dígitos do cartão utilizado
+          example: '8829'
+          deprecated: false
+        brand:
+          $ref: '#/components/schemas/ChargebackCreditCardResponseCreditCardBrand'
+      description: Informações do cartão de crédito
+      deprecated: false
+    SubscriptionInvoiceTaxesResponseDTO:
+      required:
+      - retainIss
+      - iss
+      - pis
+      - cofins
+      - csll
+      - inss
+      - ir
+      type: object
+      properties:
+        nbsCode:
+          type: string
+          description: Código NBS (Nomenclatura Brasileira de Serviços)
+          example: '01.01'
+          deprecated: false
+        taxSituationCode:
+          type: string
+          description: Código de situação tributária
+          example: '011'
+          deprecated: false
+        taxClassificationCode:
+          type: string
+          description: Código de classificação tributária
+          example: '011001'
+          deprecated: false
+        operationIndicatorCode:
+          type: string
+          description: Código do indicador de operação
+          example: '020101'
+          deprecated: false
+        retainIss:
+          type: boolean
+          description: Tomador da nota fiscal deve reter ISS ou não
+          example: true
+          deprecated: false
+        iss:
+          type: number
+          description: Alíquota ISS
+          example: 2
+          deprecated: false
+        pisCofinsRetentionType:
+          type: string
+          description: Tipo de retenção de PIS/COFINS. Não envie este campo na requisição; ele é calculado automaticamente pelo Asaas com base nas alíquotas de PIS, COFINS e CSLL. Utilize o valor retornado na resposta para fins de conciliação
+          example: NOT_WITHHELD
+          deprecated: false
+        pisCofinsTaxStatus:
+          type: string
+          description: Situação tributária do PIS/COFINS
+          example: STANDARD_TAXABLE_OPERATION
+          deprecated: false
+        operationPis:
+          type: number
+          description: Alíquota de PIS de operação (apuração própria do contribuinte)
+          example: 0.65
+          deprecated: false
+        operationCofins:
+          type: number
+          description: Alíquota de COFINS de operação (apuração própria do contribuinte)
+          example: 3
+          deprecated: false
+        pis:
+          type: number
+          description: Alíquota PIS
+          example: 0.65
+          deprecated: false
+        cofins:
+          type: number
+          description: Alíquota COFINS
+          example: 3
+          deprecated: false
+        csll:
+          type: number
+          description: Alíquota CSLL
+          example: 9
+          deprecated: false
+        inss:
+          type: number
+          description: Alíquota INSS
+          example: 11
+          deprecated: false
+        ir:
+          type: number
+          description: Alíquota IR
+          example: 1.5
+          deprecated: false
+        stateIbs:
+          type: number
+          description: Alíquota estadual IBS
+          example: 0.1
+          deprecated: false
+        stateIbsValue:
+          type: number
+          description: Valor estadual IBS
+          example: 0.3
+          deprecated: false
+        municipalIbs:
+          type: number
+          description: Alíquota municipal IBS
+          example: 0
+          deprecated: false
+        municipalIbsValue:
+          type: number
+          description: Valor municipal IBS
+          example: 0
+          deprecated: false
+        cbs:
+          type: number
+          description: Alíquota CBS
+          example: 0.9
+          deprecated: false
+        cbsValue:
+          type: number
+          description: Valor CBS
+          example: 2.7
+          deprecated: false
+        realEstateInfo:
+          $ref: '#/components/schemas/InvoiceRealEstateInfoResponseDTO'
+        operationTypeCode:
+          type: integer
+          description: Código do tipo de operação da reforma tributária. Obrigatório para notas de serviços de locação, cessão ou usufruto de bens imóveis
+          format: int32
+          example: '2'
+          deprecated: false
+      description: Impostos da nota fiscal
+      deprecated: false
+    PaymentFineRequestDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Percentual de multa sobre o valor da cobrança para pagamento após o vencimento
+          deprecated: false
+          example: null
+        type:
+          $ref: '#/components/schemas/PaymentFineRequestFineType'
+      description: Informações de multa para pagamento após o vencimento
+      deprecated: false
+    SubscriptionSplitResponseSubscriptionSplitDisabledReason:
+      type: string
+      description: Motivo pelo qual o split de assinatura foi desativado
+      example: WALLET_UNABLE_TO_RECEIVE
+      deprecated: false
+      enum:
+      - WALLET_UNABLE_TO_RECEIVE
+      - VALUE_DIVERGENCE
+      - WALLET_REMOVED_FROM_OUTSIDE_ARRANGEMENT_ALLOW_LIST
+    PaymentFineRequestFineType:
+      type: string
+      description: Tipo de multa
+      example: FIXED
+      deprecated: false
+      enum:
+      - FIXED
+      - PERCENTAGE
+    PaymentRefundedSplitResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do split
+          example: cff860dd-148e-48ca-ac8e-849684175158
+          deprecated: false
+        value:
+          type: number
+          description: Valor estornado
+          example: 10
+          deprecated: false
+        done:
+          type: boolean
+          description: Indica se o split foi estornado
+          example: true
+          deprecated: false
+      description: Lista de splits estornados, se houver
+      deprecated: false
+    InvoiceRealEstateInfoResponseDTO:
+      type: object
+      properties:
+        fiscalPropertyRegistration:
+          type: string
+          description: Inscrição fiscal do imóvel na prefeitura
+          example: '333'
+          deprecated: false
+        cibCode:
+          type: string
+          description: Código de Identificação do imóvel na Receita Federal (CIB)
+          example: '34567890'
+          deprecated: false
+        city:
+          type: integer
+          description: Identificador da cidade do imóvel no Asaas. Quando não informado, a cidade é resolvida a partir do postalCode
+          format: int64
+          example: 13660
+          deprecated: false
+        address:
+          type: string
+          description: Logradouro do imóvel
+          example: Rua das Acácias
+          deprecated: false
+        addressNumber:
+          type: string
+          description: Número do imóvel
+          example: '100'
+          deprecated: false
+        complement:
+          type: string
+          description: Complemento do endereço do imóvel
+          example: Bloco A
+          deprecated: false
+        province:
+          type: string
+          description: Bairro do imóvel
+          example: Centro
+          deprecated: false
+        postalCode:
+          type: string
+          description: CEP do imóvel
+          example: '89201002'
+          deprecated: false
+      description: Informações do imóvel, exigidas quando o indicador de operação corresponde a uma operação de locação, cessão ou usufruto de bem imóvel
+      deprecated: false
+    SubscriptionGetResponseSubscriptionStatus:
+      type: string
+      description: Status da assinatura
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - EXPIRED
+      - INACTIVE
+    LeanPaymentSplitGetResponsePaymentSplitStatus:
+      type: string
+      description: Status do split
+      example: PENDING
+      deprecated: false
+      enum:
+      - PENDING
+      - PROCESSING
+      - PROCESSING_REFUND
+      - AWAITING_CREDIT
+      - CANCELLED
+      - DONE
+      - REFUNDED
+      - BLOCKED_BY_VALUE_DIVERGENCE
+    SubscriptionUpdateRequestCycle:
+      type: string
+      description: Periodicidade da cobrança
+      example: MONTHLY
+      deprecated: false
+      enum:
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - BIMONTHLY
+      - QUARTERLY
+      - SEMIANNUALLY
+      - YEARLY
+    SubscriptionConfigureInvoiceRequestDTO:
+      required:
+      - taxes
+      type: object
+      properties:
+        municipalServiceId:
+          type: string
+          description: Identificador único do serviço municipal
+          deprecated: false
+          example: null
+        municipalServiceCode:
+          type: string
+          description: Código de serviço municipal
+          example: '1.01'
+          deprecated: false
+        municipalServiceName:
+          type: string
+          description: Nome do serviço municipal
+          deprecated: false
+          example: null
+        updatePayment:
+          type: boolean
+          description: Atualizar o valor da cobrança com os impostos da nota já descontados.
+          example: false
+          deprecated: false
+        deductions:
+          type: number
+          description: Deduções. As deduções não alteram o valor total da nota fiscal, mas alteram a base de cálculo do ISS.
+          example: 55
+          deprecated: false
+        effectiveDatePeriod:
+          type: string
+          description: Quando a nota fiscal será emitida
+          example: ON_PAYMENT_CONFIRMATION
+          deprecated: false
+          enum:
+          - ON_PAYMENT_CONFIRMATION
+          - ON_PAYMENT_DUE_DATE
+          - BEFORE_PAYMENT_DUE_DATE
+          - ON_DUE_DATE_MONTH
+          - ON_NEXT_MONTH
+        receivedOnly:
+          type: boolean
+          description: Emitir apenas para cobranças pagas
+          deprecated: false
+          example: null
+        daysBeforeDueDate:
+          type: integer
+          description: Quantidade de dias antes do vencimento da cobrança
+          format: int32
+          deprecated: false
+          example: null
+        observations:
+          type: string
+          description: Observações adicionais da nota fiscal
+          example: Referente aos trabalhos de março
+          deprecated: false
+        taxes:
+          $ref: '#/components/schemas/SubscriptionInvoiceTaxesRequestDTO'
+    SubscriptionSplitResponseDTO:
+      type: object
+      properties:
+        walletId:
+          type: string
+          description: Identificador da carteira Asaas que será transferido
+          example: 7bafd95a-e783-4a62-9be1-23999af742c6
+          deprecated: false
+        fixedValue:
+          type: number
+          description: Valor fixo a ser transferido para a conta quando a cobrança for recebida
+          example: 20.32
+          deprecated: false
+        percentualValue:
+          type: number
+          description: Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida
+          deprecated: false
+          example: null
+        externalReference:
+          type: string
+          description: Identificador do split no seu sistema
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do split
+          deprecated: false
+          example: null
+        status:
+          $ref: '#/components/schemas/SubscriptionSplitResponseSubscriptionSplitStatus'
+        disabledReason:
+          $ref: '#/components/schemas/SubscriptionSplitResponseSubscriptionSplitDisabledReason'
+      description: Informações de split
+      deprecated: false
+    SubscriptionDeleteInvoiceConfigResponseDTO:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          description: Informa se as configurações foram removidas
+          example: true
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único da assinatura no Asaas
+          example: sub_VXJBYgP2u0eO
+          deprecated: false
+    SubscriptionSaveWithCreditCardRequestBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - PIX
+    PaymentEscrowGetResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único da garantia da cobrança na Conta Escrow do Asaas
+          example: 4f468235-cec3-482f-b3d0-348af4c7194
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/PaymentEscrowGetResponsePaymentEscrowStatus'
+        expirationDate:
+          type: string
+          description: Data de expiração da garantia da cobrança
+          format: date
+          example: '2024-06-10'
+          deprecated: false
+        finishDate:
+          type: string
+          description: Data de encerramento da garantia da cobrança
+          format: date
+          example: '2024-06-10'
+          deprecated: false
+        finishReason:
+          $ref: '#/components/schemas/PaymentEscrowGetResponsePaymentEscrowFinishReason'
+      description: Informações de garantia da cobrança na Conta Escrow
+      deprecated: false
+    PaymentSaveWithCreditCardCreditCardDTO:
+      type: object
+      properties:
+        creditCardNumber:
+          type: string
+          description: Últimos 4 dígitos do cartão utilizado
+          example: '8829'
+          deprecated: false
+        creditCardBrand:
+          $ref: '#/components/schemas/PaymentSaveWithCreditCardCreditCardCreditCardBrand'
+        creditCardToken:
+          type: string
+          description: Token do cartão de crédito caso a tokenização esteja ativa.
+          deprecated: false
+          example: null
+      description: Informações do cartão de crédito
+      deprecated: false
+    PaymentGetResponseBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - DEBIT_CARD
+      - TRANSFER
+      - DEPOSIT
+      - PIX
+    PaymentCallbackRequestDTO:
+      required:
+      - successUrl
+      type: object
+      properties:
+        successUrl:
+          maxLength: 255
+          type: string
+          description: URL que o cliente será redirecionado após o pagamento com sucesso da fatura ou link de pagamento
+          deprecated: false
+          example: null
+        autoRedirect:
+          type: boolean
+          description: Definir se o cliente será redirecionado automaticamente ou será apenas informado com um botão para retornar ao site. O padrão é true, caso queira desativar informar false
+          deprecated: false
+          example: null
+      description: Informações de redirecionamento automático após pagamento do link de pagamento
+      deprecated: false
+    InvoiceGetResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo de objeto
+          example: invoice
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único da nota fiscal no Asaas
+          example: inv_000000000232
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/InvoiceGetResponseInvoiceStatus'
+        customer:
+          type: string
+          description: Identificador único do cliente no Asaas
+          example: cus_000000002750
+          deprecated: false
+        payment:
+          type: string
+          description: Identificador único da cobrança no Asaas
+          example: pay_145059895800
+          deprecated: false
+        installment:
+          type: string
+          description: Identificador único do parcelamento no Asaas
+          deprecated: false
+          example: null
+        type:
+          type: string
+          description: Tipo de nota fiscal
+          example: NFS-e
+          deprecated: false
+          enum:
+          - NFS-e
+        statusDescription:
+          type: string
+          description: Descrição da situação atual da nota fiscal
+          deprecated: false
+          example: null
+        serviceDescription:
+          type: string
+          description: Descrição dos serviços da nota fiscal
+          example: "Nota fiscal da Fatura 101940. \nDescrição dos Serviços: ANÁLISE E DESENVOLVIMENTO DE SISTEMAS"
+          deprecated: false
+        pdfUrl:
+          type: string
+          description: Link para arquivo pdf da nota fiscal emitida
+          deprecated: false
+          example: null
+        xmlUrl:
+          type: string
+          description: Link para arquivo xml da nota fiscal emitida
+          deprecated: false
+          example: null
+        rpsSerie:
+          type: string
+          description: Série da nota fiscal
+          deprecated: false
+          example: null
+        rpsNumber:
+          type: string
+          description: RPS convertido para a nota fiscal
+          deprecated: false
+          example: null
+        number:
+          type: string
+          description: Número da nota fiscal
+          deprecated: false
+          example: null
+        validationCode:
+          type: string
+          description: Código de verificação
+          deprecated: false
+          example: null
+        value:
+          type: number
+          description: Valor total
+          example: 300
+          deprecated: false
+        deductions:
+          type: number
+          description: Deduções. As deduções não alteram o valor total da nota fiscal, mas alteram a base de cálculo do ISS
+          example: 10
+          deprecated: false
+        effectiveDate:
+          type: string
+          description: Data de emissão da nota fiscal
+          format: date
+          example: '2024-08-15'
+          deprecated: false
+        observations:
+          type: string
+          description: Observações adicionais
+          example: Mensal referente aos trabalhos de Junho.
+          deprecated: false
+        estimatedTaxesDescription:
+          type: string
+          description: Impostos estimados da nota fiscal
+          deprecated: false
+          example: null
+        externalReference:
+          type: string
+          description: Identificador da nota fiscal no seu sistema
+          deprecated: false
+          example: null
+        taxes:
+          $ref: '#/components/schemas/InvoiceTaxesResponseDTO'
+        municipalServiceId:
+          type: string
+          description: Identificador único do serviço municipal
+          deprecated: false
+          example: null
+        municipalServiceCode:
+          type: string
+          description: Código de serviço municipal
+          example: '1.01'
+          deprecated: false
+        municipalServiceName:
+          type: string
+          description: Nome do serviço municipal
+          example: Análise e desenvolvimento de sistemas
+          deprecated: false
+    CreditCardHolderInfoRequestDTO:
+      required:
+      - name
+      - email
+      - cpfCnpj
+      - postalCode
+      - addressNumber
+      - phone
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do titular do cartão
+          example: John Doe
+          deprecated: false
+        email:
+          type: string
+          description: Email do titular do cartão
+          example: john.doe@asaas.com
+          deprecated: false
+        cpfCnpj:
+          type: string
+          description: CPF ou CNPJ do titular do cartão
+          example: '12345678901'
+          deprecated: false
+        postalCode:
+          type: string
+          description: CEP do titular do cartão
+          example: '12345678'
+          deprecated: false
+        addressNumber:
+          type: string
+          description: Número do endereço do titular do cartão
+          example: '123'
+          deprecated: false
+        addressComplement:
+          type: string
+          description: Complemento do endereço do titular do cartão
+          deprecated: false
+          example: null
+        phone:
+          type: string
+          description: Telefone com DDD do titular do cartão
+          deprecated: false
+          example: null
+        mobilePhone:
+          type: string
+          description: Celular do titular do cartão
+          deprecated: false
+          example: null
+      description: Informações do titular do cartão de crédito
+      deprecated: false
+    InvoiceRealEstateInfoRequestDTO:
+      required:
+      - cibCode
+      - address
+      - addressNumber
+      - province
+      - postalCode
+      type: object
+      properties:
+        fiscalPropertyRegistration:
+          type: string
+          description: Inscrição fiscal do imóvel na prefeitura
+          example: '333'
+          deprecated: false
+        cibCode:
+          type: string
+          description: Código de Identificação do imóvel na Receita Federal (CIB)
+          example: '34567890'
+          deprecated: false
+        city:
+          type: integer
+          description: Identificador da cidade do imóvel no Asaas. Quando não informado, a cidade é resolvida a partir do postalCode
+          format: int64
+          example: 13660
+          deprecated: false
+        address:
+          type: string
+          description: Logradouro do imóvel
+          example: Rua das Acácias
+          deprecated: false
+        addressNumber:
+          type: string
+          description: Número do imóvel
+          example: '100'
+          deprecated: false
+        complement:
+          type: string
+          description: Complemento do endereço do imóvel
+          example: Bloco A
+          deprecated: false
+        province:
+          type: string
+          description: Bairro do imóvel
+          example: Centro
+          deprecated: false
+        postalCode:
+          type: string
+          description: CEP do imóvel
+          example: '89201002'
+          deprecated: false
+      description: Informações do imóvel, exigidas quando o indicador de operação corresponde a uma operação de locação, cessão ou usufruto de bem imóvel
+      deprecated: false
+    SubscriptionInvoiceConfigGetResponseDTO:
+      type: object
+      properties:
+        municipalServiceId:
+          type: string
+          description: Identificador único do serviço municipal
+          deprecated: false
+          example: null
+        municipalServiceCode:
+          type: string
+          description: Código de serviço municipal
+          example: '1.01'
+          deprecated: false
+        municipalServiceName:
+          type: string
+          description: Nome do serviço municipal
+          deprecated: false
+          example: null
+        deductions:
+          type: number
+          description: Deduções. As deduções não alteram o valor total da nota fiscal, mas alteram a base de cálculo do ISS.
+          example: 55
+          deprecated: false
+        invoiceCreationPeriod:
+          type: string
+          description: Quando a nota fiscal será emitida
+          example: ON_PAYMENT_CONFIRMATION
+          deprecated: false
+          enum:
+          - ON_PAYMENT_CONFIRMATION
+          - ON_PAYMENT_DUE_DATE
+          - BEFORE_PAYMENT_DUE_DATE
+          - ON_DUE_DATE_MONTH
+          - ON_NEXT_MONTH
+        daysBeforeDueDate:
+          type: integer
+          description: Quantidade de dias antes do vencimento da cobrança
+          format: int32
+          deprecated: false
+          example: null
+        receivedOnly:
+          type: boolean
+          description: Emitir apenas para cobranças pagas
+          deprecated: false
+          example: null
+        observations:
+          type: string
+          description: Observações adicionais da nota fiscal
+          example: Referente aos trabalhos de março
+          deprecated: false
+        taxes:
+          $ref: '#/components/schemas/SubscriptionInvoiceTaxesResponseDTO'
+    SubscriptionGetResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo do objeto
+          example: subscription
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único da assinatura no Asaas
+          example: sub_VXJBYgP2u0eO
+          deprecated: false
+        dateCreated:
+          type: string
+          description: Data de criação da assinatura
+          format: date
+          example: '2017-03-17'
+          deprecated: false
+        customer:
+          type: string
+          description: Identificador único do cliente
+          example: cus_0T1mdomVMi39
+          deprecated: false
+        paymentLink:
+          type: string
+          description: Identificador único do link de pagamentos ao qual a assinatura pertence
+          deprecated: false
+          example: null
+        billingType:
+          $ref: '#/components/schemas/SubscriptionGetResponseBillingType'
+        cycle:
+          $ref: '#/components/schemas/SubscriptionGetResponseCycle'
+        value:
+          type: number
+          description: Valor da assinatura
+          example: 19.9
+          deprecated: false
+        nextDueDate:
+          type: string
+          description: Vencimento do próximo pagamento a ser gerado
+          format: date
+          example: '2017-06-15'
+          deprecated: false
+        endDate:
+          type: string
+          description: Data limite para vencimento das cobranças
+          format: date
+          example: '2018-06-15'
+          deprecated: false
+        description:
+          type: string
+          description: Descrição da assinatura
+          example: Assinatura Plano Pró
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/SubscriptionGetResponseSubscriptionStatus'
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineResponseDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestResponseDTO'
+        deleted:
+          type: boolean
+          description: Informa se a assinatura foi removida
+          example: false
+          deprecated: false
+        maxPayments:
+          type: integer
+          description: Número máximo de cobranças a serem geradas para esta assinatura
+          format: int32
+          example: 12
+          deprecated: false
+        externalReference:
+          type: string
+          description: Identificador da assinatura no seu sistema
+          deprecated: false
+          example: null
+        checkoutSession:
+          type: string
+          description: Identificador único do checkout
+          example: 356eb0c4-9eb7-4b7f-b2be-d9479af1d29f
+          deprecated: false
+        split:
+          type: array
+          description: Informações de split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/SubscriptionSplitResponseDTO'
+    InvoiceListResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo de objeto
+          example: list
+          deprecated: false
+        hasMore:
+          type: boolean
+          description: Indica se há mais uma página a ser buscada
+          example: false
+          deprecated: false
+        totalCount:
+          type: integer
+          description: Quantidade total de itens para os filtros informados
+          format: int32
+          example: 2
+          deprecated: false
+        limit:
+          type: integer
+          description: Quantidade de objetos por página
+          format: int32
+          example: 10
+          deprecated: false
+        offset:
+          type: integer
+          description: Posição do objeto a partir do qual a página deve ser carregada
+          format: int32
+          example: 0
+          deprecated: false
+        data:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/InvoiceGetResponseDTO'
+    SubscriptionSplitRequestDTO:
+      required:
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          description: Identificador da carteira Asaas que será transferido
+          deprecated: false
+          example: null
+        fixedValue:
+          type: number
+          description: Valor fixo a ser transferido para a conta quando a cobrança for recebida
+          deprecated: false
+          example: null
+        percentualValue:
+          type: number
+          description: Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida
+          deprecated: false
+          example: null
+        externalReference:
+          type: string
+          description: Identificador do split no seu sistema
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do split
+          deprecated: false
+          example: null
+      description: Informações de split
+      deprecated: false
+    SubscriptionSaveWithCreditCardResponseSubscriptionStatus:
+      type: string
+      description: Status da assinatura
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - EXPIRED
+      - INACTIVE
+    SubscriptionListRequestSubscriptionStatus:
+      type: string
+      description: Filtrar pelo status
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - EXPIRED
+      - INACTIVE
+    PaymentListResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo de objeto
+          example: list
+          deprecated: false
+        hasMore:
+          type: boolean
+          description: Indica se há mais uma página a ser buscada
+          example: false
+          deprecated: false
+        totalCount:
+          type: integer
+          description: Quantidade total de itens para os filtros informados
+          format: int32
+          example: 2
+          deprecated: false
+        limit:
+          type: integer
+          description: Quantidade de objetos por página
+          format: int32
+          example: 10
+          deprecated: false
+        offset:
+          type: integer
+          description: Posição do objeto a partir do qual a página deve ser carregada
+          format: int32
+          example: 0
+          deprecated: false
+        data:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/PaymentGetResponseDTO'
+    InvoiceGetResponseInvoiceStatus:
+      type: string
+      description: Status da nota fiscal
+      example: SCHEDULED
+      deprecated: false
+      enum:
+      - SCHEDULED
+      - AUTHORIZED
+      - PROCESSING_CANCELLATION
+      - CANCELED
+      - CANCELLATION_DENIED
+      - ERROR
+    PaymentGetResponsePaymentStatus:
+      type: string
+      description: Status da cobrança
+      example: PENDING
+      deprecated: false
+      enum:
+      - PENDING
+      - RECEIVED
+      - CONFIRMED
+      - OVERDUE
+      - REFUNDED
+      - RECEIVED_IN_CASH
+      - REFUND_REQUESTED
+      - REFUND_IN_PROGRESS
+      - CHARGEBACK_REQUESTED
+      - CHARGEBACK_DISPUTE
+      - AWAITING_CHARGEBACK_REVERSAL
+      - DUNNING_REQUESTED
+      - DUNNING_RECEIVED
+      - AWAITING_RISK_ANALYSIS
+    SubscriptionGetResponseCycle:
+      type: string
+      description: Periodicidade da cobrança
+      example: MONTHLY
+      deprecated: false
+      enum:
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - BIMONTHLY
+      - QUARTERLY
+      - SEMIANNUALLY
+      - YEARLY
+    SubscriptionSplitResponseSubscriptionSplitStatus:
+      type: string
+      description: Status do split de assinatura
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - DISABLED
+    SubscriptionUpdateRequestDTO:
+      type: object
+      properties:
+        billingType:
+          $ref: '#/components/schemas/SubscriptionUpdateRequestBillingType'
+        status:
+          $ref: '#/components/schemas/SubscriptionUpdateRequestSubscriptionStatus'
+        nextDueDate:
+          type: string
+          description: Vencimento da primeira cobrança
+          format: date
+          example: '2017-05-15'
+          deprecated: false
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestRequestDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineRequestDTO'
+        cycle:
+          $ref: '#/components/schemas/SubscriptionUpdateRequestCycle'
+        description:
+          type: string
+          description: Descrição da assinatura (máx. 500 caracteres)
+          example: Assinatura Plano Pró
+          deprecated: false
+        endDate:
+          type: string
+          description: Data limite para vencimento das cobranças
+          format: date
+          deprecated: false
+          example: null
+        updatePendingPayments:
+          type: boolean
+          description: true para atualizar as propriedades possíveis de cobranças pendentes já existentes
+          example: true
+          deprecated: false
+        externalReference:
+          type: string
+          description: Identificador da assinatura no seu sistema
+          deprecated: false
+          example: null
+        split:
+          type: array
+          description: Informações de split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/SubscriptionSplitRequestDTO'
+        callback:
+          $ref: '#/components/schemas/PaymentCallbackRequestDTO'
+    SubscriptionSaveWithCreditCardResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo do objeto
+          example: subscription
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único da assinatura no Asaas
+          example: sub_VXJBYgP2u0eO
+          deprecated: false
+        dateCreated:
+          type: string
+          description: Data de criação da assinatura
+          format: date
+          example: '2017-03-17'
+          deprecated: false
+        customer:
+          type: string
+          description: Identificador único do cliente
+          example: cus_0T1mdomVMi39
+          deprecated: false
+        paymentLink:
+          type: string
+          description: Identificador único do link de pagamentos ao qual a assinatura pertence
+          deprecated: false
+          example: null
+        billingType:
+          $ref: '#/components/schemas/SubscriptionSaveWithCreditCardResponseBillingType'
+        cycle:
+          $ref: '#/components/schemas/SubscriptionSaveWithCreditCardResponseCycle'
+        value:
+          type: number
+          description: Valor da assinatura
+          example: 19.9
+          deprecated: false
+        nextDueDate:
+          type: string
+          description: Vencimento do próximo pagamento a ser gerado
+          format: date
+          example: '2017-06-15'
+          deprecated: false
+        endDate:
+          type: string
+          description: Data limite para vencimento das cobranças
+          format: date
+          example: '2018-06-15'
+          deprecated: false
+        description:
+          type: string
+          description: Descrição da assinatura
+          example: Assinatura Plano Pró
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/SubscriptionSaveWithCreditCardResponseSubscriptionStatus'
+        discount:
+          $ref: '#/components/schemas/PaymentDiscountDTO'
+        fine:
+          $ref: '#/components/schemas/PaymentFineResponseDTO'
+        interest:
+          $ref: '#/components/schemas/PaymentInterestResponseDTO'
+        deleted:
+          type: boolean
+          description: Informa se a assinatura foi removida
+          example: false
+          deprecated: false
+        maxPayments:
+          type: integer
+          description: Número máximo de cobranças a serem geradas para esta assinatura
+          format: int32
+          example: 12
+          deprecated: false
+        externalReference:
+          type: string
+          description: Identificador da assinatura no seu sistema
+          deprecated: false
+          example: null
+        checkoutSession:
+          type: string
+          description: Identificador único do checkout
+          example: 356eb0c4-9eb7-4b7f-b2be-d9479af1d29f
+          deprecated: false
+        split:
+          type: array
+          description: Informações de split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/SubscriptionSplitResponseDTO'
+        creditCard:
+          $ref: '#/components/schemas/PaymentSaveWithCreditCardCreditCardDTO'
+    PaymentChargebackResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do chargeback.
+          example: 8e784c3e-afe8-4844-bb93-6b445763
+          deprecated: false
+        payment:
+          type: string
+          description: Identificador único da cobrança no Asaas
+          example: pay_pBtDdshgBD2Rt
+          deprecated: false
+        installment:
+          type: string
+          description: Identificador único do parcelamento no Asaas
+          example: b8dd74c-d078-40a0-9ae1-61a66c61a204
+          deprecated: false
+        customerAccount:
+          type: string
+          description: Identificador único do cliente ao qual o chargeback está vinculado.
+          example: cus_000000004085
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/PaymentChargebackResponseChargebackStatus'
+        reason:
+          $ref: '#/components/schemas/PaymentChargebackResponseChargebackReason'
+        disputeStartDate:
+          type: string
+          description: Data de abertura do chargeback.
+          format: date
+          example: '2024-11-10'
+          deprecated: false
+        value:
+          type: number
+          description: Valor do chargeback.
+          example: 2323.45
+          deprecated: false
+        paymentDate:
+          type: string
+          description: Data de liquidação da cobrança no Asaas
+          format: date
+          example: '2024-03-10'
+          deprecated: false
+        creditCard:
+          $ref: '#/components/schemas/ChargebackCreditCardResponseDTO'
+        disputeStatus:
+          $ref: '#/components/schemas/PaymentChargebackResponseChargebackDisputeStatus'
+        deadlineToSendDisputeDocuments:
+          type: string
+          description: Data limite para envio de documentos de disputa.
+          format: date
+          example: '2024-12-10'
+          deprecated: false
+    PaymentRefundGetResponseDTO:
+      type: object
+      properties:
+        dateCreated:
+          type: string
+          description: Data da criação do estorno
+          format: date-time
+          example: '2024-10-18 10:19:06'
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/PaymentRefundGetResponsePaymentRefundStatus'
+        value:
+          type: number
+          description: Valor do estorno
+          example: 40
+          deprecated: false
+        endToEndIdentifier:
+          type: string
+          description: (Apenas pix) Identificador da transação Pix no Banco Central
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do estorno
+          deprecated: false
+          example: null
+        effectiveDate:
+          type: string
+          description: (Apenas pix) Data de efetivação do estorno
+          format: date-time
+          example: '2024-10-19 10:19:06'
+          deprecated: false
+        transactionReceiptUrl:
+          type: string
+          description: Link do recibo da transação
+          deprecated: false
+          example: null
+        refundedSplits:
+          type: array
+          description: Lista de splits estornados, se houver
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/PaymentRefundedSplitResponseDTO'
+      description: Informações de estorno
+      deprecated: false
+    SubscriptionInvoiceConfigUpdateRequestDTO:
+      required:
+      - taxes
+      type: object
+      properties:
+        deductions:
+          type: number
+          description: Deduções. As deduções não alteram o valor total da nota fiscal, mas alteram a base de cálculo do ISS.
+          example: 55
+          deprecated: false
+        effectiveDatePeriod:
+          type: string
+          description: Quando a nota fiscal será emitida
+          example: ON_PAYMENT_CONFIRMATION
+          deprecated: false
+          enum:
+          - ON_PAYMENT_CONFIRMATION
+          - ON_PAYMENT_DUE_DATE
+          - BEFORE_PAYMENT_DUE_DATE
+          - ON_DUE_DATE_MONTH
+          - ON_NEXT_MONTH
+        receivedOnly:
+          type: boolean
+          description: Emitir apenas para cobranças pagas
+          deprecated: false
+          example: null
+        daysBeforeDueDate:
+          type: integer
+          description: Quantidade de dias antes do vencimento da cobrança
+          format: int32
+          deprecated: false
+          example: null
+        observations:
+          type: string
+          description: Observações adicionais da nota fiscal
+          example: Referente aos trabalhos de março
+          deprecated: false
+        taxes:
+          $ref: '#/components/schemas/SubscriptionInvoiceTaxesRequestDTO'
+    PaymentRefundGetResponsePaymentRefundStatus:
+      type: string
+      description: Status do estorno
+      example: DONE
+      deprecated: false
+      enum:
+      - PENDING
+      - AWAITING_CRITICAL_ACTION_AUTHORIZATION
+      - AWAITING_CUSTOMER_EXTERNAL_AUTHORIZATION
+      - CANCELLED
+      - DONE
+    ChargebackCreditCardResponseCreditCardBrand:
+      type: string
+      description: Bandeira do cartão utilizado
+      example: VISA
+      deprecated: false
+      enum:
+      - VISA
+      - MASTERCARD
+      - ELO
+      - DINERS
+      - DISCOVER
+      - AMEX
+      - CABAL
+      - BANESCARD
+      - CREDZ
+      - SOROCRED
+      - CREDSYSTEM
+      - JCB
+      - UNKNOWN
+    SubscriptionSaveWithCreditCardRequestCycle:
+      type: string
+      description: Periodicidade da cobrança
+      example: MONTHLY
+      deprecated: false
+      enum:
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - BIMONTHLY
+      - QUARTERLY
+      - SEMIANNUALLY
+      - YEARLY
+    PaymentFineResponseDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Valor da multa em porcentagem
+          example: 1
+          deprecated: false
+      description: Informações de multa para pagamento após o vencimento
+      deprecated: false
+    SubscriptionDeleteResponseDTO:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+          description: Informa se a assinatura foi removida
+          example: true
+          deprecated: false
+        id:
+          type: string
+          description: Identificador único da assinatura no Asaas
+          example: sub_VXJBYgP2u0eO
+          deprecated: false
+    SubscriptionListRequestBillingType:
+      type: string
+      description: Filtrar por forma de pagamento
+      example: UNDEFINED
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - DEBIT_CARD
+      - TRANSFER
+      - DEPOSIT
+      - PIX
+    PaymentEscrowGetResponsePaymentEscrowStatus:
+      type: string
+      description: Status da garantia da cobrança
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - DONE
+    SubscriptionUpdateCreditCardRequestDTO:
+      required:
+      - creditCard
+      - creditCardHolderInfo
+      - remoteIp
+      type: object
+      properties:
+        creditCard:
+          $ref: '#/components/schemas/CreditCardRequestDTO'
+        creditCardHolderInfo:
+          $ref: '#/components/schemas/CreditCardHolderInfoRequestDTO'
+        creditCardToken:
+          type: string
+          description: Token do cartão de crédito para uso da funcionalidade de tokenização de cartão de crédito. Caso informado, os campos acima não são obrigatórios.
+          example: a75a1d98-c52d-4a6b-a413-71e00b193c99
+          deprecated: false
+        remoteIp:
+          type: string
+          description: IP de onde o cliente está fazendo a compra. Não deve ser informado o IP do seu servidor.
+          example: 116.213.42.532
+          deprecated: false
+    SubscriptionSaveWithCreditCardResponseCycle:
+      type: string
+      description: Periodicidade da cobrança
+      example: MONTHLY
+      deprecated: false
+      enum:
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - BIMONTHLY
+      - QUARTERLY
+      - SEMIANNUALLY
+      - YEARLY
+    PaymentEscrowGetResponsePaymentEscrowFinishReason:
+      type: string
+      description: Motivo do encerramento da garantia da cobrança
+      example: EXPIRED
+      deprecated: false
+      enum:
+      - CHARGEBACK
+      - EXPIRED
+      - INSUFFICIENT_BALANCE
+      - PAYMENT_REFUNDED
+      - REQUESTED_BY_CUSTOMER
+      - CUSTOMER_CONFIG_DISABLED
+    InvoiceTaxesResponseDTO:
+      required:
+      - retainIss
+      - iss
+      - pis
+      - cofins
+      - csll
+      - inss
+      - ir
+      type: object
+      properties:
+        nbsCode:
+          type: string
+          description: Código NBS (Nomenclatura Brasileira de Serviços)
+          example: '01.01'
+          deprecated: false
+        taxSituationCode:
+          type: string
+          description: Código de situação tributária
+          example: '011'
+          deprecated: false
+        taxClassificationCode:
+          type: string
+          description: Código de classificação tributária
+          example: '011001'
+          deprecated: false
+        operationIndicatorCode:
+          type: string
+          description: Código do indicador de operação
+          example: '020101'
+          deprecated: false
+        retainIss:
+          type: boolean
+          description: Tomador da nota fiscal deve reter ISS ou não
+          example: true
+          deprecated: false
+        iss:
+          type: number
+          description: Alíquota ISS
+          example: 2
+          deprecated: false
+        pisCofinsRetentionType:
+          type: string
+          description: Tipo de retenção de PIS/COFINS. Não envie este campo na requisição; ele é calculado automaticamente pelo Asaas com base nas alíquotas de PIS, COFINS e CSLL. Utilize o valor retornado na resposta para fins de conciliação
+          example: NOT_WITHHELD
+          deprecated: false
+        pisCofinsTaxStatus:
+          type: string
+          description: Situação tributária do PIS/COFINS
+          example: STANDARD_TAXABLE_OPERATION
+          deprecated: false
+        operationPis:
+          type: number
+          description: Alíquota de PIS de operação (apuração própria do contribuinte)
+          example: 0.65
+          deprecated: false
+        operationCofins:
+          type: number
+          description: Alíquota de COFINS de operação (apuração própria do contribuinte)
+          example: 3
+          deprecated: false
+        pis:
+          type: number
+          description: Alíquota PIS
+          example: 0.65
+          deprecated: false
+        cofins:
+          type: number
+          description: Alíquota COFINS
+          example: 3
+          deprecated: false
+        csll:
+          type: number
+          description: Alíquota CSLL
+          example: 9
+          deprecated: false
+        inss:
+          type: number
+          description: Alíquota INSS
+          example: 11
+          deprecated: false
+        ir:
+          type: number
+          description: Alíquota IR
+          example: 1.5
+          deprecated: false
+        stateIbs:
+          type: number
+          description: Alíquota estadual IBS
+          example: 0.1
+          deprecated: false
+        stateIbsValue:
+          type: number
+          description: Valor estadual IBS
+          example: 0.3
+          deprecated: false
+        municipalIbs:
+          type: number
+          description: Alíquota municipal IBS
+          example: 0
+          deprecated: false
+        municipalIbsValue:
+          type: number
+          description: Valor municipal IBS
+          example: 0
+          deprecated: false
+        cbs:
+          type: number
+          description: Alíquota CBS
+          example: 0.9
+          deprecated: false
+        cbsValue:
+          type: number
+          description: Valor CBS
+          example: 2.7
+          deprecated: false
+        operationTypeCode:
+          type: integer
+          description: Código do tipo de operação da reforma tributária. Obrigatório para notas de serviços de locação, cessão ou usufruto de bens imóveis
+          format: int32
+          example: '2'
+          deprecated: false
+        referencedInvoiceAccessKeyList:
+          type: array
+          description: Lista de chaves de acesso das NFS-e referenciadas por esta nota, exigida para determinados tipos de operação
+          deprecated: false
+          items:
+            type: string
+            description: Lista de chaves de acesso das NFS-e referenciadas por esta nota, exigida para determinados tipos de operação
+            deprecated: false
+            example: null
+        realEstateInfo:
+          $ref: '#/components/schemas/InvoiceRealEstateInfoResponseDTO'
+      description: Impostos da nota fiscal
+      deprecated: false
+    PaymentInterestRequestDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Percentual de juros *ao mês* sobre o valor da cobrança para pagamento após o vencimento
+          deprecated: false
+          example: null
+      description: Informações de juros para pagamento após o vencimento
+      deprecated: false
+    SubscriptionSaveRequestBillingType:
+      type: string
+      description: Forma de pagamento
+      example: BOLETO
+      deprecated: false
+      enum:
+      - UNDEFINED
+      - BOLETO
+      - CREDIT_CARD
+      - PIX
+    PaymentChargebackResponseChargebackStatus:
+      type: string
+      description: Status do chargeback
+      example: DONE
+      deprecated: false
+      enum:
+      - REQUESTED
+      - IN_DISPUTE
+      - DISPUTE_LOST
+      - REVERSED
+      - DONE
+    SubscriptionListResponseDTO:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Tipo de objeto
+          example: list
+          deprecated: false
+        hasMore:
+          type: boolean
+          description: Indica se há mais uma página a ser buscada
+          example: false
+          deprecated: false
+        totalCount:
+          type: integer
+          description: Quantidade total de itens para os filtros informados
+          format: int32
+          example: 2
+          deprecated: false
+        limit:
+          type: integer
+          description: Quantidade de objetos por página
+          format: int32
+          example: 10
+          deprecated: false
+        offset:
+          type: integer
+          description: Posição do objeto a partir do qual a página deve ser carregada
+          format: int32
+          example: 0
+          deprecated: false
+        data:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/SubscriptionGetResponseDTO'
+    PaymentSaveWithCreditCardCreditCardCreditCardBrand:
+      type: string
+      description: Bandeira do cartão utilizado
+      example: VISA
+      deprecated: false
+      enum:
+      - VISA
+      - MASTERCARD
+      - ELO
+      - DINERS
+      - DISCOVER
+      - AMEX
+      - CABAL
+      - BANESCARD
+      - CREDZ
+      - SOROCRED
+      - CREDSYSTEM
+      - JCB
+      - UNKNOWN
+    ErrorResponseDTO:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/ErrorResponseItemDTO'
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      name: access_token
+      in: header
+x-provenance:
+  method: searched
+  source: https://docs.asaas.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.asaas.com/reference/add-an-image-to-a-payments-link.md
+  - https://docs.asaas.com/reference/adicionar-uma-imagem-a-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/agendar-nota-fiscal.md
+  - https://docs.asaas.com/reference/approve-account.md
+  - https://docs.asaas.com/reference/aprovar-conta.md
+  - https://docs.asaas.com/reference/atualizar-assinatura-existente.md
+  - https://docs.asaas.com/reference/atualizar-cartao-de-credito-assinatura.md
+  - https://docs.asaas.com/reference/atualizar-chave-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/atualizar-cliente-existente.md
+  - https://docs.asaas.com/reference/atualizar-cobranca-existente-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/atualizar-cobranca-existente.md
+  - https://docs.asaas.com/reference/atualizar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/atualizar-dados-comerciais.md
+  - https://docs.asaas.com/reference/atualizar-definicoes-de-um-documento-da-cobranca.md
+  - https://docs.asaas.com/reference/atualizar-documento-enviado.md
+  - https://docs.asaas.com/reference/atualizar-nota-fiscal.md
+  - https://docs.asaas.com/reference/atualizar-notificacao-existente.md
+  - https://docs.asaas.com/reference/atualizar-notificacoes-existentes-em-lote.md
+  - https://docs.asaas.com/reference/atualizar-splits-do-parcelamento.md
+  - https://docs.asaas.com/reference/atualizar-status-da-antecipacao-automatica.md
+  - https://docs.asaas.com/reference/atualizar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/atualizar-webhook-existente.md
+  - https://docs.asaas.com/reference/available-token-bucket-check.md
+  - https://docs.asaas.com/reference/billing-statistics.md
+  - https://docs.asaas.com/reference/buscar-qual-provedor-o-numero-pertence-e-os-valores-disponiveis-para-recarga.md
+  - https://docs.asaas.com/reference/cancel-a-cellphone-recharge.md
+  - https://docs.asaas.com/reference/cancel-a-checkout.md
+  - https://docs.asaas.com/reference/cancel-a-recurrence-item.md
+  - https://docs.asaas.com/reference/cancel-a-recurrence.md
+  - https://docs.asaas.com/reference/cancel-a-scheduled-transaction.md
+  - https://docs.asaas.com/reference/cancel-a-transfer.md
+  - https://docs.asaas.com/reference/cancel-an-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/cancel-an-invoice.md
+  - https://docs.asaas.com/reference/cancel-anticipation.md
+  - https://docs.asaas.com/reference/cancel-bill-payment.md
+  - https://docs.asaas.com/reference/cancel-charges-of-an-installment.md
+  - https://docs.asaas.com/reference/cancel-payment-dunning.md
+  - https://docs.asaas.com/reference/cancelar-antecipacao.md
+  - https://docs.asaas.com/reference/cancelar-cobrancas-de-um-parcelamento.md
+  - https://docs.asaas.com/reference/cancelar-item-de-uma-recorrencia.md
+  - https://docs.asaas.com/reference/cancelar-negativacao.md
+  - https://docs.asaas.com/reference/cancelar-pagamento-de-contas.md
+  - https://docs.asaas.com/reference/cancelar-um-checkout.md
+  - https://docs.asaas.com/reference/cancelar-uma-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/cancelar-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/cancelar-uma-recarga-de-celular.md
+  - https://docs.asaas.com/reference/cancelar-uma-recorrencia.md
+  - https://docs.asaas.com/reference/cancelar-uma-transacao-agendada.md
+  - https://docs.asaas.com/reference/capturar-cobranca-com-pre-autorizacao-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/capturar-cobranca-com-pre-autorizacao.md
+  - https://docs.asaas.com/reference/capture-payment-with-pre-authorization-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/capture-payment-with-pre-authorization.md
+  - https://docs.asaas.com/reference/check-account-registration-status.md
+  - https://docs.asaas.com/reference/check-pending-documents.md
+  - https://docs.asaas.com/reference/check-pix-key.md
+  - https://docs.asaas.com/reference/close-non-baas-subaccount.md
+  - https://docs.asaas.com/reference/configurar-portal-emissor-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/configure-invoice-issuing-portal.md
+  - https://docs.asaas.com/reference/confirm-cash-receipt-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/confirm-cash-receipt.md
+  - https://docs.asaas.com/reference/confirm-payment.md
+  - https://docs.asaas.com/reference/confirmar-pagamento.md
+  - https://docs.asaas.com/reference/confirmar-recebimento-em-dinheiro-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/confirmar-recebimento-em-dinheiro.md
+  - https://docs.asaas.com/reference/consulta-de-fichas-disponiveis-no-balde.md
+  - https://docs.asaas.com/reference/consultar-chave-pix.md
+  - https://docs.asaas.com/reference/consultar-situacao-cadastral-da-conta.md
+  - https://docs.asaas.com/reference/create-a-bill-payment.md
+  - https://docs.asaas.com/reference/create-a-chargeback-dispute.md
+  - https://docs.asaas.com/reference/create-a-key.md
+  - https://docs.asaas.com/reference/create-a-payment-dunning.md
+  - https://docs.asaas.com/reference/create-a-payments-link.md
+  - https://docs.asaas.com/reference/create-an-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/create-and-update-tax-information.md
+  - https://docs.asaas.com/reference/create-api-key-for-subaccount.md
+  - https://docs.asaas.com/reference/create-automatic-pix-payment-instruction-retry.md
+  - https://docs.asaas.com/reference/create-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/create-default-escrow-account-configuration-to-all-subaccounts.md
+  - https://docs.asaas.com/reference/create-installment-with-credit-card.md
+  - https://docs.asaas.com/reference/create-installment.md
+  - https://docs.asaas.com/reference/create-new-checkout.md
+  - https://docs.asaas.com/reference/create-new-customer.md
+  - https://docs.asaas.com/reference/create-new-payment-with-credit-card-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/create-new-payment-with-credit-card.md
+  - https://docs.asaas.com/reference/create-new-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/create-new-payment.md
+  - https://docs.asaas.com/reference/create-new-subscription.md
+  - https://docs.asaas.com/reference/create-new-webhook.md
+  - https://docs.asaas.com/reference/create-static-qrcode.md
+  - https://docs.asaas.com/reference/create-subaccount.md
+  - https://docs.asaas.com/reference/create-subscription-with-credit-card.md
+  - https://docs.asaas.com/reference/credit-card-tokenization.md
+  - https://docs.asaas.com/reference/criar-assinatura-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/criar-chave-de-api-para-uma-subconta.md
+  - https://docs.asaas.com/reference/criar-cobranca-com-cartao-de-credito-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/criar-cobranca-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/criar-configuracao-padrao-da-conta-escrow-para-todas-as-subcontas.md
+  - https://docs.asaas.com/reference/criar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/criar-disputa-de-chargeback.md
+  - https://docs.asaas.com/reference/criar-e-atualizar-informacoes-fiscais.md
+  - https://docs.asaas.com/reference/criar-nova-assinatura.md
+  - https://docs.asaas.com/reference/criar-nova-cobranca-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/criar-nova-cobranca.md
+  - https://docs.asaas.com/reference/criar-novo-checkout.md
+  - https://docs.asaas.com/reference/criar-novo-cliente.md
+  - https://docs.asaas.com/reference/criar-novo-webhook.md
+  - https://docs.asaas.com/reference/criar-parcelamento.md
+  - https://docs.asaas.com/reference/criar-qrcode-estatico.md
+  - https://docs.asaas.com/reference/criar-retentativa-de-instrucao-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/criar-subconta.md
+  - https://docs.asaas.com/reference/criar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/criar-um-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/criar-uma-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/criar-uma-chave.md
+  - https://docs.asaas.com/reference/criar-uma-negativacao.md
+  - https://docs.asaas.com/reference/decode-a-qrcode-for-payment.md
+  - https://docs.asaas.com/reference/decodificar-um-qrcode-para-pagamento.md
+  - https://docs.asaas.com/reference/definir-imagem-principal-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/deletar-qrcode-estatico.md
+  - https://docs.asaas.com/reference/delete-api-key-for-a-subaccount.md
+  - https://docs.asaas.com/reference/delete-baas-subaccount.md
+  - https://docs.asaas.com/reference/delete-document-from-a-payment.md
+  - https://docs.asaas.com/reference/delete-payment-with-summary-data.md
+  - https://docs.asaas.com/reference/delete-payment.md
+  - https://docs.asaas.com/reference/delete-static-qrcode.md
+  - https://docs.asaas.com/reference/desfazer-confirmacao-de-recebimento-em-dinheiro-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/desfazer-confirmacao-de-recebimento-em-dinheiro.md
+  - https://docs.asaas.com/reference/emitir-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/encerrar-garantia-da-cobranca-na-conta-escrow.md
+  - https://docs.asaas.com/reference/encerrar-subconta-nao-baas.md
+  - https://docs.asaas.com/reference/enviar-documentos.md
+  - https://docs.asaas.com/reference/estatisticas-de-cobrancas.md
+  - https://docs.asaas.com/reference/estornar-boleto.md
+  - https://docs.asaas.com/reference/estornar-cobranca-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/estornar-cobranca.md
+  - https://docs.asaas.com/reference/estornar-parcelamento.md
+  - https://docs.asaas.com/reference/event-history-lists.md
+  - https://docs.asaas.com/reference/excluir-chave-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/excluir-cobranca-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/excluir-cobranca.md
+  - https://docs.asaas.com/reference/excluir-documento-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/excluir-subconta-baas.md
+  - https://docs.asaas.com/reference/fazer-upload-de-documentos-da-cobranca.md
+  - https://docs.asaas.com/reference/finish-payment-escrow-in-the-escrow-account.md
+  - https://docs.asaas.com/reference/forcar-vencimento.md
+  - https://docs.asaas.com/reference/force-expire.md
+  - https://docs.asaas.com/reference/generate-installment-booklet.md
+  - https://docs.asaas.com/reference/generate-subscription-booklet.md
+  - https://docs.asaas.com/reference/gerar-carne-de-assinatura.md
+  - https://docs.asaas.com/reference/gerar-carne-de-parcelamento.md
+  - https://docs.asaas.com/reference/get-digitable-bill-line.md
+  - https://docs.asaas.com/reference/get-qr-code-for-pix-payments.md
+  - https://docs.asaas.com/reference/informacoes-sobre-visualizacao-da-cobranca.md
+  - https://docs.asaas.com/reference/issue-an-invoice.md
+  - https://docs.asaas.com/reference/list-anticipations.md
+  - https://docs.asaas.com/reference/list-api-keys-for-subaccount.md
+  - https://docs.asaas.com/reference/list-automatic-pix-authorizations.md
+  - https://docs.asaas.com/reference/list-automatic-pix-payment-instructions.md
+  - https://docs.asaas.com/reference/list-bill-payments.md
+  - https://docs.asaas.com/reference/list-chargebacks.md
+  - https://docs.asaas.com/reference/list-credit-bureau-reports.md
+  - https://docs.asaas.com/reference/list-customers.md
+  - https://docs.asaas.com/reference/list-documents-of-a-payment.md
+  - https://docs.asaas.com/reference/list-federal-service-codes.md
+  - https://docs.asaas.com/reference/list-images-from-a-payments-link.md
+  - https://docs.asaas.com/reference/list-installments.md
+  - https://docs.asaas.com/reference/list-invoices-for-subscription-charges.md
+  - https://docs.asaas.com/reference/list-invoices.md
+  - https://docs.asaas.com/reference/list-keys.md
+  - https://docs.asaas.com/reference/list-mobile-recharges.md
+  - https://docs.asaas.com/reference/list-municipal-configurations.md
+  - https://docs.asaas.com/reference/list-municipal-services.md
+  - https://docs.asaas.com/reference/list-nbs-codes.md
+  - https://docs.asaas.com/reference/list-operation-indicator-codes.md
+  - https://docs.asaas.com/reference/list-paid-splits-1.md
+  - https://docs.asaas.com/reference/list-payment-dunnings.md
+  - https://docs.asaas.com/reference/list-payments-available-for-payment-dunning.md
+  - https://docs.asaas.com/reference/list-payments-links.md
+  - https://docs.asaas.com/reference/list-payments-of-a-installment.md
+  - https://docs.asaas.com/reference/list-payments-of-a-subscription.md
+  - https://docs.asaas.com/reference/list-payments-received.md
+  - https://docs.asaas.com/reference/list-payments-with-summary-data.md
+  - https://docs.asaas.com/reference/list-payments.md
+  - https://docs.asaas.com/reference/list-received-splits-1.md
+  - https://docs.asaas.com/reference/list-recurrence-items.md
+  - https://docs.asaas.com/reference/list-recurrences.md
+  - https://docs.asaas.com/reference/list-subaccounts.md
+  - https://docs.asaas.com/reference/list-subscriptions.md
+  - https://docs.asaas.com/reference/list-tax-classification-codes.md
+  - https://docs.asaas.com/reference/list-tax-situation-codes.md
+  - https://docs.asaas.com/reference/list-transactions.md
+  - https://docs.asaas.com/reference/list-transfers.md
+  - https://docs.asaas.com/reference/list-webhooks.md
+  - https://docs.asaas.com/reference/listar-antecipacoes.md
+  - https://docs.asaas.com/reference/listar-assinaturas.md
+  - https://docs.asaas.com/reference/listar-autorizacoes-pix-automatico.md
+  - https://docs.asaas.com/reference/listar-chargebacks.md
+  - https://docs.asaas.com/reference/listar-chaves-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/listar-chaves.md
+  - https://docs.asaas.com/reference/listar-clientes.md
+  - https://docs.asaas.com/reference/listar-cobrancas-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/listar-cobrancas-de-uma-assinatura.md
+  - https://docs.asaas.com/reference/listar-cobrancas-disponiveis-para-negativacao.md
+  - https://docs.asaas.com/reference/listar-cobrancas.md
+  - https://docs.asaas.com/reference/listar-codigos-de-classificacoes-tributarias.md
+  - https://docs.asaas.com/reference/listar-codigos-de-operadores-de-indicacoes.md
+  - https://docs.asaas.com/reference/listar-codigos-de-situacoes-tributarias.md
+  - https://docs.asaas.com/reference/listar-codigos-nbs.md
+  - https://docs.asaas.com/reference/listar-codigos-servicos-federais.md
+  - https://docs.asaas.com/reference/listar-configuracoes-municipais.md
+  - https://docs.asaas.com/reference/listar-consultas-1.md
+  - https://docs.asaas.com/reference/listar-documentos-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/listar-estornos-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/listar-historico-de-eventos.md
+  - https://docs.asaas.com/reference/listar-imagens-de-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/listar-instrucoes-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/listar-itens-de-uma-recorrencia.md
+  - https://docs.asaas.com/reference/listar-links-de-pagamentos.md
+  - https://docs.asaas.com/reference/listar-negativacoes.md
+  - https://docs.asaas.com/reference/listar-notas-fiscais-das-cobrancas-de-uma-assinatura.md
+  - https://docs.asaas.com/reference/listar-notas-fiscais.md
+  - https://docs.asaas.com/reference/listar-pagamento-de-contas.md
+  - https://docs.asaas.com/reference/listar-pagamentos-recebidos.md
+  - https://docs.asaas.com/reference/listar-parcelamentos.md
+  - https://docs.asaas.com/reference/listar-recargas-de-celular.md
+  - https://docs.asaas.com/reference/listar-recorrencias.md
+  - https://docs.asaas.com/reference/listar-servicos-municipais.md
+  - https://docs.asaas.com/reference/listar-splits-pagos.md
+  - https://docs.asaas.com/reference/listar-splits-recebidos.md
+  - https://docs.asaas.com/reference/listar-subcontas.md
+  - https://docs.asaas.com/reference/listar-transacoes.md
+  - https://docs.asaas.com/reference/listar-transferencias.md
+  - https://docs.asaas.com/reference/listar-webhooks.md
+  - https://docs.asaas.com/reference/make-consultation.md
+  - https://docs.asaas.com/reference/obter-linha-digitavel-do-boleto.md
+  - https://docs.asaas.com/reference/obter-qr-code-para-pagamentos-via-pix.md
+  - https://docs.asaas.com/reference/pagar-um-qrcode.md
+  - https://docs.asaas.com/reference/pagar-uma-cobranca-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/pagar-uma-cobranca-com-cartao.md
+  - https://docs.asaas.com/reference/pay-a-charge-with-card.md
+  - https://docs.asaas.com/reference/pay-a-charge-with-credit-card.md
+  - https://docs.asaas.com/reference/pay-a-qrcode.md
+  - https://docs.asaas.com/reference/payment-viewing-information.md
+  - https://docs.asaas.com/reference/realizar-consulta.md
+  - https://docs.asaas.com/reference/recover-a-single-cellphone-recharge.md
+  - https://docs.asaas.com/reference/recover-a-single-payment-dunning.md
+  - https://docs.asaas.com/reference/recovering-payment-limits.md
+  - https://docs.asaas.com/reference/recuperando-limites-de-cobrancas-1.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-da-conta-escrow-para-a-subconta.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-de-pre-autorizacao.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-padrao-da-conta-escrow.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/recuperar-configuracoes-de-personalizacao.md
+  - https://docs.asaas.com/reference/recuperar-dados-comerciais.md
+  - https://docs.asaas.com/reference/recuperar-efeito-de-contrato-bloqueando-antecipacao-da-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-extrato.md
+  - https://docs.asaas.com/reference/recuperar-garantia-da-cobranca-na-conta-escrow.md
+  - https://docs.asaas.com/reference/recuperar-informacoes-de-pagamento-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-informacoes-fiscais.md
+  - https://docs.asaas.com/reference/recuperar-limites-de-antecipacoes.md
+  - https://docs.asaas.com/reference/recuperar-notificacoes-de-um-cliente.md
+  - https://docs.asaas.com/reference/recuperar-numero-de-conta-no-asaas.md
+  - https://docs.asaas.com/reference/recuperar-saldo-da-conta.md
+  - https://docs.asaas.com/reference/recuperar-status-da-antecipacao-automatica.md
+  - https://docs.asaas.com/reference/recuperar-status-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-taxas-da-conta.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-chargeback.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-cliente.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-documento-da-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-parcelamento.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-split-pago.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-split-recebido.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-webhook.md
+  - https://docs.asaas.com/reference/recuperar-uma-consulta-1.md
+  - https://docs.asaas.com/reference/recuperar-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-antecipacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-assinatura.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-chave.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-cobranca-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-imagem-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-instrucao-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-negativacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-recarga-de-celular.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-recorrencia.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-subconta.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-transacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-transferencia.md
+  - https://docs.asaas.com/reference/recuperar-valores-de-split.md
+  - https://docs.asaas.com/reference/recuperar-walletid.md
+  - https://docs.asaas.com/reference/reenviar-documentos.md
+  - https://docs.asaas.com/reference/reenviar-link-de-ativacao-para-subconta-nao-baas.md
+  - https://docs.asaas.com/reference/refund-bank-slip.md
+  - https://docs.asaas.com/reference/refund-installment.md
+  - https://docs.asaas.com/reference/refund-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/refund-payment.md
+  - https://docs.asaas.com/reference/remove-a-payments-link.md
+  - https://docs.asaas.com/reference/remove-an-image-from-payments-link.md
+  - https://docs.asaas.com/reference/remove-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/remove-customer.md
+  - https://docs.asaas.com/reference/remove-installment.md
+  - https://docs.asaas.com/reference/remove-key-1.md
+  - https://docs.asaas.com/reference/remove-sent-document.md
+  - https://docs.asaas.com/reference/remove-subscription.md
+  - https://docs.asaas.com/reference/remove-webhook-backoff.md
+  - https://docs.asaas.com/reference/remove-webhook.md
+  - https://docs.asaas.com/reference/remover-assinatura.md
+  - https://docs.asaas.com/reference/remover-chave.md
+  - https://docs.asaas.com/reference/remover-cliente.md
+  - https://docs.asaas.com/reference/remover-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/remover-documento-enviado.md
+  - https://docs.asaas.com/reference/remover-parcelamento-1.md
+  - https://docs.asaas.com/reference/remover-penalizacao-webhook.md
+  - https://docs.asaas.com/reference/remover-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/remover-uma-imagem-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/remover-webhook.md
+  - https://docs.asaas.com/reference/request-anticipation.md
+  - https://docs.asaas.com/reference/request-recharge.md
+  - https://docs.asaas.com/reference/resend-activation-link-for-non-baas-subaccount.md
+  - https://docs.asaas.com/reference/resend-documents.md
+  - https://docs.asaas.com/reference/restaurar-cliente-removido.md
+  - https://docs.asaas.com/reference/restaurar-cobranca-removida-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/restaurar-cobranca-removida.md
+  - https://docs.asaas.com/reference/restaurar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/restore-a-payments-link.md
+  - https://docs.asaas.com/reference/restore-removed-customer.md
+  - https://docs.asaas.com/reference/restore-removed-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/restore-removed-payment.md
+  - https://docs.asaas.com/reference/reterive-escrow-account-configuration-for-subaccount.md
+  - https://docs.asaas.com/reference/retrieve-a-credit-bureau-report.md
+  - https://docs.asaas.com/reference/retrieve-a-single-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-a-single-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/retrieve-a-single-automatic-pix-payment-instruction.md
+  - https://docs.asaas.com/reference/retrieve-a-single-bill-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-chargeback.md
+  - https://docs.asaas.com/reference/retrieve-a-single-customer.md
+  - https://docs.asaas.com/reference/retrieve-a-single-document-of-a-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-installment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-invoice.md
+  - https://docs.asaas.com/reference/retrieve-a-single-key.md
+  - https://docs.asaas.com/reference/retrieve-a-single-paid-split.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payment-with-summary-data.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payments-link-image.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payments-link.md
+  - https://docs.asaas.com/reference/retrieve-a-single-received-split.md
+  - https://docs.asaas.com/reference/retrieve-a-single-recurrence.md
+  - https://docs.asaas.com/reference/retrieve-a-single-subaccount.md
+  - https://docs.asaas.com/reference/retrieve-a-single-subscription.md
+  - https://docs.asaas.com/reference/retrieve-a-single-transaction.md
+  - https://docs.asaas.com/reference/retrieve-a-single-transfer.md
+  - https://docs.asaas.com/reference/retrieve-a-single-webhook.md
+  - https://docs.asaas.com/reference/retrieve-account-balance.md
+  - https://docs.asaas.com/reference/retrieve-account-fees.md
+  - https://docs.asaas.com/reference/retrieve-anticipation-limits.md
+  - https://docs.asaas.com/reference/retrieve-asaas-account-number.md
+  - https://docs.asaas.com/reference/retrieve-business-data.md
+  - https://docs.asaas.com/reference/retrieve-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/retrieve-contract-effect-blocking-payment-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-default-escrow-account-configuration.md
+  - https://docs.asaas.com/reference/retrieve-extract.md
+  - https://docs.asaas.com/reference/retrieve-notifications-from-a-customer.md
+  - https://docs.asaas.com/reference/retrieve-payment-billing-information.md
+  - https://docs.asaas.com/reference/retrieve-payment-escrow-in-the-escrow-account.md
+  - https://docs.asaas.com/reference/retrieve-personalization-settings.md
+  - https://docs.asaas.com/reference/retrieve-pre-authorization-configuration.md
+  - https://docs.asaas.com/reference/retrieve-refunds-of-a-single-payment.md
+  - https://docs.asaas.com/reference/retrieve-split-values.md
+  - https://docs.asaas.com/reference/retrieve-status-of-a-payment.md
+  - https://docs.asaas.com/reference/retrieve-status-of-automatic-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-tax-information.md
+  - https://docs.asaas.com/reference/retrieve-walletid.md
+  - https://docs.asaas.com/reference/sales-simulator.md
+  - https://docs.asaas.com/reference/salvar-ou-atualizar-configuracao-da-conta-escrow-para-a-subconta.md
+  - https://docs.asaas.com/reference/salvar-ou-atualizar-configuracao-de-pre-autorizacao.md
+  - https://docs.asaas.com/reference/salvar-personalizacao-da-fatura.md
+  - https://docs.asaas.com/reference/save-or-update-escrow-account-configuration-for-subaccount.md
+  - https://docs.asaas.com/reference/save-or-update-pre-authorization-configuration.md
+  - https://docs.asaas.com/reference/save-payment-checkout-personalization.md
+  - https://docs.asaas.com/reference/schedule-invoice.md
+  - https://docs.asaas.com/reference/search-for-cell-phone-provider.md
+  - https://docs.asaas.com/reference/send-documents.md
+  - https://docs.asaas.com/reference/set-payments-link-main-image.md
+  - https://docs.asaas.com/reference/simulador-de-vendas.md
+  - https://docs.asaas.com/reference/simular-um-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/simular-uma-negativacao.md
+  - https://docs.asaas.com/reference/simulate-a-bill-payment.md
+  - https://docs.asaas.com/reference/simulate-a-payment-dunning.md
+  - https://docs.asaas.com/reference/simulate-anticipation.md
+  - https://docs.asaas.com/reference/solicitar-antecipacao.md
+  - https://docs.asaas.com/reference/solicitar-recarga.md
+  - https://docs.asaas.com/reference/tokenizacao-de-cartao-de-credito.md
+  - https://docs.asaas.com/reference/transfer-to-another-institution-account-or-pix-key.md
+  - https://docs.asaas.com/reference/transfer-to-asaas-account-1.md
+  - https://docs.asaas.com/reference/transferir-para-conta-asaas.md
+  - https://docs.asaas.com/reference/transferir-para-conta-de-outra-instituicao-ou-chave-pix.md
+  - https://docs.asaas.com/reference/undo-cash-receipt-confirmation-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/undo-cash-receipt-confirmation.md
+  - https://docs.asaas.com/reference/update-a-payments-link.md
+  - https://docs.asaas.com/reference/update-api-key-for-a-subaccount.md
+  - https://docs.asaas.com/reference/update-business-data.md
+  - https://docs.asaas.com/reference/update-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/update-existing-customer.md
+  - https://docs.asaas.com/reference/update-existing-notification.md
+  - https://docs.asaas.com/reference/update-existing-notifications-in-batch.md
+  - https://docs.asaas.com/reference/update-existing-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/update-existing-payment.md
+  - https://docs.asaas.com/reference/update-existing-subscription.md
+  - https://docs.asaas.com/reference/update-existing-webhook.md
+  - https://docs.asaas.com/reference/update-installment-splits.md
+  - https://docs.asaas.com/reference/update-invoice.md
+  - https://docs.asaas.com/reference/update-sent-document.md
+  - https://docs.asaas.com/reference/update-settings-of-a-document-of-a-payment.md
+  - https://docs.asaas.com/reference/update-status-of-automatic-anticipation.md
+  - https://docs.asaas.com/reference/update-subscription-credit-card.md
+  - https://docs.asaas.com/reference/upload-payment-documents.md
+  - https://docs.asaas.com/reference/verificar-documentos-pendentes.md
+  - https://docs.asaas.com/reference/view-document-sent.md
+  - https://docs.asaas.com/reference/visualizar-documento-enviado.md
+  merge:
+    pages: 422
+    deduped: 1780
+    conflicts_kept_first: 2048

@@ -1,0 +1,951 @@
+openapi: 3.2.0
+info:
+  title: Asaas Checkout API
+  description: API pública de integração com a plataforma Asaas.
+  version: 3.0.0
+servers:
+- url: https://api-sandbox.asaas.com
+  description: Sandbox
+security:
+- Authorization: []
+tags:
+- name: Checkout
+paths:
+  /v3/checkouts:
+    post:
+      tags:
+      - Checkout
+      summary: Criar novo checkout
+      description: ''
+      operationId: criar-novo-checkout
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutSessionSaveRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutSessionResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+      deprecated: false
+  /v3/checkouts/{id}/cancel:
+    post:
+      tags:
+      - Checkout
+      summary: Cancelar um checkout
+      description: ''
+      operationId: cancelar-um-checkout
+      parameters:
+      - name: id
+        in: path
+        description: Identificador único do checkout no Asaas
+        required: true
+        schema:
+          type: string
+          example: 131ca662-56c8-4479-b5b3-fd61a413fce7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutSessionCancelRequestDTO'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutSessionResponseDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: error_code
+                  description: Descrição do erro
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                errors:
+                - code: invalid_access_token
+                  description: A chave de API fornecida é inválida
+        '404':
+          description: Not found
+      deprecated: false
+components:
+  schemas:
+    CheckoutSessionSubscriptionCycle:
+      type: string
+      description: Periodicidade da cobrança
+      example: MONTHLY
+      deprecated: false
+      enum:
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - BIMONTHLY
+      - QUARTERLY
+      - SEMIANNUALLY
+      - YEARLY
+    CheckoutSessionCallbackDTO:
+      required:
+      - successUrl
+      - cancelUrl
+      type: object
+      properties:
+        successUrl:
+          type: string
+          description: URL de direcionamento para checkout com sucesso
+          example: https://example.com/asaas/checkout/success
+          deprecated: false
+        cancelUrl:
+          type: string
+          description: URL de direciomento para checkout cancelado
+          example: https://example.com/asaas/checkout/cancel
+          deprecated: false
+        expiredUrl:
+          type: string
+          description: URL de direcionamento para checkout expirado
+          example: https://example.com/asaas/checkout/expired
+          deprecated: false
+      description: Informações de redirecionamento automático após pagamento na tela do checkout
+      deprecated: false
+    CheckoutSessionResponseCheckoutSessionStatus:
+      type: string
+      description: Status do checkout
+      example: ACTIVE
+      deprecated: false
+      enum:
+      - ACTIVE
+      - CANCELED
+      - EXPIRED
+      - PAID
+    CheckoutSessionCancelRequestDTO:
+      type: object
+      properties: {}
+    CheckoutSessionCustomerDataDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do cliente
+          example: John Doe
+          deprecated: false
+        cpfCnpj:
+          type: string
+          description: CPF ou CNPJ do cliente
+          example: '24971563792'
+          deprecated: false
+        email:
+          type: string
+          description: E-mail do cliente
+          example: john.doe@asaas.com.br
+          deprecated: false
+        phone:
+          type: string
+          description: Telefone do cliente
+          example: '4738010919'
+          deprecated: false
+        address:
+          type: string
+          description: Endereço do cliente
+          example: Av. Paulista
+          deprecated: false
+        addressNumber:
+          type: integer
+          description: Número do endereço
+          format: int32
+          example: '150'
+          deprecated: false
+        complement:
+          type: string
+          description: Complemento do endereço (máx. 255 caracteres)
+          example: Sala 201
+          deprecated: false
+        province:
+          type: string
+          description: Província do endereço
+          example: Centro
+          deprecated: false
+        postalCode:
+          type: string
+          description: Código postal do endereço
+          example: 01310-000
+          deprecated: false
+        city:
+          type: integer
+          description: Código da cidade
+          format: int32
+          example: '12987382'
+          deprecated: false
+      description: Dados do cliente
+      deprecated: false
+    CheckoutSessionResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identificador único do checkout no Asaas
+          example: 131ca662-56c8-4479-b5b3-fd61a413fce7
+          deprecated: false
+        link:
+          type: string
+          description: Link de acesso do checkout
+          example: https://sandbox.asaas.com/checkoutSession/show/131ca662-56c8-4479-b5b3-fd61a413fce7
+          deprecated: false
+        status:
+          $ref: '#/components/schemas/CheckoutSessionResponseCheckoutSessionStatus'
+        billingTypes:
+          type: array
+          description: Formas de pagamento
+          example:
+          - CREDIT_CARD
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionResponseBillingType'
+          enum:
+          - CREDIT_CARD
+          - PIX
+        chargeTypes:
+          type: array
+          description: Tipos de cobrança
+          example:
+          - RECURRENT
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionResponseChargeType'
+          enum:
+          - DETACHED
+          - RECURRENT
+          - INSTALLMENT
+        minutesToExpire:
+          maximum: 1440
+          minimum: 10
+          type: integer
+          description: Tempo em minutos para expiração do checkout
+          format: int32
+          example: 100
+          deprecated: false
+        externalReference:
+          maxLength: 200
+          type: string
+          description: Identificador do checkout no seu sistema
+          example: dcf4dff9-b080-425c-b234-765f2ffac0ae
+          deprecated: false
+        callback:
+          $ref: '#/components/schemas/CheckoutSessionCallbackDTO'
+        items:
+          type: array
+          description: Lista de itens no checkout
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionItemsDTO'
+        customerData:
+          $ref: '#/components/schemas/CheckoutSessionCustomerDataDTO'
+        subscription:
+          $ref: '#/components/schemas/CheckoutSessionSubscriptionDTO'
+        installment:
+          $ref: '#/components/schemas/CheckoutSessionInstallmentDTO'
+        split:
+          type: array
+          description: Configurações do split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionSplitDTO'
+    CheckoutSessionSubscriptionDTO:
+      type: object
+      properties:
+        cycle:
+          $ref: '#/components/schemas/CheckoutSessionSubscriptionCycle'
+        endDate:
+          type: string
+          description: Data limite para vencimento das cobranças
+          format: date
+          example: '2025-01-01'
+          deprecated: false
+        nextDueDate:
+          type: string
+          description: Vencimento do próximo pagamento a ser gerado
+          format: date
+          example: '2025-01-01'
+          deprecated: false
+      description: Detalhes da assinatura, obrigatório se chargeTypes incluir `RECURRENT`
+      deprecated: false
+    CheckoutSessionSaveRequestBillingType:
+      type: string
+      description: Formas de pagamento
+      example:
+      - CREDIT_CARD
+      deprecated: false
+      enum:
+      - CREDIT_CARD
+      - PIX
+    CheckoutSessionSaveRequestDTO:
+      required:
+      - billingTypes
+      - chargeTypes
+      - callback
+      - items
+      type: object
+      properties:
+        billingTypes:
+          type: array
+          description: Formas de pagamento
+          example:
+          - CREDIT_CARD
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionSaveRequestBillingType'
+          enum:
+          - CREDIT_CARD
+          - PIX
+        chargeTypes:
+          type: array
+          description: Tipos de cobrança
+          example:
+          - DETACHED
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionSaveRequestChargeType'
+          enum:
+          - DETACHED
+          - RECURRENT
+          - INSTALLMENT
+        minutesToExpire:
+          maximum: 1440
+          minimum: 10
+          type: integer
+          description: Tempo em minutos para expiração do checkout
+          format: int32
+          example: 10
+          deprecated: false
+        externalReference:
+          maxLength: 200
+          type: string
+          description: Identificador do checkout no seu sistema
+          example: dcf4dff9-b080-425c-b234-765f2ffac0ae
+          deprecated: false
+        callback:
+          $ref: '#/components/schemas/CheckoutSessionCallbackDTO'
+        items:
+          type: array
+          description: Lista de itens no checkout
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionItemsDTO'
+        customerData:
+          $ref: '#/components/schemas/CheckoutSessionCustomerDataDTO'
+        subscription:
+          $ref: '#/components/schemas/CheckoutSessionSubscriptionDTO'
+        installment:
+          $ref: '#/components/schemas/CheckoutSessionInstallmentDTO'
+        splits:
+          type: array
+          description: Configurações do split
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/CheckoutSessionSplitDTO'
+    CheckoutSessionSplitDTO:
+      required:
+      - walletId
+      type: object
+      properties:
+        walletId:
+          type: string
+          description: Identificador da carteira Asaas que receberá a transferência
+          example: 7bafd95a-e783-4a62-9be1-23999af742c6
+          deprecated: false
+        fixedValue:
+          type: number
+          description: Valor fixo a ser transferido para a conta quando a cobrança for recebida
+          example: Comissão referente ao serviço utilizado
+          deprecated: false
+        percentageValue:
+          type: number
+          description: Percentual sobre o valor líquido da cobrança a ser transferido quando for recebida
+          example: 10
+          deprecated: false
+        totalFixedValue:
+          type: number
+          description: (Somente parcelamentos). Valor que será feito split referente ao valor total que será parcelado.
+          example: 15
+          deprecated: false
+      description: Configurações do split
+      deprecated: false
+    ErrorResponseItemDTO:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código do erro
+          deprecated: false
+          example: null
+        description:
+          type: string
+          description: Descrição do erro
+          deprecated: false
+          example: null
+      description: Lista de objetos
+      deprecated: false
+    CheckoutSessionInstallmentDTO:
+      type: object
+      properties:
+        maxInstallmentCount:
+          maximum: 21
+          minimum: 1
+          type: integer
+          description: Número máximo de parcelas
+          format: int32
+          example: 1
+          deprecated: false
+      description: Detalhes do parcelamento. Caso informado, será obrigatório incluir o chargeType `INSTALLMENT`
+      deprecated: false
+    CheckoutSessionResponseBillingType:
+      type: string
+      description: Formas de pagamento
+      example:
+      - CREDIT_CARD
+      deprecated: false
+      enum:
+      - CREDIT_CARD
+      - PIX
+    CheckoutSessionSaveRequestChargeType:
+      type: string
+      description: Tipos de cobrança
+      example:
+      - DETACHED
+      deprecated: false
+      enum:
+      - DETACHED
+      - RECURRENT
+      - INSTALLMENT
+    CheckoutSessionItemsDTO:
+      required:
+      - imageBase64
+      - name
+      - quantity
+      - value
+      type: object
+      properties:
+        externalReference:
+          type: string
+          description: Identificador único do item no seu sistema
+          example: 334ae1d5-5802-4de4-8720-915728f2892a
+          deprecated: false
+        description:
+          maxLength: 150
+          type: string
+          description: Descrição do item
+          example: Camisetas
+          deprecated: false
+        imageBase64:
+          type: string
+          description: Imagem do item em Base64
+          example: IMAGE IN BASE64
+          deprecated: false
+        name:
+          maxLength: 30
+          type: string
+          description: Nome do item
+          example: Roupas
+          deprecated: false
+        quantity:
+          type: integer
+          description: Quantidade do item
+          format: int32
+          example: 2
+          deprecated: false
+        value:
+          type: number
+          description: Valor do item
+          example: 100
+          deprecated: false
+      description: Lista de itens no checkout
+      deprecated: false
+    ErrorResponseDTO:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: Lista de objetos
+          deprecated: false
+          items:
+            $ref: '#/components/schemas/ErrorResponseItemDTO'
+    CheckoutSessionResponseChargeType:
+      type: string
+      description: Tipos de cobrança
+      example:
+      - RECURRENT
+      deprecated: false
+      enum:
+      - DETACHED
+      - RECURRENT
+      - INSTALLMENT
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      name: access_token
+      in: header
+x-provenance:
+  method: searched
+  source: https://docs.asaas.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.asaas.com/reference/add-an-image-to-a-payments-link.md
+  - https://docs.asaas.com/reference/adicionar-uma-imagem-a-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/agendar-nota-fiscal.md
+  - https://docs.asaas.com/reference/approve-account.md
+  - https://docs.asaas.com/reference/aprovar-conta.md
+  - https://docs.asaas.com/reference/atualizar-assinatura-existente.md
+  - https://docs.asaas.com/reference/atualizar-cartao-de-credito-assinatura.md
+  - https://docs.asaas.com/reference/atualizar-chave-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/atualizar-cliente-existente.md
+  - https://docs.asaas.com/reference/atualizar-cobranca-existente-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/atualizar-cobranca-existente.md
+  - https://docs.asaas.com/reference/atualizar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/atualizar-dados-comerciais.md
+  - https://docs.asaas.com/reference/atualizar-definicoes-de-um-documento-da-cobranca.md
+  - https://docs.asaas.com/reference/atualizar-documento-enviado.md
+  - https://docs.asaas.com/reference/atualizar-nota-fiscal.md
+  - https://docs.asaas.com/reference/atualizar-notificacao-existente.md
+  - https://docs.asaas.com/reference/atualizar-notificacoes-existentes-em-lote.md
+  - https://docs.asaas.com/reference/atualizar-splits-do-parcelamento.md
+  - https://docs.asaas.com/reference/atualizar-status-da-antecipacao-automatica.md
+  - https://docs.asaas.com/reference/atualizar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/atualizar-webhook-existente.md
+  - https://docs.asaas.com/reference/available-token-bucket-check.md
+  - https://docs.asaas.com/reference/billing-statistics.md
+  - https://docs.asaas.com/reference/buscar-qual-provedor-o-numero-pertence-e-os-valores-disponiveis-para-recarga.md
+  - https://docs.asaas.com/reference/cancel-a-cellphone-recharge.md
+  - https://docs.asaas.com/reference/cancel-a-checkout.md
+  - https://docs.asaas.com/reference/cancel-a-recurrence-item.md
+  - https://docs.asaas.com/reference/cancel-a-recurrence.md
+  - https://docs.asaas.com/reference/cancel-a-scheduled-transaction.md
+  - https://docs.asaas.com/reference/cancel-a-transfer.md
+  - https://docs.asaas.com/reference/cancel-an-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/cancel-an-invoice.md
+  - https://docs.asaas.com/reference/cancel-anticipation.md
+  - https://docs.asaas.com/reference/cancel-bill-payment.md
+  - https://docs.asaas.com/reference/cancel-charges-of-an-installment.md
+  - https://docs.asaas.com/reference/cancel-payment-dunning.md
+  - https://docs.asaas.com/reference/cancelar-antecipacao.md
+  - https://docs.asaas.com/reference/cancelar-cobrancas-de-um-parcelamento.md
+  - https://docs.asaas.com/reference/cancelar-item-de-uma-recorrencia.md
+  - https://docs.asaas.com/reference/cancelar-negativacao.md
+  - https://docs.asaas.com/reference/cancelar-pagamento-de-contas.md
+  - https://docs.asaas.com/reference/cancelar-um-checkout.md
+  - https://docs.asaas.com/reference/cancelar-uma-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/cancelar-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/cancelar-uma-recarga-de-celular.md
+  - https://docs.asaas.com/reference/cancelar-uma-recorrencia.md
+  - https://docs.asaas.com/reference/cancelar-uma-transacao-agendada.md
+  - https://docs.asaas.com/reference/capturar-cobranca-com-pre-autorizacao-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/capturar-cobranca-com-pre-autorizacao.md
+  - https://docs.asaas.com/reference/capture-payment-with-pre-authorization-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/capture-payment-with-pre-authorization.md
+  - https://docs.asaas.com/reference/check-account-registration-status.md
+  - https://docs.asaas.com/reference/check-pending-documents.md
+  - https://docs.asaas.com/reference/check-pix-key.md
+  - https://docs.asaas.com/reference/close-non-baas-subaccount.md
+  - https://docs.asaas.com/reference/configurar-portal-emissor-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/configure-invoice-issuing-portal.md
+  - https://docs.asaas.com/reference/confirm-cash-receipt-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/confirm-cash-receipt.md
+  - https://docs.asaas.com/reference/confirm-payment.md
+  - https://docs.asaas.com/reference/confirmar-pagamento.md
+  - https://docs.asaas.com/reference/confirmar-recebimento-em-dinheiro-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/confirmar-recebimento-em-dinheiro.md
+  - https://docs.asaas.com/reference/consulta-de-fichas-disponiveis-no-balde.md
+  - https://docs.asaas.com/reference/consultar-chave-pix.md
+  - https://docs.asaas.com/reference/consultar-situacao-cadastral-da-conta.md
+  - https://docs.asaas.com/reference/create-a-bill-payment.md
+  - https://docs.asaas.com/reference/create-a-chargeback-dispute.md
+  - https://docs.asaas.com/reference/create-a-key.md
+  - https://docs.asaas.com/reference/create-a-payment-dunning.md
+  - https://docs.asaas.com/reference/create-a-payments-link.md
+  - https://docs.asaas.com/reference/create-an-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/create-and-update-tax-information.md
+  - https://docs.asaas.com/reference/create-api-key-for-subaccount.md
+  - https://docs.asaas.com/reference/create-automatic-pix-payment-instruction-retry.md
+  - https://docs.asaas.com/reference/create-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/create-default-escrow-account-configuration-to-all-subaccounts.md
+  - https://docs.asaas.com/reference/create-installment-with-credit-card.md
+  - https://docs.asaas.com/reference/create-installment.md
+  - https://docs.asaas.com/reference/create-new-checkout.md
+  - https://docs.asaas.com/reference/create-new-customer.md
+  - https://docs.asaas.com/reference/create-new-payment-with-credit-card-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/create-new-payment-with-credit-card.md
+  - https://docs.asaas.com/reference/create-new-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/create-new-payment.md
+  - https://docs.asaas.com/reference/create-new-subscription.md
+  - https://docs.asaas.com/reference/create-new-webhook.md
+  - https://docs.asaas.com/reference/create-static-qrcode.md
+  - https://docs.asaas.com/reference/create-subaccount.md
+  - https://docs.asaas.com/reference/create-subscription-with-credit-card.md
+  - https://docs.asaas.com/reference/credit-card-tokenization.md
+  - https://docs.asaas.com/reference/criar-assinatura-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/criar-chave-de-api-para-uma-subconta.md
+  - https://docs.asaas.com/reference/criar-cobranca-com-cartao-de-credito-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/criar-cobranca-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/criar-configuracao-padrao-da-conta-escrow-para-todas-as-subcontas.md
+  - https://docs.asaas.com/reference/criar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/criar-disputa-de-chargeback.md
+  - https://docs.asaas.com/reference/criar-e-atualizar-informacoes-fiscais.md
+  - https://docs.asaas.com/reference/criar-nova-assinatura.md
+  - https://docs.asaas.com/reference/criar-nova-cobranca-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/criar-nova-cobranca.md
+  - https://docs.asaas.com/reference/criar-novo-checkout.md
+  - https://docs.asaas.com/reference/criar-novo-cliente.md
+  - https://docs.asaas.com/reference/criar-novo-webhook.md
+  - https://docs.asaas.com/reference/criar-parcelamento.md
+  - https://docs.asaas.com/reference/criar-qrcode-estatico.md
+  - https://docs.asaas.com/reference/criar-retentativa-de-instrucao-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/criar-subconta.md
+  - https://docs.asaas.com/reference/criar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/criar-um-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/criar-uma-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/criar-uma-chave.md
+  - https://docs.asaas.com/reference/criar-uma-negativacao.md
+  - https://docs.asaas.com/reference/decode-a-qrcode-for-payment.md
+  - https://docs.asaas.com/reference/decodificar-um-qrcode-para-pagamento.md
+  - https://docs.asaas.com/reference/definir-imagem-principal-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/deletar-qrcode-estatico.md
+  - https://docs.asaas.com/reference/delete-api-key-for-a-subaccount.md
+  - https://docs.asaas.com/reference/delete-baas-subaccount.md
+  - https://docs.asaas.com/reference/delete-document-from-a-payment.md
+  - https://docs.asaas.com/reference/delete-payment-with-summary-data.md
+  - https://docs.asaas.com/reference/delete-payment.md
+  - https://docs.asaas.com/reference/delete-static-qrcode.md
+  - https://docs.asaas.com/reference/desfazer-confirmacao-de-recebimento-em-dinheiro-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/desfazer-confirmacao-de-recebimento-em-dinheiro.md
+  - https://docs.asaas.com/reference/emitir-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/encerrar-garantia-da-cobranca-na-conta-escrow.md
+  - https://docs.asaas.com/reference/encerrar-subconta-nao-baas.md
+  - https://docs.asaas.com/reference/enviar-documentos.md
+  - https://docs.asaas.com/reference/estatisticas-de-cobrancas.md
+  - https://docs.asaas.com/reference/estornar-boleto.md
+  - https://docs.asaas.com/reference/estornar-cobranca-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/estornar-cobranca.md
+  - https://docs.asaas.com/reference/estornar-parcelamento.md
+  - https://docs.asaas.com/reference/event-history-lists.md
+  - https://docs.asaas.com/reference/excluir-chave-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/excluir-cobranca-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/excluir-cobranca.md
+  - https://docs.asaas.com/reference/excluir-documento-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/excluir-subconta-baas.md
+  - https://docs.asaas.com/reference/fazer-upload-de-documentos-da-cobranca.md
+  - https://docs.asaas.com/reference/finish-payment-escrow-in-the-escrow-account.md
+  - https://docs.asaas.com/reference/forcar-vencimento.md
+  - https://docs.asaas.com/reference/force-expire.md
+  - https://docs.asaas.com/reference/generate-installment-booklet.md
+  - https://docs.asaas.com/reference/generate-subscription-booklet.md
+  - https://docs.asaas.com/reference/gerar-carne-de-assinatura.md
+  - https://docs.asaas.com/reference/gerar-carne-de-parcelamento.md
+  - https://docs.asaas.com/reference/get-digitable-bill-line.md
+  - https://docs.asaas.com/reference/get-qr-code-for-pix-payments.md
+  - https://docs.asaas.com/reference/informacoes-sobre-visualizacao-da-cobranca.md
+  - https://docs.asaas.com/reference/issue-an-invoice.md
+  - https://docs.asaas.com/reference/list-anticipations.md
+  - https://docs.asaas.com/reference/list-api-keys-for-subaccount.md
+  - https://docs.asaas.com/reference/list-automatic-pix-authorizations.md
+  - https://docs.asaas.com/reference/list-automatic-pix-payment-instructions.md
+  - https://docs.asaas.com/reference/list-bill-payments.md
+  - https://docs.asaas.com/reference/list-chargebacks.md
+  - https://docs.asaas.com/reference/list-credit-bureau-reports.md
+  - https://docs.asaas.com/reference/list-customers.md
+  - https://docs.asaas.com/reference/list-documents-of-a-payment.md
+  - https://docs.asaas.com/reference/list-federal-service-codes.md
+  - https://docs.asaas.com/reference/list-images-from-a-payments-link.md
+  - https://docs.asaas.com/reference/list-installments.md
+  - https://docs.asaas.com/reference/list-invoices-for-subscription-charges.md
+  - https://docs.asaas.com/reference/list-invoices.md
+  - https://docs.asaas.com/reference/list-keys.md
+  - https://docs.asaas.com/reference/list-mobile-recharges.md
+  - https://docs.asaas.com/reference/list-municipal-configurations.md
+  - https://docs.asaas.com/reference/list-municipal-services.md
+  - https://docs.asaas.com/reference/list-nbs-codes.md
+  - https://docs.asaas.com/reference/list-operation-indicator-codes.md
+  - https://docs.asaas.com/reference/list-paid-splits-1.md
+  - https://docs.asaas.com/reference/list-payment-dunnings.md
+  - https://docs.asaas.com/reference/list-payments-available-for-payment-dunning.md
+  - https://docs.asaas.com/reference/list-payments-links.md
+  - https://docs.asaas.com/reference/list-payments-of-a-installment.md
+  - https://docs.asaas.com/reference/list-payments-of-a-subscription.md
+  - https://docs.asaas.com/reference/list-payments-received.md
+  - https://docs.asaas.com/reference/list-payments-with-summary-data.md
+  - https://docs.asaas.com/reference/list-payments.md
+  - https://docs.asaas.com/reference/list-received-splits-1.md
+  - https://docs.asaas.com/reference/list-recurrence-items.md
+  - https://docs.asaas.com/reference/list-recurrences.md
+  - https://docs.asaas.com/reference/list-subaccounts.md
+  - https://docs.asaas.com/reference/list-subscriptions.md
+  - https://docs.asaas.com/reference/list-tax-classification-codes.md
+  - https://docs.asaas.com/reference/list-tax-situation-codes.md
+  - https://docs.asaas.com/reference/list-transactions.md
+  - https://docs.asaas.com/reference/list-transfers.md
+  - https://docs.asaas.com/reference/list-webhooks.md
+  - https://docs.asaas.com/reference/listar-antecipacoes.md
+  - https://docs.asaas.com/reference/listar-assinaturas.md
+  - https://docs.asaas.com/reference/listar-autorizacoes-pix-automatico.md
+  - https://docs.asaas.com/reference/listar-chargebacks.md
+  - https://docs.asaas.com/reference/listar-chaves-de-api-de-uma-subconta.md
+  - https://docs.asaas.com/reference/listar-chaves.md
+  - https://docs.asaas.com/reference/listar-clientes.md
+  - https://docs.asaas.com/reference/listar-cobrancas-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/listar-cobrancas-de-uma-assinatura.md
+  - https://docs.asaas.com/reference/listar-cobrancas-disponiveis-para-negativacao.md
+  - https://docs.asaas.com/reference/listar-cobrancas.md
+  - https://docs.asaas.com/reference/listar-codigos-de-classificacoes-tributarias.md
+  - https://docs.asaas.com/reference/listar-codigos-de-operadores-de-indicacoes.md
+  - https://docs.asaas.com/reference/listar-codigos-de-situacoes-tributarias.md
+  - https://docs.asaas.com/reference/listar-codigos-nbs.md
+  - https://docs.asaas.com/reference/listar-codigos-servicos-federais.md
+  - https://docs.asaas.com/reference/listar-configuracoes-municipais.md
+  - https://docs.asaas.com/reference/listar-consultas-1.md
+  - https://docs.asaas.com/reference/listar-documentos-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/listar-estornos-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/listar-historico-de-eventos.md
+  - https://docs.asaas.com/reference/listar-imagens-de-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/listar-instrucoes-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/listar-itens-de-uma-recorrencia.md
+  - https://docs.asaas.com/reference/listar-links-de-pagamentos.md
+  - https://docs.asaas.com/reference/listar-negativacoes.md
+  - https://docs.asaas.com/reference/listar-notas-fiscais-das-cobrancas-de-uma-assinatura.md
+  - https://docs.asaas.com/reference/listar-notas-fiscais.md
+  - https://docs.asaas.com/reference/listar-pagamento-de-contas.md
+  - https://docs.asaas.com/reference/listar-pagamentos-recebidos.md
+  - https://docs.asaas.com/reference/listar-parcelamentos.md
+  - https://docs.asaas.com/reference/listar-recargas-de-celular.md
+  - https://docs.asaas.com/reference/listar-recorrencias.md
+  - https://docs.asaas.com/reference/listar-servicos-municipais.md
+  - https://docs.asaas.com/reference/listar-splits-pagos.md
+  - https://docs.asaas.com/reference/listar-splits-recebidos.md
+  - https://docs.asaas.com/reference/listar-subcontas.md
+  - https://docs.asaas.com/reference/listar-transacoes.md
+  - https://docs.asaas.com/reference/listar-transferencias.md
+  - https://docs.asaas.com/reference/listar-webhooks.md
+  - https://docs.asaas.com/reference/make-consultation.md
+  - https://docs.asaas.com/reference/obter-linha-digitavel-do-boleto.md
+  - https://docs.asaas.com/reference/obter-qr-code-para-pagamentos-via-pix.md
+  - https://docs.asaas.com/reference/pagar-um-qrcode.md
+  - https://docs.asaas.com/reference/pagar-uma-cobranca-com-cartao-de-credito.md
+  - https://docs.asaas.com/reference/pagar-uma-cobranca-com-cartao.md
+  - https://docs.asaas.com/reference/pay-a-charge-with-card.md
+  - https://docs.asaas.com/reference/pay-a-charge-with-credit-card.md
+  - https://docs.asaas.com/reference/pay-a-qrcode.md
+  - https://docs.asaas.com/reference/payment-viewing-information.md
+  - https://docs.asaas.com/reference/realizar-consulta.md
+  - https://docs.asaas.com/reference/recover-a-single-cellphone-recharge.md
+  - https://docs.asaas.com/reference/recover-a-single-payment-dunning.md
+  - https://docs.asaas.com/reference/recovering-payment-limits.md
+  - https://docs.asaas.com/reference/recuperando-limites-de-cobrancas-1.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-da-conta-escrow-para-a-subconta.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-de-pre-autorizacao.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-padrao-da-conta-escrow.md
+  - https://docs.asaas.com/reference/recuperar-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/recuperar-configuracoes-de-personalizacao.md
+  - https://docs.asaas.com/reference/recuperar-dados-comerciais.md
+  - https://docs.asaas.com/reference/recuperar-efeito-de-contrato-bloqueando-antecipacao-da-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-extrato.md
+  - https://docs.asaas.com/reference/recuperar-garantia-da-cobranca-na-conta-escrow.md
+  - https://docs.asaas.com/reference/recuperar-informacoes-de-pagamento-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-informacoes-fiscais.md
+  - https://docs.asaas.com/reference/recuperar-limites-de-antecipacoes.md
+  - https://docs.asaas.com/reference/recuperar-notificacoes-de-um-cliente.md
+  - https://docs.asaas.com/reference/recuperar-numero-de-conta-no-asaas.md
+  - https://docs.asaas.com/reference/recuperar-saldo-da-conta.md
+  - https://docs.asaas.com/reference/recuperar-status-da-antecipacao-automatica.md
+  - https://docs.asaas.com/reference/recuperar-status-de-uma-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-taxas-da-conta.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-chargeback.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-cliente.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-documento-da-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-parcelamento.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-split-pago.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-split-recebido.md
+  - https://docs.asaas.com/reference/recuperar-um-unico-webhook.md
+  - https://docs.asaas.com/reference/recuperar-uma-consulta-1.md
+  - https://docs.asaas.com/reference/recuperar-uma-nota-fiscal.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-antecipacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-assinatura.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-autorizacao-pix-automatico.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-chave.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-cobranca-com-dados-resumidos.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-cobranca.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-imagem-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-instrucao-de-pagamento-pix-automatico.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-negativacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-recarga-de-celular.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-recorrencia.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-subconta.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-transacao.md
+  - https://docs.asaas.com/reference/recuperar-uma-unica-transferencia.md
+  - https://docs.asaas.com/reference/recuperar-valores-de-split.md
+  - https://docs.asaas.com/reference/recuperar-walletid.md
+  - https://docs.asaas.com/reference/reenviar-documentos.md
+  - https://docs.asaas.com/reference/reenviar-link-de-ativacao-para-subconta-nao-baas.md
+  - https://docs.asaas.com/reference/refund-bank-slip.md
+  - https://docs.asaas.com/reference/refund-installment.md
+  - https://docs.asaas.com/reference/refund-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/refund-payment.md
+  - https://docs.asaas.com/reference/remove-a-payments-link.md
+  - https://docs.asaas.com/reference/remove-an-image-from-payments-link.md
+  - https://docs.asaas.com/reference/remove-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/remove-customer.md
+  - https://docs.asaas.com/reference/remove-installment.md
+  - https://docs.asaas.com/reference/remove-key-1.md
+  - https://docs.asaas.com/reference/remove-sent-document.md
+  - https://docs.asaas.com/reference/remove-subscription.md
+  - https://docs.asaas.com/reference/remove-webhook-backoff.md
+  - https://docs.asaas.com/reference/remove-webhook.md
+  - https://docs.asaas.com/reference/remover-assinatura.md
+  - https://docs.asaas.com/reference/remover-chave.md
+  - https://docs.asaas.com/reference/remover-cliente.md
+  - https://docs.asaas.com/reference/remover-configuracao-para-emissao-de-notas-fiscais.md
+  - https://docs.asaas.com/reference/remover-documento-enviado.md
+  - https://docs.asaas.com/reference/remover-parcelamento-1.md
+  - https://docs.asaas.com/reference/remover-penalizacao-webhook.md
+  - https://docs.asaas.com/reference/remover-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/remover-uma-imagem-do-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/remover-webhook.md
+  - https://docs.asaas.com/reference/request-anticipation.md
+  - https://docs.asaas.com/reference/request-recharge.md
+  - https://docs.asaas.com/reference/resend-activation-link-for-non-baas-subaccount.md
+  - https://docs.asaas.com/reference/resend-documents.md
+  - https://docs.asaas.com/reference/restaurar-cliente-removido.md
+  - https://docs.asaas.com/reference/restaurar-cobranca-removida-com-dados-resumidos-na-resposta.md
+  - https://docs.asaas.com/reference/restaurar-cobranca-removida.md
+  - https://docs.asaas.com/reference/restaurar-um-link-de-pagamentos.md
+  - https://docs.asaas.com/reference/restore-a-payments-link.md
+  - https://docs.asaas.com/reference/restore-removed-customer.md
+  - https://docs.asaas.com/reference/restore-removed-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/restore-removed-payment.md
+  - https://docs.asaas.com/reference/reterive-escrow-account-configuration-for-subaccount.md
+  - https://docs.asaas.com/reference/retrieve-a-credit-bureau-report.md
+  - https://docs.asaas.com/reference/retrieve-a-single-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-a-single-automatic-pix-authorization.md
+  - https://docs.asaas.com/reference/retrieve-a-single-automatic-pix-payment-instruction.md
+  - https://docs.asaas.com/reference/retrieve-a-single-bill-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-chargeback.md
+  - https://docs.asaas.com/reference/retrieve-a-single-customer.md
+  - https://docs.asaas.com/reference/retrieve-a-single-document-of-a-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-installment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-invoice.md
+  - https://docs.asaas.com/reference/retrieve-a-single-key.md
+  - https://docs.asaas.com/reference/retrieve-a-single-paid-split.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payment-with-summary-data.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payment.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payments-link-image.md
+  - https://docs.asaas.com/reference/retrieve-a-single-payments-link.md
+  - https://docs.asaas.com/reference/retrieve-a-single-received-split.md
+  - https://docs.asaas.com/reference/retrieve-a-single-recurrence.md
+  - https://docs.asaas.com/reference/retrieve-a-single-subaccount.md
+  - https://docs.asaas.com/reference/retrieve-a-single-subscription.md
+  - https://docs.asaas.com/reference/retrieve-a-single-transaction.md
+  - https://docs.asaas.com/reference/retrieve-a-single-transfer.md
+  - https://docs.asaas.com/reference/retrieve-a-single-webhook.md
+  - https://docs.asaas.com/reference/retrieve-account-balance.md
+  - https://docs.asaas.com/reference/retrieve-account-fees.md
+  - https://docs.asaas.com/reference/retrieve-anticipation-limits.md
+  - https://docs.asaas.com/reference/retrieve-asaas-account-number.md
+  - https://docs.asaas.com/reference/retrieve-business-data.md
+  - https://docs.asaas.com/reference/retrieve-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/retrieve-contract-effect-blocking-payment-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-default-escrow-account-configuration.md
+  - https://docs.asaas.com/reference/retrieve-extract.md
+  - https://docs.asaas.com/reference/retrieve-notifications-from-a-customer.md
+  - https://docs.asaas.com/reference/retrieve-payment-billing-information.md
+  - https://docs.asaas.com/reference/retrieve-payment-escrow-in-the-escrow-account.md
+  - https://docs.asaas.com/reference/retrieve-personalization-settings.md
+  - https://docs.asaas.com/reference/retrieve-pre-authorization-configuration.md
+  - https://docs.asaas.com/reference/retrieve-refunds-of-a-single-payment.md
+  - https://docs.asaas.com/reference/retrieve-split-values.md
+  - https://docs.asaas.com/reference/retrieve-status-of-a-payment.md
+  - https://docs.asaas.com/reference/retrieve-status-of-automatic-anticipation.md
+  - https://docs.asaas.com/reference/retrieve-tax-information.md
+  - https://docs.asaas.com/reference/retrieve-walletid.md
+  - https://docs.asaas.com/reference/sales-simulator.md
+  - https://docs.asaas.com/reference/salvar-ou-atualizar-configuracao-da-conta-escrow-para-a-subconta.md
+  - https://docs.asaas.com/reference/salvar-ou-atualizar-configuracao-de-pre-autorizacao.md
+  - https://docs.asaas.com/reference/salvar-personalizacao-da-fatura.md
+  - https://docs.asaas.com/reference/save-or-update-escrow-account-configuration-for-subaccount.md
+  - https://docs.asaas.com/reference/save-or-update-pre-authorization-configuration.md
+  - https://docs.asaas.com/reference/save-payment-checkout-personalization.md
+  - https://docs.asaas.com/reference/schedule-invoice.md
+  - https://docs.asaas.com/reference/search-for-cell-phone-provider.md
+  - https://docs.asaas.com/reference/send-documents.md
+  - https://docs.asaas.com/reference/set-payments-link-main-image.md
+  - https://docs.asaas.com/reference/simulador-de-vendas.md
+  - https://docs.asaas.com/reference/simular-um-pagamento-de-conta.md
+  - https://docs.asaas.com/reference/simular-uma-negativacao.md
+  - https://docs.asaas.com/reference/simulate-a-bill-payment.md
+  - https://docs.asaas.com/reference/simulate-a-payment-dunning.md
+  - https://docs.asaas.com/reference/simulate-anticipation.md
+  - https://docs.asaas.com/reference/solicitar-antecipacao.md
+  - https://docs.asaas.com/reference/solicitar-recarga.md
+  - https://docs.asaas.com/reference/tokenizacao-de-cartao-de-credito.md
+  - https://docs.asaas.com/reference/transfer-to-another-institution-account-or-pix-key.md
+  - https://docs.asaas.com/reference/transfer-to-asaas-account-1.md
+  - https://docs.asaas.com/reference/transferir-para-conta-asaas.md
+  - https://docs.asaas.com/reference/transferir-para-conta-de-outra-instituicao-ou-chave-pix.md
+  - https://docs.asaas.com/reference/undo-cash-receipt-confirmation-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/undo-cash-receipt-confirmation.md
+  - https://docs.asaas.com/reference/update-a-payments-link.md
+  - https://docs.asaas.com/reference/update-api-key-for-a-subaccount.md
+  - https://docs.asaas.com/reference/update-business-data.md
+  - https://docs.asaas.com/reference/update-configuration-for-issuance-of-invoices.md
+  - https://docs.asaas.com/reference/update-existing-customer.md
+  - https://docs.asaas.com/reference/update-existing-notification.md
+  - https://docs.asaas.com/reference/update-existing-notifications-in-batch.md
+  - https://docs.asaas.com/reference/update-existing-payment-with-summary-data-in-response.md
+  - https://docs.asaas.com/reference/update-existing-payment.md
+  - https://docs.asaas.com/reference/update-existing-subscription.md
+  - https://docs.asaas.com/reference/update-existing-webhook.md
+  - https://docs.asaas.com/reference/update-installment-splits.md
+  - https://docs.asaas.com/reference/update-invoice.md
+  - https://docs.asaas.com/reference/update-sent-document.md
+  - https://docs.asaas.com/reference/update-settings-of-a-document-of-a-payment.md
+  - https://docs.asaas.com/reference/update-status-of-automatic-anticipation.md
+  - https://docs.asaas.com/reference/update-subscription-credit-card.md
+  - https://docs.asaas.com/reference/upload-payment-documents.md
+  - https://docs.asaas.com/reference/verificar-documentos-pendentes.md
+  - https://docs.asaas.com/reference/view-document-sent.md
+  - https://docs.asaas.com/reference/visualizar-documento-enviado.md
+  merge:
+    pages: 422
+    deduped: 1780
+    conflicts_kept_first: 2048
