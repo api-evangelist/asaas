@@ -687,6 +687,8 @@ apis:
   humanURL: https://docs.asaas.com/reference/criar-novo-cliente
   baseURL: https://api.asaas.com/v3
   tags:
+  - Chargebacks
+  tags_raw:
   - Chargeback
   properties:
   - type: OpenAPI
@@ -1287,6 +1289,8 @@ apis:
   humanURL: https://docs.asaas.com/reference/criar-novo-cliente
   baseURL: https://api.asaas.com/v3
   tags:
+  - Split
+  tags_raw:
   - Splits
   properties:
   - type: OpenAPI
