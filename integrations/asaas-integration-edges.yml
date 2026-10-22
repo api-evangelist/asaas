@@ -13,6 +13,7 @@ checked:
 - https://www.bcb.gov.br/estabilidadefinanceira/participantespix
 - https://zapier.com/apps/asaas/integrations
 - wordpress/integrations/wordpress-integration-edges.yml
+- adobe-commerce/integrations/adobe-commerce-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -40,23 +41,6 @@ edges:
     - payments-recurring-consents-automatic
     detected_by: sweep-standard-registers.py
     detected: '2026-10-14'
-- partner_name: WordPress (own)
-  partner: wordpress
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://wordpress.org/plugins/woo-asaas/
-  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
-  apps:
-  - Asaas Gateway for WooCommerce
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: WordPress plugin
 - partner_name: Open Finance Brasil functional certification
   partner: null
   partner_match: register
@@ -132,4 +116,38 @@ edges:
     detected: '2026-10-19'
   detected_by: sweep-latam-open-finance.py
   first_seen: '2026-10-15'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/woo-asaas/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Asaas Gateway for WooCommerce
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
+- partner_name: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://commercemarketplace.adobe.com/asaas-module-magento2.html
+  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+  apps:
+  - Asaas Payment
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Commerce Marketplace extension
 templates: []

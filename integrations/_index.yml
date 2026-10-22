@@ -30,19 +30,6 @@
     detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
-- slug: asaas-wordpress-own
-  label: WordPress (own)
-  partner: wordpress
-  partner_name: WordPress (own)
-  category: WordPress plugin
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://wordpress.org/plugins/woo-asaas/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: asaas-open-finance-brasil-functional-certification
   label: Open Finance Brasil functional certification
   partner_name: Open Finance Brasil functional certification
@@ -116,5 +103,31 @@
     signal_note: 'participation only: the domain comes from a labelled lookup (registrations[].identity)'
     detected_by: sweep-latam-open-finance.py
     detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: asaas-wordpress-own
+  label: WordPress (own)
+  partner: wordpress
+  partner_name: WordPress (own)
+  category: WordPress plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://wordpress.org/plugins/woo-asaas/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: asaas-adobe-commerce-own
+  label: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_name: Adobe Commerce (own)
+  category: Adobe Commerce Marketplace extension
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://commercemarketplace.adobe.com/asaas-module-magento2.html
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
