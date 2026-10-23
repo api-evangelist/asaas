@@ -18,6 +18,7 @@ checked:
 - https://olinda.bcb.gov.br/olinda/servico/BcBase/versao/v2/odata/
 - https://olinda.bcb.gov.br/olinda/servico/Informes_ListaTarifasPorInstituicaoFinanceira/versao/v1/odata/
 - https://olinda.bcb.gov.br/olinda/servico/Instituicoes_em_funcionamento/versao/v1/odata/
+- bubble/integrations/bubble-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -120,40 +121,6 @@ edges:
     detected: '2026-10-19'
   detected_by: sweep-latam-open-finance.py
   first_seen: '2026-10-15'
-- partner_name: WordPress (own)
-  partner: wordpress
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://wordpress.org/plugins/woo-asaas/
-  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
-  apps:
-  - Asaas Gateway for WooCommerce
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: WordPress plugin
-- partner_name: Adobe Commerce (own)
-  partner: adobe-commerce
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://commercemarketplace.adobe.com/asaas-module-magento2.html
-  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
-  apps:
-  - Asaas Payment
-  listing_count: 1
-  detected: '2026-10-22'
-  detected_by: mirror-platform-listings.py
-  category: Adobe Commerce Marketplace extension
 - partner_name: Banco Central do Brasil authorized payment institutions (Instituições de Pagamento)
   partner: null
   partner_match: register
@@ -189,4 +156,55 @@ edges:
     detected: '2026-10-22'
   detected_by: sweep-brazil-bcb-authorized-institutions.py
   first_seen: '2026-10-22'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/woo-asaas/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Asaas Gateway for WooCommerce
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
+- partner_name: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://commercemarketplace.adobe.com/asaas-module-magento2.html
+  mirror_of: adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+  apps:
+  - Asaas Payment
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Commerce Marketplace extension
+- partner_name: Bubble (own)
+  partner: bubble
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://bubble.io/plugin/asaas-1706804350267x518485267472187400
+  mirror_of: bubble/integrations/bubble-integration-edges.yml
+  apps:
+  - Asaas
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Api
 templates: []

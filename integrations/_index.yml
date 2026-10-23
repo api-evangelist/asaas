@@ -105,32 +105,6 @@
     detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
-- slug: asaas-wordpress-own
-  label: WordPress (own)
-  partner: wordpress
-  partner_name: WordPress (own)
-  category: WordPress plugin
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://wordpress.org/plugins/woo-asaas/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: asaas-adobe-commerce-own
-  label: Adobe Commerce (own)
-  partner: adobe-commerce
-  partner_name: Adobe Commerce (own)
-  category: Adobe Commerce Marketplace extension
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://commercemarketplace.adobe.com/asaas-module-magento2.html
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: asaas-banco-central-do-brasil-authorized-payment-institutions-institui-es-de-pagamento
   label: Banco Central do Brasil authorized payment institutions (Instituições de Pagamento)
   partner_name: Banco Central do Brasil authorized payment institutions (Instituições de Pagamento)
@@ -164,5 +138,44 @@
       published by this register'
     detected_by: sweep-brazil-bcb-authorized-institutions.py
     detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: asaas-wordpress-own
+  label: WordPress (own)
+  partner: wordpress
+  partner_name: WordPress (own)
+  category: WordPress plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://wordpress.org/plugins/woo-asaas/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: asaas-adobe-commerce-own
+  label: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_name: Adobe Commerce (own)
+  category: Adobe Commerce Marketplace extension
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://commercemarketplace.adobe.com/asaas-module-magento2.html
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: asaas-bubble-own
+  label: Bubble (own)
+  partner: bubble
+  partner_name: Bubble (own)
+  category: Api
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://bubble.io/plugin/asaas-1706804350267x518485267472187400
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
